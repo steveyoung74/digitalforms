@@ -1140,13 +1140,29 @@
         
         // Check if module should be duplicated per customer
         function isPerCustomerModule(moduleId) {
-            const perCustomerModules = ['customer-identification', 'contact-details', 'previous-address', 'tax-residency', 'us-person'];
+            const perCustomerModules = [
+                'customer-identification', 
+                'contact-details', 
+                'previous-address', 
+                'tax-residency', 
+                'us-person',
+                'marketing',
+                'declaration'
+            ];
             return perCustomerModules.includes(moduleId);
         }
         
         // Duplicate modules for joint applications
         function duplicateModulesForJoint(modules) {
-            const perCustomerModules = ['customer-identification', 'contact-details', 'previous-address', 'tax-residency', 'us-person'];
+            const perCustomerModules = [
+                'customer-identification', 
+                'contact-details', 
+                'previous-address', 
+                'tax-residency', 
+                'us-person',
+                'marketing',
+                'declaration'
+            ];
             
             modules.forEach(moduleId => {
                 if (!perCustomerModules.includes(moduleId)) return;
