@@ -88,86 +88,39 @@
             letter-spacing: 1px;
         }
 
-        /* Joint Application Styles */
-        .customer-section {
-            margin-bottom: 40px;
-        }
-
-        .customer-header {
-            background: linear-gradient(90deg, #6b4c9a, #8b6baf);
-            color: white;
-            padding: 15px 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 10px rgba(107, 76, 154, 0.2);
-        }
-
-        .customer-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .customer-title {
-            flex: 1;
-        }
-
-        .customer-title h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .customer-title .subtitle {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .joint-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #6b4c9a, transparent);
-            margin: 40px 0;
-            position: relative;
-        }
-
-        .joint-divider::after {
-            content: 'AND';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 5px 15px;
-            color: #6b4c9a;
-            font-weight: 600;
-            font-size: 12px;
-            letter-spacing: 2px;
-        }
-
-        /* Hide customer 2 sections by default */
-        .customer-2-section {
+        /* Joint Application Styles - Simplified */
+        .form-module.joint-customer-2 {
             display: none;
         }
 
-        /* Show when joint application */
-        body.joint-application .customer-2-section {
+        body.joint-application .form-module.joint-customer-2 {
             display: block;
         }
 
-        body.joint-application .customer-1-section .customer-header {
-            background: linear-gradient(90deg, #1976d2, #42a5f5);
+        /* Style for joint section titles */
+        body.joint-application .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        body.joint-application .customer-2-section .customer-header {
-            background: linear-gradient(90deg, #7b1fa2, #ba68c8);
+        .customer-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .customer-label.primary {
+            background: rgba(33, 150, 243, 0.3);
+        }
+
+        .customer-label.joint {
+            background: rgba(156, 39, 176, 0.3);
         }
 
         .content {
@@ -1084,7 +1037,6 @@
             const urlParams = getURLParams();
             
             // Get modules from URL parameter (comma-separated)
-            // Example: ?modules=customer-identification,contact-details,tax-residency
             const modulesParam = urlParams.modules || '';
             const requestedModules = modulesParam ? modulesParam.split(',') : [];
             
@@ -1117,9 +1069,9 @@
                 );
             }
             
-            // If joint application, wrap relevant modules with customer headers
+            // If joint application, duplicate relevant modules
             if (isJoint) {
-                wrapModulesForJoint(requestedModules);
+                duplicateModulesForJoint(requestedModules);
             }
             
             // Activate requested modules
@@ -1129,12 +1081,50 @@
                 if (moduleElement) {
                     moduleElement.classList.add('active');
                     
-                    // Update section number
-                    const sectionNumberElement = moduleElement.querySelector('.section-number');
-                    if (sectionNumberElement) {
-                        sectionNumberElement.textContent = sectionNumber;
+                    // Update section number and add customer label for primary
+                    const sectionTitleElement = moduleElement.querySelector('.section-title');
+                    if (sectionTitleElement) {
+                        const sectionNumberElement = sectionTitleElement.querySelector('.section-number');
+                        if (sectionNumberElement) {
+                            sectionNumberElement.textContent = sectionNumber;
+                        }
+                        
+                        // Add primary customer label for joint applications
+                        if (isJoint && isPerCustomerModule(moduleId)) {
+                            if (!sectionTitleElement.querySelector('.customer-label')) {
+                                const label = document.createElement('span');
+                                label.className = 'customer-label primary';
+                                label.textContent = 'Primary Applicant';
+                                sectionTitleElement.appendChild(label);
+                            }
+                        }
                     }
                     sectionNumber++;
+                }
+                
+                // Activate customer 2 version if joint
+                if (isJoint && isPerCustomerModule(moduleId)) {
+                    const customer2Element = document.getElementById(`module-${moduleId}-customer2`);
+                    if (customer2Element) {
+                        customer2Element.classList.add('active');
+                        
+                        const sectionTitleElement = customer2Element.querySelector('.section-title');
+                        if (sectionTitleElement) {
+                            const sectionNumberElement = sectionTitleElement.querySelector('.section-number');
+                            if (sectionNumberElement) {
+                                sectionNumberElement.textContent = sectionNumber;
+                            }
+                            
+                            // Add joint customer label
+                            if (!sectionTitleElement.querySelector('.customer-label')) {
+                                const label = document.createElement('span');
+                                label.className = 'customer-label joint';
+                                label.textContent = 'Joint Applicant';
+                                sectionTitleElement.appendChild(label);
+                            }
+                        }
+                        sectionNumber++;
+                    }
                 }
             });
             
@@ -1148,70 +1138,34 @@
             populateFormFromURL(urlParams);
         }
         
-        // Wrap modules with customer headers for joint applications
-        function wrapModulesForJoint(modules) {
-            // Modules that should be duplicated for each customer
+        // Check if module should be duplicated per customer
+        function isPerCustomerModule(moduleId) {
+            const perCustomerModules = ['customer-identification', 'contact-details', 'previous-address', 'tax-residency', 'us-person'];
+            return perCustomerModules.includes(moduleId);
+        }
+        
+        // Duplicate modules for joint applications
+        function duplicateModulesForJoint(modules) {
             const perCustomerModules = ['customer-identification', 'contact-details', 'previous-address', 'tax-residency', 'us-person'];
             
-            // Modules that are shared (only one instance)
-            const sharedModules = ['marketing', 'declaration'];
-            
             modules.forEach(moduleId => {
-                const moduleElement = document.getElementById(`module-${moduleId}`);
-                if (!moduleElement) return;
+                if (!perCustomerModules.includes(moduleId)) return;
                 
-                if (perCustomerModules.includes(moduleId)) {
-                    // This module should appear for each customer
-                    // Wrap in customer 1 section
-                    if (!moduleElement.classList.contains('wrapped')) {
-                        const customer1Wrapper = document.createElement('div');
-                        customer1Wrapper.className = 'customer-section customer-1-section';
-                        customer1Wrapper.innerHTML = `
-                            <div class="customer-header">
-                                <div class="customer-icon">👤</div>
-                                <div class="customer-title">
-                                    <h3>Customer 1</h3>
-                                    <div class="subtitle">Primary Applicant</div>
-                                </div>
-                            </div>
-                        `;
-                        
-                        moduleElement.parentNode.insertBefore(customer1Wrapper, moduleElement);
-                        customer1Wrapper.appendChild(moduleElement);
-                        
-                        // Clone for customer 2
-                        const customer2Wrapper = document.createElement('div');
-                        customer2Wrapper.className = 'customer-section customer-2-section';
-                        customer2Wrapper.innerHTML = `
-                            <div class="customer-header">
-                                <div class="customer-icon">👤</div>
-                                <div class="customer-title">
-                                    <h3>Customer 2</h3>
-                                    <div class="subtitle">Joint Applicant</div>
-                                </div>
-                            </div>
-                        `;
-                        
-                        const moduleClone = moduleElement.cloneNode(true);
-                        moduleClone.id = `module-${moduleId}-customer2`;
-                        
-                        // Update all field names to include customer2 suffix
-                        updateFieldNamesForCustomer2(moduleClone);
-                        
-                        customer2Wrapper.appendChild(moduleClone);
-                        customer1Wrapper.parentNode.insertBefore(customer2Wrapper, customer1Wrapper.nextSibling);
-                        
-                        // Add divider between customers (except for last per-customer module)
-                        const lastPerCustomerModule = perCustomerModules[perCustomerModules.length - 1];
-                        if (moduleId === lastPerCustomerModule) {
-                            const divider = document.createElement('div');
-                            divider.className = 'joint-divider';
-                            customer2Wrapper.parentNode.insertBefore(divider, customer2Wrapper.nextSibling);
-                        }
-                        
-                        moduleElement.classList.add('wrapped');
-                    }
-                }
+                const moduleElement = document.getElementById(`module-${moduleId}`);
+                if (!moduleElement || moduleElement.dataset.cloned === 'true') return;
+                
+                // Clone the module for customer 2
+                const moduleClone = moduleElement.cloneNode(true);
+                moduleClone.id = `module-${moduleId}-customer2`;
+                moduleClone.classList.add('joint-customer-2');
+                moduleClone.dataset.module = moduleId + '-customer2';
+                
+                // Update all field names to include customer2 suffix
+                updateFieldNamesForCustomer2(moduleClone);
+                
+                // Insert after the original module
+                moduleElement.parentNode.insertBefore(moduleClone, moduleElement.nextSibling);
+                moduleElement.dataset.cloned = 'true';
             });
         }
         
@@ -1224,26 +1178,15 @@
                     field.name = field.name + '_customer2';
                 }
                 if (field.id) {
+                    const oldId = field.id;
                     field.id = field.id + '_customer2';
-                }
-                
-                // Update associated labels
-                if (field.id) {
-                    const labels = element.querySelectorAll(`label[for="${field.id.replace('_customer2', '')}"]`);
+                    
+                    // Update associated labels
+                    const labels = element.querySelectorAll(`label[for="${oldId}"]`);
                     labels.forEach(label => {
                         label.setAttribute('for', field.id);
                     });
                 }
-            });
-            
-            // Update radio button groups
-            const radioGroups = {};
-            element.querySelectorAll('input[type="radio"]').forEach(radio => {
-                const baseName = radio.name;
-                if (!radioGroups[baseName]) {
-                    radioGroups[baseName] = [];
-                }
-                radioGroups[baseName].push(radio);
             });
         }
 
