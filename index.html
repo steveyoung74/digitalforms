@@ -63,13 +63,26 @@
         }
 
         .intro-box h2 {
-            color: #1e3c72;
+            color: #6b4c9a;
             margin-bottom: 15px;
         }
 
         .intro-box p {
             color: #666;
             margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .intro-box .highlight {
+            background: #f3e5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #6b4c9a;
+        }
+
+        .intro-box .highlight strong {
+            color: #6b4c9a;
         }
 
         .journeys-grid {
@@ -111,7 +124,7 @@
         }
 
         .journey-title h3 {
-            color: #1e3c72;
+            color: #6b4c9a;
             font-size: 22px;
             margin-bottom: 5px;
         }
@@ -172,7 +185,7 @@
         }
 
         .modules-list h4 {
-            color: #1e3c72;
+            color: #6b4c9a;
             font-size: 14px;
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -186,8 +199,8 @@
         }
 
         .module-tag {
-            background: #e3f2fd;
-            color: #1565c0;
+            background: #f3e5f5;
+            color: #6b4c9a;
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
@@ -234,73 +247,67 @@
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            background: white;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #666;
         }
 
         .toggle-option input[type="radio"]:checked + .toggle-label {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6b4c9a 0%, #8b6baf 100%);
             color: white;
-        }
-
-        .toggle-option:hover .toggle-label {
-            border-color: #667eea;
+            border-color: #6b4c9a;
         }
 
         .journey-button {
-            display: block;
             width: 100%;
-            padding: 14px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            background: linear-gradient(135deg, #6b4c9a 0%, #8b6baf 100%);
             color: white;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
             border: none;
-            cursor: pointer;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(107, 76, 154, 0.3);
         }
 
         .journey-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 15px rgba(107, 76, 154, 0.4);
         }
 
         .modules-reference {
             background: white;
+            padding: 40px;
             border-radius: 12px;
-            padding: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            margin-top: 40px;
         }
 
         .modules-reference h2 {
-            color: #1e3c72;
-            margin-bottom: 20px;
+            color: #6b4c9a;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
         }
 
         .module-categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 30px;
         }
 
         .module-category {
-            padding: 20px;
-            background: #f5f5f5;
+            background: #f9f9f9;
+            padding: 25px;
             border-radius: 8px;
+            border-left: 4px solid #6b4c9a;
         }
 
         .module-category h3 {
-            color: #1e3c72;
-            font-size: 16px;
+            color: #6b4c9a;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
+            font-size: 18px;
         }
 
         .module-category ul {
@@ -310,30 +317,54 @@
         .module-category li {
             padding: 8px 0;
             color: #666;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .module-category li:before {
-            content: "✓";
-            color: #4caf50;
+        .module-category li:last-child {
+            border-bottom: none;
+        }
+
+        .module-category li::before {
+            content: '✓ ';
+            color: #6b4c9a;
             font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .tech-note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+
+        .tech-note h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .tech-note p {
+            color: #555;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .tech-note code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d32f2f;
         }
 
         @media (max-width: 768px) {
-            .journeys-grid {
-                grid-template-columns: 1fr;
-            }
-
             .header h1 {
                 font-size: 32px;
             }
 
-            .journey-meta {
-                flex-direction: column;
-                gap: 10px;
+            .journeys-grid {
+                grid-template-columns: 1fr;
             }
 
             .module-categories {
@@ -346,33 +377,43 @@
     <div class="container">
         <div class="header">
             <div class="logo">EVELYN PARTNERS</div>
-            <h1>Client Onboarding Journeys</h1>
-            <p class="subtitle">Select the appropriate journey for your client</p>
+            <h1>Client Journey Portal</h1>
+            <p class="subtitle">Select your journey to begin</p>
         </div>
 
         <div class="intro-box">
-            <h2>Welcome to Digital Onboarding</h2>
-            <p>Choose the appropriate journey below based on your client's needs. Each journey includes only the necessary modules for that specific scenario.</p>
-            <p><strong>New Feature:</strong> Toggle between Individual and Joint applications for each journey type.</p>
+            <h2>Welcome to the Modular Form System</h2>
+            <p>Our unified form system allows you to complete any combination of information modules based on your specific needs. Each journey below is pre-configured with the most relevant modules for that process.</p>
+            <p>All forms support both <strong>individual</strong> and <strong>joint applications</strong> with automatic field duplication and proper GDPR compliance.</p>
+            <div class="highlight">
+                <strong>✨ New Features:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Real-time progress tracking</li>
+                    <li>Conditional field logic</li>
+                    <li>Digital signature capture</li>
+                    <li>URL parameter pre-population for n8n integration</li>
+                    <li>Mobile-responsive design</li>
+                </ul>
+            </div>
         </div>
 
         <div class="journeys-grid">
-            <!-- Journey 1: Full KYC Onboarding -->
+            <!-- Journey 1: Full Client Onboarding -->
             <div class="journey-card">
                 <div class="journey-header">
                     <div class="journey-icon">📋</div>
                     <div class="journey-title">
-                        <h3>Full KYC Onboarding</h3>
+                        <h3>Full Client Onboarding</h3>
                         <span class="journey-badge comprehensive">Comprehensive • 15-20 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Complete onboarding for new clients. Includes all necessary sections for AML/KYC, FATCA, and CRS requirements.
+                    Complete onboarding process for new clients. Includes all KYC information, tax residency, US person status, and marketing preferences.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>7 Core Modules</span>
+                        <span>7 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
@@ -386,7 +427,7 @@
                         <span class="module-tag">✓ Contact Details</span>
                         <span class="module-tag">✓ Previous Address</span>
                         <span class="module-tag">✓ Tax Residency</span>
-                        <span class="module-tag">✓ US Person Status</span>
+                        <span class="module-tag">✓ US Person</span>
                         <span class="module-tag">✓ Marketing</span>
                         <span class="module-tag">✓ Declaration</span>
                     </div>
@@ -405,40 +446,39 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey1')">
-                    Start Full KYC →
+                    Start Full Onboarding →
                 </button>
             </div>
 
-            <!-- Journey 2: Full AML Compliance -->
+            <!-- Journey 2: Basic Client Onboarding -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">🔍</div>
+                    <div class="journey-icon">📝</div>
                     <div class="journey-title">
-                        <h3>Full AML Compliance Check</h3>
-                        <span class="journey-badge comprehensive">Comprehensive • 20-25 mins</span>
+                        <h3>Basic Client Onboarding</h3>
+                        <span class="journey-badge standard">Standard • 8-10 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Complete AML assessment including source of wealth, source of funds, PEP screening, and jurisdiction risk evaluation.
+                    Streamlined onboarding for clients without complex tax situations. Essential information only.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>5 AML Modules</span>
+                        <span>4 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>20-25 mins</span>
+                        <span>8-10 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
                     <h4>Included Modules:</h4>
                     <div class="module-tags">
-                        <span class="module-tag">✓ Source of Wealth</span>
-                        <span class="module-tag">✓ Source of Funds</span>
-                        <span class="module-tag">✓ PEP Check</span>
-                        <span class="module-tag">✓ High-Risk Business</span>
-                        <span class="module-tag">✓ Jurisdiction Risk</span>
+                        <span class="module-tag">✓ Customer ID</span>
+                        <span class="module-tag">✓ Contact Details</span>
+                        <span class="module-tag">✓ Marketing</span>
+                        <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
@@ -455,30 +495,30 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey2')">
-                    Start AML Check →
+                    Start Basic Onboarding →
                 </button>
             </div>
 
-            <!-- Journey 3: Complete Onboarding (KYC + AML) -->
+            <!-- Journey 3: Address Change -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">🎯</div>
+                    <div class="journey-icon">🏠</div>
                     <div class="journey-title">
-                        <h3>Complete Client Onboarding</h3>
-                        <span class="journey-badge comprehensive">Comprehensive • 30-40 mins</span>
+                        <h3>Address Change</h3>
+                        <span class="journey-badge quick">Quick • 5-7 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Full onboarding package combining KYC identification with complete AML compliance checks. Recommended for new high-value clients.
+                    Update your residential address details. Includes previous address history if recently moved.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>12 Modules</span>
+                        <span>4 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>30-40 mins</span>
+                        <span>5-7 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
@@ -487,14 +527,6 @@
                         <span class="module-tag">✓ Customer ID</span>
                         <span class="module-tag">✓ Contact Details</span>
                         <span class="module-tag">✓ Previous Address</span>
-                        <span class="module-tag">✓ Tax Residency</span>
-                        <span class="module-tag">✓ US Person Status</span>
-                        <span class="module-tag">✓ Source of Wealth</span>
-                        <span class="module-tag">✓ Source of Funds</span>
-                        <span class="module-tag">✓ PEP Check</span>
-                        <span class="module-tag">✓ High-Risk Business</span>
-                        <span class="module-tag">✓ Jurisdiction Risk</span>
-                        <span class="module-tag">✓ Marketing</span>
                         <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
@@ -512,38 +544,37 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey3')">
-                    Start Complete Onboarding →
+                    Start Address Change →
                 </button>
             </div>
 
-            <!-- Journey 4: Tax Information Update -->
+            <!-- Journey 4: Contact Details Update -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">💼</div>
+                    <div class="journey-icon">📧</div>
                     <div class="journey-title">
-                        <h3>Tax Information Update</h3>
-                        <span class="journey-badge quick">Quick • 5-7 mins</span>
+                        <h3>Contact Details Update</h3>
+                        <span class="journey-badge quick">Quick • 3-5 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Annual tax compliance update for existing clients. Captures updated tax residency and US person status information.
+                    Update phone number, email, or other contact information and marketing preferences.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>4 Modules</span>
+                        <span>3 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>5-7 mins</span>
+                        <span>3-5 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
                     <h4>Included Modules:</h4>
                     <div class="module-tags">
                         <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Tax Residency</span>
-                        <span class="module-tag">✓ US Person Status</span>
+                        <span class="module-tag">✓ Contact Details</span>
                         <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
@@ -561,38 +592,39 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey4')">
-                    Start Tax Update →
+                    Start Contact Update →
                 </button>
             </div>
 
-            <!-- Journey 5: Address Change -->
+            <!-- Journey 5: Tax Information Update -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">🏠</div>
+                    <div class="journey-icon">💼</div>
                     <div class="journey-title">
-                        <h3>Address Change</h3>
-                        <span class="journey-badge quick">Quick • 3-5 mins</span>
+                        <h3>Tax Information Update</h3>
+                        <span class="journey-badge standard">Standard • 8-10 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Update address details for existing clients. Captures current and previous address information.
+                    Update tax residency, TIN, and US person status information for compliance purposes.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>3 Modules</span>
+                        <span>4 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>3-5 mins</span>
+                        <span>8-10 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
                     <h4>Included Modules:</h4>
                     <div class="module-tags">
                         <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ Previous Address</span>
+                        <span class="module-tag">✓ Tax Residency</span>
+                        <span class="module-tag">✓ US Person</span>
+                        <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
@@ -609,21 +641,21 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey5')">
-                    Start Address Change →
+                    Start Tax Update →
                 </button>
             </div>
 
-            <!-- Journey 6: Contact Details Update -->
+            <!-- Journey 6: Marketing Preferences -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">📱</div>
+                    <div class="journey-icon">📢</div>
                     <div class="journey-title">
-                        <h3>Contact Details Update</h3>
-                        <span class="journey-badge quick">Quick • 2-3 mins</span>
+                        <h3>Marketing Preferences</h3>
+                        <span class="journey-badge quick">Quick • 3-5 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Quick update of phone, email, and marketing preferences for existing clients.
+                    Update your communication preferences and marketing consent settings.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
@@ -632,15 +664,15 @@
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>2-3 mins</span>
+                        <span>3-5 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
                     <h4>Included Modules:</h4>
                     <div class="module-tags">
                         <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
                         <span class="module-tag">✓ Marketing</span>
+                        <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
@@ -657,36 +689,39 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey6')">
-                    Start Contact Update →
+                    Start Marketing Update →
                 </button>
             </div>
 
-            <!-- Journey 7: Source of Wealth Declaration -->
+            <!-- Journey 7: US Person Declaration -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">💎</div>
+                    <div class="journey-icon">🇺🇸</div>
                     <div class="journey-title">
-                        <h3>Source of Wealth Declaration</h3>
-                        <span class="journey-badge standard">Standard • 10-15 mins</span>
+                        <h3>US Person Declaration</h3>
+                        <span class="journey-badge standard">Standard • 5-7 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Comprehensive wealth origin assessment for AML compliance. Captures all sources contributing to overall wealth.
+                    FATCA compliance form for US persons. Required for tax reporting purposes.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>1 Module</span>
+                        <span>4 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>10-15 mins</span>
+                        <span>5-7 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
                     <h4>Included Modules:</h4>
                     <div class="module-tags">
-                        <span class="module-tag">✓ Source of Wealth</span>
+                        <span class="module-tag">✓ Customer ID</span>
+                        <span class="module-tag">✓ Contact Details</span>
+                        <span class="module-tag">✓ US Person</span>
+                        <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
@@ -703,36 +738,41 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey7')">
-                    Start Wealth Declaration →
+                    Start US Declaration →
                 </button>
             </div>
 
-            <!-- Journey 8: PEP Screening -->
+            <!-- Journey 8: Annual Review -->
             <div class="journey-card">
                 <div class="journey-header">
-                    <div class="journey-icon">🏛️</div>
+                    <div class="journey-icon">📅</div>
                     <div class="journey-title">
-                        <h3>PEP Screening</h3>
-                        <span class="journey-badge standard">Standard • 5-10 mins</span>
+                        <h3>Annual Review Update</h3>
+                        <span class="journey-badge comprehensive">Comprehensive • 12-15 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Politically Exposed Person check with automatic risk rating. Required for enhanced due diligence.
+                    Comprehensive annual review of client information and preferences. Excludes initial address history.
                 </p>
                 <div class="journey-meta">
                     <div class="meta-item">
                         <span class="meta-icon">📊</span>
-                        <span>1 Module</span>
+                        <span>6 Modules</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-icon">⏱️</span>
-                        <span>5-10 mins</span>
+                        <span>12-15 mins</span>
                     </div>
                 </div>
                 <div class="modules-list">
                     <h4>Included Modules:</h4>
                     <div class="module-tags">
-                        <span class="module-tag">✓ PEP Check</span>
+                        <span class="module-tag">✓ Customer ID</span>
+                        <span class="module-tag">✓ Contact Details</span>
+                        <span class="module-tag">✓ Tax Residency</span>
+                        <span class="module-tag">✓ US Person</span>
+                        <span class="module-tag">✓ Marketing</span>
+                        <span class="module-tag">✓ Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
@@ -749,7 +789,7 @@
                     </div>
                 </div>
                 <button class="journey-button" onclick="startJourney('journey8')">
-                    Start PEP Screening →
+                    Start Annual Review →
                 </button>
             </div>
         </div>
@@ -771,81 +811,118 @@
                     </ul>
                 </div>
                 <div class="module-category">
-                    <h3>AML/Compliance Modules</h3>
+                    <h3>System Features</h3>
                     <ul>
-                        <li>Source of Wealth</li>
-                        <li>Source of Funds</li>
-                        <li>PEP Check</li>
-                        <li>High-Risk Business Activity</li>
-                        <li>Jurisdiction Risk</li>
+                        <li>Individual/Joint Applications</li>
+                        <li>Conditional Field Logic</li>
+                        <li>Real-time Progress Tracking</li>
+                        <li>Digital Signatures</li>
+                        <li>URL Pre-population</li>
+                        <li>Mobile Responsive</li>
+                        <li>n8n Integration Ready</li>
                     </ul>
                 </div>
                 <div class="module-category">
                     <h3>Coming Soon</h3>
                     <ul>
-                        <li>Investment Knowledge & Experience</li>
-                        <li>Oxford Risk Questionnaire</li>
-                        <li>Vulnerable Clients Assessment</li>
+                        <li>Source of Wealth</li>
+                        <li>Source of Funds</li>
+                        <li>PEP Check</li>
+                        <li>Investment Knowledge</li>
+                        <li>Risk Questionnaire</li>
                         <li>Employment Details</li>
-                        <li>Dependants</li>
-                        <li>Lifestyle/Health</li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="tech-note">
+                <h4>🔧 Technical Integration</h4>
+                <p>All forms support URL parameter pre-population for n8n workflows. Example format:</p>
+                <p><code>form.html?firstName=John&email=john@example.com&firstName_customer2=Jane</code></p>
+                <p>Joint applications are automatically detected when <code>_customer2</code> parameters are present.</p>
+                <p>All fields use standardized naming: <code>fieldName</code> for primary applicant, <code>fieldName_customer2</code> for joint applicant.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Journey configurations
+        // Journey configurations - maps to formConfig.modules in unified-modular-form-revised.html
         const journeyConfigs = {
             journey1: {
-                name: 'Full KYC Onboarding',
-                modules: 'customer-identification,contact-details,previous-address,tax-residency,us-person,marketing,declaration'
+                name: 'Full Client Onboarding',
+                modules: [
+                    'customerIdentification',
+                    'contactDetails',
+                    'previousAddress',
+                    'taxResidency',
+                    'usPersonStatus',
+                    'marketingPreferences',
+                    'declaration'
+                ]
             },
             journey2: {
-                name: 'Full AML Compliance Check',
-                modules: 'source-of-wealth,source-of-funds,pep-check,high-risk-business,jurisdiction-risk'
+                name: 'Basic Client Onboarding',
+                modules: [
+                    'customerIdentification',
+                    'contactDetails',
+                    'marketingPreferences',
+                    'declaration'
+                ]
             },
             journey3: {
-                name: 'Complete Client Onboarding',
-                modules: 'customer-identification,contact-details,previous-address,tax-residency,us-person,source-of-wealth,source-of-funds,pep-check,high-risk-business,jurisdiction-risk,marketing,declaration'
+                name: 'Address Change',
+                modules: [
+                    'customerIdentification',
+                    'contactDetails',
+                    'previousAddress',
+                    'declaration'
+                ]
             },
             journey4: {
-                name: 'Tax Information Update',
-                modules: 'customer-identification,tax-residency,us-person,declaration'
+                name: 'Contact Details Update',
+                modules: [
+                    'customerIdentification',
+                    'contactDetails',
+                    'declaration'
+                ]
             },
             journey5: {
-                name: 'Address Change',
-                modules: 'customer-identification,contact-details,previous-address'
+                name: 'Tax Information Update',
+                modules: [
+                    'customerIdentification',
+                    'taxResidency',
+                    'usPersonStatus',
+                    'declaration'
+                ]
             },
             journey6: {
-                name: 'Contact Details Update',
-                modules: 'customer-identification,contact-details,marketing'
+                name: 'Marketing Preferences',
+                modules: [
+                    'customerIdentification',
+                    'marketingPreferences',
+                    'declaration'
+                ]
             },
             journey7: {
-                name: 'Source of Wealth Declaration',
-                modules: 'source-of-wealth'
+                name: 'US Person Declaration',
+                modules: [
+                    'customerIdentification',
+                    'contactDetails',
+                    'usPersonStatus',
+                    'declaration'
+                ]
             },
             journey8: {
-                name: 'PEP Screening',
-                modules: 'pep-check'
+                name: 'Annual Review Update',
+                modules: [
+                    'customerIdentification',
+                    'contactDetails',
+                    'taxResidency',
+                    'usPersonStatus',
+                    'marketingPreferences',
+                    'declaration'
+                ]
             }
-        };
-
-        // Module URL mapping
-        const moduleUrls = {
-            'source-of-wealth': 'module_source_of_wealth.html',
-            'source-of-funds': 'module_source_of_funds.html',
-            'pep-check': 'module_pep_check.html',
-            'high-risk-business': 'module_high_risk_business.html',
-            'jurisdiction-risk': 'module_jurisdiction_risk.html',
-            'customer-identification': 'module_customer_identification.html',
-            'contact-details': 'module_contact_details.html',
-            'previous-address': 'module_previous_address.html',
-            'tax-residency': 'module_tax_residency.html',
-            'us-person': 'module_us_person.html',
-            'marketing': 'module_marketing.html',
-            'declaration': 'module_declaration.html'
         };
 
         function startJourney(journeyId) {
@@ -853,29 +930,66 @@
             const applicationType = document.querySelector(`input[name="${journeyId}_type"]:checked`).value;
             const isJoint = applicationType === 'joint';
             
-            // Get the first module
-            const modules = config.modules.split(',');
-            const firstModule = modules[0];
-            const moduleUrl = moduleUrls[firstModule];
+            // Build URL to unified form
+            let url = 'unified-modular-form-revised.html';
             
-            if (!moduleUrl) {
-                alert('This module is not yet available. Please check back soon!');
-                return;
-            }
+            // Add journey name as URL parameter
+            url += '?journey=' + encodeURIComponent(config.name);
             
-            // Build URL with parameters
-            let url = moduleUrl + '?journey=' + encodeURIComponent(config.name);
+            // Add modules configuration
+            url += '&modules=' + encodeURIComponent(JSON.stringify(config.modules));
             
+            // If joint application, add a dummy customer2 parameter to trigger joint mode
             if (isJoint) {
-                url += '&joint=true';
+                url += '&_joint=true';
             }
             
-            // Add all modules to URL for reference
-            url += '&modules=' + encodeURIComponent(config.modules);
-            
-            // Navigate to the form
+            // Navigate to the unified form
             window.location.href = url;
         }
+
+        // Optional: Test URL generation
+        function generateTestURL(journeyId) {
+            const config = journeyConfigs[journeyId];
+            
+            // Example pre-populated data
+            const testData = {
+                // Journey info
+                journey: config.name,
+                modules: JSON.stringify(config.modules),
+                
+                // Customer 1 sample data
+                title: 'Mr',
+                firstName: 'John',
+                surname: 'Smith',
+                dateOfBirth: '1980-05-15',
+                nationalInsurance: 'AB123456C',
+                addressLine1: '123 High Street',
+                city: 'London',
+                postcode: 'SW1A 1AA',
+                country: 'United Kingdom',
+                phoneNumber: '07700900123',
+                email: 'john.smith@example.com',
+                
+                // Customer 2 sample data (for joint)
+                title_customer2: 'Mrs',
+                firstName_customer2: 'Jane',
+                surname_customer2: 'Smith',
+                dateOfBirth_customer2: '1982-08-20',
+                nationalInsurance_customer2: 'CD789012E',
+                phoneNumber_customer2: '07700900456',
+                email_customer2: 'jane.smith@example.com'
+            };
+            
+            const params = new URLSearchParams(testData);
+            const testURL = 'unified-modular-form-revised.html?' + params.toString();
+            
+            console.log('Test URL for ' + config.name + ':', testURL);
+            return testURL;
+        }
+
+        // Expose for testing in console
+        window.generateTestURL = generateTestURL;
     </script>
 </body>
 </html>

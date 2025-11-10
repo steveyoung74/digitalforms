@@ -528,8 +528,8 @@
     </div>
 
     <script>
-        // Configuration
-        const formConfig = {
+        // Configuration - will be overridden by URL parameters if present
+        let formConfig = {
             journeyType: 'New Client Onboarding',
             isJointApplication: false, // Will be detected from URL params
             modules: [
@@ -542,6 +542,32 @@
                 'declaration'
             ]
         };
+
+        // Read configuration from URL parameters
+        function loadConfigFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Get journey name
+            if (params.has('journey')) {
+                formConfig.journeyType = decodeURIComponent(params.get('journey'));
+            }
+            
+            // Get modules array
+            if (params.has('modules')) {
+                try {
+                    const modulesParam = decodeURIComponent(params.get('modules'));
+                    const modulesArray = JSON.parse(modulesParam);
+                    if (Array.isArray(modulesArray) && modulesArray.length > 0) {
+                        formConfig.modules = modulesArray;
+                    }
+                } catch (e) {
+                    console.error('Error parsing modules parameter:', e);
+                }
+            }
+        }
+
+        // Call before initialization
+        loadConfigFromURL();
 
         // Module Definitions
         const moduleDefinitions = {
