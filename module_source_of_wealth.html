@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source of Wealth - Evelyn Partners</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .applicant-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-primary {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-joint {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            color: #1565c0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .wealth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .wealth-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .wealth-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .wealth-table tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .wealth-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .wealth-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .wealth-table td {
+            padding: 15px;
+        }
+
+        .wealth-category {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #d32f2f;
+            margin-left: 3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .form-group input.error,
+        .form-group select.error,
+        .form-group textarea.error {
+            border-color: #d32f2f;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 11px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .wealth-input-cell {
+            min-width: 150px;
+        }
+
+        .wealth-description-cell {
+            min-width: 250px;
+        }
+
+        .wealth-amount-cell {
+            min-width: 120px;
+        }
+
+        .total-row {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .total-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        .additional-source {
+            background: #fafafa;
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .additional-source-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .additional-source-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+
+        .add-source-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-source-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        @media (max-width: 768px) {
+            .form-content {
+                padding: 25px;
+            }
+
+            .wealth-table {
+                font-size: 13px;
+            }
+
+            .wealth-table th,
+            .wealth-table td {
+                padding: 10px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Source of Wealth Declaration</h1>
+            <p>Anti-Money Laundering Compliance | Overall Wealth Origin Assessment</p>
+        </div>
+
+        <div class="form-content">
+            <form id="sourceOfWealthForm">
+                
+                <!-- Primary Applicant Section -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span>💎</span>
+                        <span>Source of Wealth</span>
+                        <span class="applicant-badge badge-primary">Primary Applicant</span>
+                    </h2>
+
+                    <div class="info-box">
+                        <p><strong>Purpose:</strong> This information helps us understand the origin of your overall wealth and assets, not just the immediate funds being invested.</p>
+                        <p><strong>Instructions:</strong> Please provide details of all sources that have contributed to building your current wealth. Include occupation details, time periods, and estimated annual amounts or total values.</p>
+                    </div>
+
+                    <table class="wealth-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 200px;">Wealth Source</th>
+                                <th>Description / Details</th>
+                                <th>Period</th>
+                                <th style="width: 150px;">Annual/Total Amount (£)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Salary/Earnings -->
+                            <tr>
+                                <td class="wealth-category">Salary/Earnings</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="salary_description" name="salary_description" placeholder="e.g., Senior Manager at ABC Ltd">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="salary_period" name="salary_period" placeholder="e.g., 2010-Present">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="salary_amount" name="salary_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Investments -->
+                            <tr>
+                                <td class="wealth-category">Investments</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="investments_description" name="investments_description" placeholder="e.g., Stock market investments, property portfolio">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="investments_period" name="investments_period" placeholder="e.g., 2005-Present">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="investments_amount" name="investments_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Inheritance/Gifts -->
+                            <tr>
+                                <td class="wealth-category">Inheritance/Gifts</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="inheritance_description" name="inheritance_description" placeholder="e.g., Inheritance from parents' estate">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="inheritance_period" name="inheritance_period" placeholder="e.g., 2018">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="inheritance_amount" name="inheritance_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Sale of Business -->
+                            <tr>
+                                <td class="wealth-category">Sale of Business</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="business_description" name="business_description" placeholder="e.g., Sale of XYZ Ltd to ABC Corp">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="business_period" name="business_period" placeholder="e.g., 2020">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="business_amount" name="business_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- PI & Clinical Negligence -->
+                            <tr>
+                                <td class="wealth-category">PI & Clinical Negligence</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="pi_description" name="pi_description" placeholder="e.g., Personal injury compensation claim">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="pi_period" name="pi_period" placeholder="e.g., 2019">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="pi_amount" name="pi_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Sale of Property -->
+                            <tr>
+                                <td class="wealth-category">Sale of Property</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="property_description" name="property_description" placeholder="e.g., Sale of residential property in London">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="property_period" name="property_period" placeholder="e.g., 2021">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="property_amount" name="property_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Life Policy Maturity -->
+                            <tr>
+                                <td class="wealth-category">Life Policy Maturity</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="life_description" name="life_description" placeholder="e.g., Endowment policy matured with XYZ Insurance">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="life_period" name="life_period" placeholder="e.g., 2022">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="life_amount" name="life_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Lottery Winnings -->
+                            <tr>
+                                <td class="wealth-category">Lottery Winnings</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="lottery_description" name="lottery_description" placeholder="e.g., National Lottery win">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="lottery_period" name="lottery_period" placeholder="e.g., 2020">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="lottery_amount" name="lottery_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Divorce Settlement -->
+                            <tr>
+                                <td class="wealth-category">Divorce Settlement</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="divorce_description" name="divorce_description" placeholder="e.g., Financial settlement from divorce">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="divorce_period" name="divorce_period" placeholder="e.g., 2019">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="divorce_amount" name="divorce_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Additional Sources Container -->
+                    <div id="additionalSourcesContainer"></div>
+
+                    <button type="button" class="add-source-btn" onclick="addAdditionalSource()">
+                        <span>➕</span>
+                        <span>Add Other Source</span>
+                    </button>
+
+                    <!-- Total Row -->
+                    <div class="total-row">
+                        <span class="total-label">Total Wealth Declared:</span>
+                        <span class="total-amount" id="total_wealth">£0.00</span>
+                    </div>
+                </div>
+
+                <!-- Joint Applicant Section -->
+                <div class="section" id="jointSection" style="display: none;">
+                    <h2 class="section-title">
+                        <span>💎</span>
+                        <span>Source of Wealth</span>
+                        <span class="applicant-badge badge-joint">Joint Applicant</span>
+                    </h2>
+
+                    <div class="info-box">
+                        <p><strong>Purpose:</strong> This information helps us understand the origin of your overall wealth and assets, not just the immediate funds being invested.</p>
+                        <p><strong>Instructions:</strong> Please provide details of all sources that have contributed to building your current wealth. Include occupation details, time periods, and estimated annual amounts or total values.</p>
+                    </div>
+
+                    <table class="wealth-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 200px;">Wealth Source</th>
+                                <th>Description / Details</th>
+                                <th>Period</th>
+                                <th style="width: 150px;">Annual/Total Amount (£)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Salary/Earnings - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Salary/Earnings</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="salary_description_customer2" name="salary_description_customer2" placeholder="e.g., Senior Manager at ABC Ltd">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="salary_period_customer2" name="salary_period_customer2" placeholder="e.g., 2010-Present">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="salary_amount_customer2" name="salary_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Investments - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Investments</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="investments_description_customer2" name="investments_description_customer2" placeholder="e.g., Stock market investments, property portfolio">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="investments_period_customer2" name="investments_period_customer2" placeholder="e.g., 2005-Present">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="investments_amount_customer2" name="investments_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Inheritance/Gifts - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Inheritance/Gifts</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="inheritance_description_customer2" name="inheritance_description_customer2" placeholder="e.g., Inheritance from parents' estate">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="inheritance_period_customer2" name="inheritance_period_customer2" placeholder="e.g., 2018">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="inheritance_amount_customer2" name="inheritance_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Sale of Business - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Sale of Business</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="business_description_customer2" name="business_description_customer2" placeholder="e.g., Sale of XYZ Ltd to ABC Corp">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="business_period_customer2" name="business_period_customer2" placeholder="e.g., 2020">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="business_amount_customer2" name="business_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- PI & Clinical Negligence - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">PI & Clinical Negligence</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="pi_description_customer2" name="pi_description_customer2" placeholder="e.g., Personal injury compensation claim">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="pi_period_customer2" name="pi_period_customer2" placeholder="e.g., 2019">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="pi_amount_customer2" name="pi_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Sale of Property - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Sale of Property</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="property_description_customer2" name="property_description_customer2" placeholder="e.g., Sale of residential property in London">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="property_period_customer2" name="property_period_customer2" placeholder="e.g., 2021">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="property_amount_customer2" name="property_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Life Policy Maturity - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Life Policy Maturity</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="life_description_customer2" name="life_description_customer2" placeholder="e.g., Endowment policy matured with XYZ Insurance">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="life_period_customer2" name="life_period_customer2" placeholder="e.g., 2022">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="life_amount_customer2" name="life_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Lottery Winnings - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Lottery Winnings</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="lottery_description_customer2" name="lottery_description_customer2" placeholder="e.g., National Lottery win">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="lottery_period_customer2" name="lottery_period_customer2" placeholder="e.g., 2020">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="lottery_amount_customer2" name="lottery_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Divorce Settlement - Customer 2 -->
+                            <tr>
+                                <td class="wealth-category">Divorce Settlement</td>
+                                <td class="wealth-description-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="divorce_description_customer2" name="divorce_description_customer2" placeholder="e.g., Financial settlement from divorce">
+                                        <span class="error-message">Please provide details</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-input-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="divorce_period_customer2" name="divorce_period_customer2" placeholder="e.g., 2019">
+                                        <span class="error-message">Please provide period</span>
+                                    </div>
+                                </td>
+                                <td class="wealth-amount-cell">
+                                    <div class="form-group">
+                                        <input type="text" id="divorce_amount_customer2" name="divorce_amount_customer2" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                                        <span class="error-message">Invalid amount</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Additional Sources Container Customer 2 -->
+                    <div id="additionalSourcesContainerCustomer2"></div>
+
+                    <button type="button" class="add-source-btn" onclick="addAdditionalSourceCustomer2()">
+                        <span>➕</span>
+                        <span>Add Other Source</span>
+                    </button>
+
+                    <!-- Total Row Customer 2 -->
+                    <div class="total-row">
+                        <span class="total-label">Total Wealth Declared:</span>
+                        <span class="total-amount" id="total_wealth_customer2">£0.00</span>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">← Previous</button>
+                    <button type="submit" class="btn btn-primary">Save & Continue →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check URL parameters for joint application
+        const urlParams = new URLSearchParams(window.location.search);
+        const isJoint = urlParams.get('joint') === 'true';
+
+        if (isJoint) {
+            document.getElementById('jointSection').style.display = 'block';
+        }
+
+        // Counter for additional sources
+        let additionalSourceCounter = 0;
+        let additionalSourceCounterCustomer2 = 0;
+
+        // Add additional source for primary applicant
+        function addAdditionalSource() {
+            additionalSourceCounter++;
+            const container = document.getElementById('additionalSourcesContainer');
+            const sourceId = 'additional_' + additionalSourceCounter;
+            
+            const sourceHtml = `
+                <div class="additional-source" id="${sourceId}">
+                    <div class="additional-source-header">
+                        <span class="additional-source-title">Other Source #${additionalSourceCounter}</span>
+                        <button type="button" class="remove-btn" onclick="removeAdditionalSource('${sourceId}')">Remove</button>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Source Type <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_type" name="${sourceId}_type" placeholder="e.g., Pension, Rental Income, etc.">
+                            <span class="error-message">Please specify source type</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Period <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_period" name="${sourceId}_period" placeholder="e.g., 2015-Present">
+                            <span class="error-message">Please provide period</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Description <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_description" name="${sourceId}_description" placeholder="e.g., Rental income from buy-to-let properties">
+                            <span class="error-message">Please provide details</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Annual/Total Amount (£) <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_amount" name="${sourceId}_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotal()">
+                            <span class="error-message">Invalid amount</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', sourceHtml);
+        }
+
+        // Add additional source for joint applicant
+        function addAdditionalSourceCustomer2() {
+            additionalSourceCounterCustomer2++;
+            const container = document.getElementById('additionalSourcesContainerCustomer2');
+            const sourceId = 'additional_customer2_' + additionalSourceCounterCustomer2;
+            
+            const sourceHtml = `
+                <div class="additional-source" id="${sourceId}">
+                    <div class="additional-source-header">
+                        <span class="additional-source-title">Other Source #${additionalSourceCounterCustomer2}</span>
+                        <button type="button" class="remove-btn" onclick="removeAdditionalSourceCustomer2('${sourceId}')">Remove</button>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Source Type <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_type" name="${sourceId}_type" placeholder="e.g., Pension, Rental Income, etc.">
+                            <span class="error-message">Please specify source type</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Period <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_period" name="${sourceId}_period" placeholder="e.g., 2015-Present">
+                            <span class="error-message">Please provide period</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Description <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_description" name="${sourceId}_description" placeholder="e.g., Rental income from buy-to-let properties">
+                            <span class="error-message">Please provide details</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Annual/Total Amount (£) <span class="required">*</span></label>
+                            <input type="text" id="${sourceId}_amount" name="${sourceId}_amount" placeholder="0.00" oninput="formatCurrency(this); calculateTotalCustomer2()">
+                            <span class="error-message">Invalid amount</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', sourceHtml);
+        }
+
+        // Remove additional source
+        function removeAdditionalSource(sourceId) {
+            const element = document.getElementById(sourceId);
+            if (element) {
+                element.remove();
+                calculateTotal();
+            }
+        }
+
+        function removeAdditionalSourceCustomer2(sourceId) {
+            const element = document.getElementById(sourceId);
+            if (element) {
+                element.remove();
+                calculateTotalCustomer2();
+            }
+        }
+
+        // Format currency input
+        function formatCurrency(input) {
+            let value = input.value.replace(/[^\d.]/g, '');
+            
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            
+            if (parts.length === 2 && parts[1].length > 2) {
+                value = parts[0] + '.' + parts[1].substring(0, 2);
+            }
+            
+            input.value = value;
+        }
+
+        // Calculate total wealth for primary applicant
+        function calculateTotal() {
+            let total = 0;
+            
+            // Standard sources
+            const sources = ['salary', 'investments', 'inheritance', 'business', 'pi', 'property', 'life', 'lottery', 'divorce'];
+            sources.forEach(source => {
+                const amountField = document.getElementById(source + '_amount');
+                if (amountField && amountField.value) {
+                    const amount = parseFloat(amountField.value.replace(/[^\d.]/g, ''));
+                    if (!isNaN(amount)) {
+                        total += amount;
+                    }
+                }
+            });
+            
+            // Additional sources
+            for (let i = 1; i <= additionalSourceCounter; i++) {
+                const amountField = document.getElementById('additional_' + i + '_amount');
+                if (amountField && amountField.value) {
+                    const amount = parseFloat(amountField.value.replace(/[^\d.]/g, ''));
+                    if (!isNaN(amount)) {
+                        total += amount;
+                    }
+                }
+            }
+            
+            document.getElementById('total_wealth').textContent = '£' + total.toLocaleString('en-GB', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Calculate total wealth for joint applicant
+        function calculateTotalCustomer2() {
+            let total = 0;
+            
+            // Standard sources
+            const sources = ['salary', 'investments', 'inheritance', 'business', 'pi', 'property', 'life', 'lottery', 'divorce'];
+            sources.forEach(source => {
+                const amountField = document.getElementById(source + '_amount_customer2');
+                if (amountField && amountField.value) {
+                    const amount = parseFloat(amountField.value.replace(/[^\d.]/g, ''));
+                    if (!isNaN(amount)) {
+                        total += amount;
+                    }
+                }
+            });
+            
+            // Additional sources
+            for (let i = 1; i <= additionalSourceCounterCustomer2; i++) {
+                const amountField = document.getElementById('additional_customer2_' + i + '_amount');
+                if (amountField && amountField.value) {
+                    const amount = parseFloat(amountField.value.replace(/[^\d.]/g, ''));
+                    if (!isNaN(amount)) {
+                        total += amount;
+                    }
+                }
+            }
+            
+            document.getElementById('total_wealth_customer2').textContent = '£' + total.toLocaleString('en-GB', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Form validation
+        document.getElementById('sourceOfWealthForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            let hasAtLeastOneSource = false;
+
+            // Helper function to validate a row
+            function validateRow(prefix, suffix = '') {
+                const descField = document.getElementById(prefix + '_description' + suffix);
+                const periodField = document.getElementById(prefix + '_period' + suffix);
+                const amountField = document.getElementById(prefix + '_amount' + suffix);
+                
+                // Check if any field has a value
+                const hasDesc = descField && descField.value.trim();
+                const hasPeriod = periodField && periodField.value.trim();
+                const hasAmount = amountField && amountField.value.trim();
+                
+                if (hasDesc || hasPeriod || hasAmount) {
+                    hasAtLeastOneSource = true;
+                    
+                    // If one field is filled, all must be filled
+                    if (!hasDesc) {
+                        descField.classList.add('error');
+                        descField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        descField.classList.remove('error');
+                        descField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                    
+                    if (!hasPeriod) {
+                        periodField.classList.add('error');
+                        periodField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        periodField.classList.remove('error');
+                        periodField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                    
+                    const amount = parseFloat((amountField.value || '').replace(/[^\d.]/g, ''));
+                    if (!hasAmount || isNaN(amount) || amount <= 0) {
+                        amountField.classList.add('error');
+                        amountField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        amountField.classList.remove('error');
+                        amountField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                }
+            }
+            
+            // Validate primary applicant standard sources
+            const sources = ['salary', 'investments', 'inheritance', 'business', 'pi', 'property', 'life', 'lottery', 'divorce'];
+            sources.forEach(source => validateRow(source));
+            
+            // Validate primary applicant additional sources
+            for (let i = 1; i <= additionalSourceCounter; i++) {
+                const sourceId = 'additional_' + i;
+                const typeField = document.getElementById(sourceId + '_type');
+                const descField = document.getElementById(sourceId + '_description');
+                const periodField = document.getElementById(sourceId + '_period');
+                const amountField = document.getElementById(sourceId + '_amount');
+                
+                if (!typeField.value.trim()) {
+                    typeField.classList.add('error');
+                    typeField.parentElement.querySelector('.error-message').classList.add('show');
+                    isValid = false;
+                } else {
+                    typeField.classList.remove('error');
+                    typeField.parentElement.querySelector('.error-message').classList.remove('show');
+                }
+                
+                if (!descField.value.trim()) {
+                    descField.classList.add('error');
+                    descField.parentElement.querySelector('.error-message').classList.add('show');
+                    isValid = false;
+                } else {
+                    descField.classList.remove('error');
+                    descField.parentElement.querySelector('.error-message').classList.remove('show');
+                }
+                
+                if (!periodField.value.trim()) {
+                    periodField.classList.add('error');
+                    periodField.parentElement.querySelector('.error-message').classList.add('show');
+                    isValid = false;
+                } else {
+                    periodField.classList.remove('error');
+                    periodField.parentElement.querySelector('.error-message').classList.remove('show');
+                }
+                
+                const amount = parseFloat(amountField.value.replace(/[^\d.]/g, ''));
+                if (!amountField.value || isNaN(amount) || amount <= 0) {
+                    amountField.classList.add('error');
+                    amountField.parentElement.querySelector('.error-message').classList.add('show');
+                    isValid = false;
+                } else {
+                    amountField.classList.remove('error');
+                    amountField.parentElement.querySelector('.error-message').classList.remove('show');
+                }
+                
+                hasAtLeastOneSource = true;
+            }
+            
+            if (!hasAtLeastOneSource) {
+                alert('Please declare at least one source of wealth for the primary applicant.');
+                isValid = false;
+            }
+            
+            // Validate joint applicant if applicable
+            if (isJoint) {
+                let hasJointSource = false;
+                
+                sources.forEach(source => {
+                    const descField = document.getElementById(source + '_description_customer2');
+                    const periodField = document.getElementById(source + '_period_customer2');
+                    const amountField = document.getElementById(source + '_amount_customer2');
+                    
+                    const hasDesc = descField && descField.value.trim();
+                    const hasPeriod = periodField && periodField.value.trim();
+                    const hasAmount = amountField && amountField.value.trim();
+                    
+                    if (hasDesc || hasPeriod || hasAmount) {
+                        hasJointSource = true;
+                        
+                        if (!hasDesc) {
+                            descField.classList.add('error');
+                            descField.parentElement.querySelector('.error-message').classList.add('show');
+                            isValid = false;
+                        } else {
+                            descField.classList.remove('error');
+                            descField.parentElement.querySelector('.error-message').classList.remove('show');
+                        }
+                        
+                        if (!hasPeriod) {
+                            periodField.classList.add('error');
+                            periodField.parentElement.querySelector('.error-message').classList.add('show');
+                            isValid = false;
+                        } else {
+                            periodField.classList.remove('error');
+                            periodField.parentElement.querySelector('.error-message').classList.remove('show');
+                        }
+                        
+                        const amount = parseFloat((amountField.value || '').replace(/[^\d.]/g, ''));
+                        if (!hasAmount || isNaN(amount) || amount <= 0) {
+                            amountField.classList.add('error');
+                            amountField.parentElement.querySelector('.error-message').classList.add('show');
+                            isValid = false;
+                        } else {
+                            amountField.classList.remove('error');
+                            amountField.parentElement.querySelector('.error-message').classList.remove('show');
+                        }
+                    }
+                });
+                
+                // Validate joint applicant additional sources
+                for (let i = 1; i <= additionalSourceCounterCustomer2; i++) {
+                    const sourceId = 'additional_customer2_' + i;
+                    const typeField = document.getElementById(sourceId + '_type');
+                    const descField = document.getElementById(sourceId + '_description');
+                    const periodField = document.getElementById(sourceId + '_period');
+                    const amountField = document.getElementById(sourceId + '_amount');
+                    
+                    if (!typeField.value.trim()) {
+                        typeField.classList.add('error');
+                        typeField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        typeField.classList.remove('error');
+                        typeField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                    
+                    if (!descField.value.trim()) {
+                        descField.classList.add('error');
+                        descField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        descField.classList.remove('error');
+                        descField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                    
+                    if (!periodField.value.trim()) {
+                        periodField.classList.add('error');
+                        periodField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        periodField.classList.remove('error');
+                        periodField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                    
+                    const amount = parseFloat(amountField.value.replace(/[^\d.]/g, ''));
+                    if (!amountField.value || isNaN(amount) || amount <= 0) {
+                        amountField.classList.add('error');
+                        amountField.parentElement.querySelector('.error-message').classList.add('show');
+                        isValid = false;
+                    } else {
+                        amountField.classList.remove('error');
+                        amountField.parentElement.querySelector('.error-message').classList.remove('show');
+                    }
+                    
+                    hasJointSource = true;
+                }
+                
+                if (!hasJointSource) {
+                    alert('Please declare at least one source of wealth for the joint applicant.');
+                    isValid = false;
+                }
+            }
+            
+            if (isValid) {
+                alert('Form validated successfully! Data would be submitted here.');
+                console.log('Form data:', new FormData(this));
+            } else {
+                alert('Please correct the errors highlighted in red.');
+            }
+        });
+
+        // Auto-populate from URL parameters (for n8n integration)
+        window.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            params.forEach((value, key) => {
+                const field = document.getElementById(key);
+                if (field) {
+                    field.value = decodeURIComponent(value);
+                }
+            });
+            
+            // Recalculate totals after auto-population
+            calculateTotal();
+            if (isJoint) {
+                calculateTotalCustomer2();
+            }
+        });
+    </script>
+</body>
+</html>
