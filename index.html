@@ -85,11 +85,30 @@
             color: #6b4c9a;
         }
 
+        .category-header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .category-header h2 {
+            color: #6b4c9a;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .category-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
         .journeys-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .journey-card {
@@ -331,33 +350,6 @@
             margin-right: 8px;
         }
 
-        .tech-note {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
-        }
-
-        .tech-note h4 {
-            color: #1976d2;
-            margin-bottom: 10px;
-        }
-
-        .tech-note p {
-            color: #555;
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-
-        .tech-note code {
-            background: #fff;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #d32f2f;
-        }
-
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 32px;
@@ -378,27 +370,35 @@
         <div class="header">
             <div class="logo">EVELYN PARTNERS</div>
             <h1>Client Journey Portal</h1>
-            <p class="subtitle">Select your journey to begin</p>
+            <p class="subtitle">Complete Modular Form System - 18 Modules Available</p>
         </div>
 
         <div class="intro-box">
-            <h2>Welcome to the Modular Form System</h2>
-            <p>Our unified form system allows you to complete any combination of information modules based on your specific needs. Each journey below is pre-configured with the most relevant modules for that process.</p>
+            <h2>Welcome to the Complete Modular Form System</h2>
+            <p>Our system now includes <strong>18 modules</strong> covering all aspects of client onboarding, compliance, and data collection. Mix and match any combination based on your specific needs.</p>
             <p>All forms support both <strong>individual</strong> and <strong>joint applications</strong> with automatic field duplication and proper GDPR compliance.</p>
             <div class="highlight">
-                <strong>✨ New Features:</strong>
+                <strong>✨ System Features:</strong>
                 <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>18 fully integrated modules</li>
                     <li>Real-time progress tracking</li>
-                    <li>Conditional field logic</li>
+                    <li>Conditional field logic throughout</li>
                     <li>Digital signature capture</li>
-                    <li>URL parameter pre-population for n8n integration</li>
+                    <li>n8n integration ready with URL pre-population</li>
                     <li>Mobile-responsive design</li>
+                    <li>Zero dependencies - pure HTML/CSS/JavaScript</li>
                 </ul>
             </div>
         </div>
 
+        <!-- KYC JOURNEYS -->
+        <div class="category-header">
+            <h2>📋 KYC & Onboarding Journeys</h2>
+            <p>Standard client onboarding and information collection</p>
+        </div>
+
         <div class="journeys-grid">
-            <!-- Journey 1: Full Client Onboarding -->
+            <!-- Journey 1 -->
             <div class="journey-card">
                 <div class="journey-header">
                     <div class="journey-icon">📋</div>
@@ -408,49 +408,41 @@
                     </div>
                 </div>
                 <p class="journey-description">
-                    Complete onboarding process for new clients. Includes all KYC information, tax residency, US person status, and marketing preferences.
+                    Complete onboarding with all KYC requirements including tax, US person status, and preferences.
                 </p>
                 <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>7 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>15-20 mins</span>
-                    </div>
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>7 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>15-20 mins</span></div>
                 </div>
                 <div class="modules-list">
-                    <h4>Included Modules:</h4>
+                    <h4>Modules:</h4>
                     <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ Previous Address</span>
-                        <span class="module-tag">✓ Tax Residency</span>
-                        <span class="module-tag">✓ US Person</span>
-                        <span class="module-tag">✓ Marketing</span>
-                        <span class="module-tag">✓ Declaration</span>
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Contact</span>
+                        <span class="module-tag">Previous Address</span>
+                        <span class="module-tag">Tax</span>
+                        <span class="module-tag">US Person</span>
+                        <span class="module-tag">Marketing</span>
+                        <span class="module-tag">Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
                     <label>Application Type:</label>
                     <div class="toggle-switch">
                         <div class="toggle-option">
-                            <input type="radio" name="journey1_type" id="journey1_individual" value="individual" checked>
-                            <label for="journey1_individual" class="toggle-label">Individual</label>
+                            <input type="radio" name="j1_type" id="j1_ind" value="individual" checked>
+                            <label for="j1_ind" class="toggle-label">Individual</label>
                         </div>
                         <div class="toggle-option">
-                            <input type="radio" name="journey1_type" id="journey1_joint" value="joint">
-                            <label for="journey1_joint" class="toggle-label">Joint</label>
+                            <input type="radio" name="j1_type" id="j1_joint" value="joint">
+                            <label for="j1_joint" class="toggle-label">Joint</label>
                         </div>
                     </div>
                 </div>
-                <button class="journey-button" onclick="startJourney('journey1')">
-                    Start Full Onboarding →
-                </button>
+                <button class="journey-button" onclick="startJourney('j1')">Start Full Onboarding →</button>
             </div>
 
-            <!-- Journey 2: Basic Client Onboarding -->
+            <!-- Journey 2 -->
             <div class="journey-card">
                 <div class="journey-header">
                     <div class="journey-icon">📝</div>
@@ -460,346 +452,361 @@
                     </div>
                 </div>
                 <p class="journey-description">
-                    Streamlined onboarding for clients without complex tax situations. Essential information only.
+                    Streamlined onboarding for straightforward client situations.
                 </p>
                 <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>4 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>8-10 mins</span>
-                    </div>
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>4 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>8-10 mins</span></div>
                 </div>
                 <div class="modules-list">
-                    <h4>Included Modules:</h4>
+                    <h4>Modules:</h4>
                     <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ Marketing</span>
-                        <span class="module-tag">✓ Declaration</span>
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Contact</span>
+                        <span class="module-tag">Marketing</span>
+                        <span class="module-tag">Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
                     <label>Application Type:</label>
                     <div class="toggle-switch">
                         <div class="toggle-option">
-                            <input type="radio" name="journey2_type" id="journey2_individual" value="individual" checked>
-                            <label for="journey2_individual" class="toggle-label">Individual</label>
+                            <input type="radio" name="j2_type" id="j2_ind" value="individual" checked>
+                            <label for="j2_ind" class="toggle-label">Individual</label>
                         </div>
                         <div class="toggle-option">
-                            <input type="radio" name="journey2_type" id="journey2_joint" value="joint">
-                            <label for="journey2_joint" class="toggle-label">Joint</label>
+                            <input type="radio" name="j2_type" id="j2_joint" value="joint">
+                            <label for="j2_joint" class="toggle-label">Joint</label>
                         </div>
                     </div>
                 </div>
-                <button class="journey-button" onclick="startJourney('journey2')">
-                    Start Basic Onboarding →
-                </button>
+                <button class="journey-button" onclick="startJourney('j2')">Start Basic Onboarding →</button>
             </div>
 
-            <!-- Journey 3: Address Change -->
-            <div class="journey-card">
-                <div class="journey-header">
-                    <div class="journey-icon">🏠</div>
-                    <div class="journey-title">
-                        <h3>Address Change</h3>
-                        <span class="journey-badge quick">Quick • 5-7 mins</span>
-                    </div>
-                </div>
-                <p class="journey-description">
-                    Update your residential address details. Includes previous address history if recently moved.
-                </p>
-                <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>4 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>5-7 mins</span>
-                    </div>
-                </div>
-                <div class="modules-list">
-                    <h4>Included Modules:</h4>
-                    <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ Previous Address</span>
-                        <span class="module-tag">✓ Declaration</span>
-                    </div>
-                </div>
-                <div class="application-type-selector">
-                    <label>Application Type:</label>
-                    <div class="toggle-switch">
-                        <div class="toggle-option">
-                            <input type="radio" name="journey3_type" id="journey3_individual" value="individual" checked>
-                            <label for="journey3_individual" class="toggle-label">Individual</label>
-                        </div>
-                        <div class="toggle-option">
-                            <input type="radio" name="journey3_type" id="journey3_joint" value="joint">
-                            <label for="journey3_joint" class="toggle-label">Joint</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="journey-button" onclick="startJourney('journey3')">
-                    Start Address Change →
-                </button>
-            </div>
-
-            <!-- Journey 4: Contact Details Update -->
-            <div class="journey-card">
-                <div class="journey-header">
-                    <div class="journey-icon">📧</div>
-                    <div class="journey-title">
-                        <h3>Contact Details Update</h3>
-                        <span class="journey-badge quick">Quick • 3-5 mins</span>
-                    </div>
-                </div>
-                <p class="journey-description">
-                    Update phone number, email, or other contact information and marketing preferences.
-                </p>
-                <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>3 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>3-5 mins</span>
-                    </div>
-                </div>
-                <div class="modules-list">
-                    <h4>Included Modules:</h4>
-                    <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ Declaration</span>
-                    </div>
-                </div>
-                <div class="application-type-selector">
-                    <label>Application Type:</label>
-                    <div class="toggle-switch">
-                        <div class="toggle-option">
-                            <input type="radio" name="journey4_type" id="journey4_individual" value="individual" checked>
-                            <label for="journey4_individual" class="toggle-label">Individual</label>
-                        </div>
-                        <div class="toggle-option">
-                            <input type="radio" name="journey4_type" id="journey4_joint" value="joint">
-                            <label for="journey4_joint" class="toggle-label">Joint</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="journey-button" onclick="startJourney('journey4')">
-                    Start Contact Update →
-                </button>
-            </div>
-
-            <!-- Journey 5: Tax Information Update -->
-            <div class="journey-card">
-                <div class="journey-header">
-                    <div class="journey-icon">💼</div>
-                    <div class="journey-title">
-                        <h3>Tax Information Update</h3>
-                        <span class="journey-badge standard">Standard • 8-10 mins</span>
-                    </div>
-                </div>
-                <p class="journey-description">
-                    Update tax residency, TIN, and US person status information for compliance purposes.
-                </p>
-                <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>4 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>8-10 mins</span>
-                    </div>
-                </div>
-                <div class="modules-list">
-                    <h4>Included Modules:</h4>
-                    <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Tax Residency</span>
-                        <span class="module-tag">✓ US Person</span>
-                        <span class="module-tag">✓ Declaration</span>
-                    </div>
-                </div>
-                <div class="application-type-selector">
-                    <label>Application Type:</label>
-                    <div class="toggle-switch">
-                        <div class="toggle-option">
-                            <input type="radio" name="journey5_type" id="journey5_individual" value="individual" checked>
-                            <label for="journey5_individual" class="toggle-label">Individual</label>
-                        </div>
-                        <div class="toggle-option">
-                            <input type="radio" name="journey5_type" id="journey5_joint" value="joint">
-                            <label for="journey5_joint" class="toggle-label">Joint</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="journey-button" onclick="startJourney('journey5')">
-                    Start Tax Update →
-                </button>
-            </div>
-
-            <!-- Journey 6: Marketing Preferences -->
-            <div class="journey-card">
-                <div class="journey-header">
-                    <div class="journey-icon">📢</div>
-                    <div class="journey-title">
-                        <h3>Marketing Preferences</h3>
-                        <span class="journey-badge quick">Quick • 3-5 mins</span>
-                    </div>
-                </div>
-                <p class="journey-description">
-                    Update your communication preferences and marketing consent settings.
-                </p>
-                <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>3 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>3-5 mins</span>
-                    </div>
-                </div>
-                <div class="modules-list">
-                    <h4>Included Modules:</h4>
-                    <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Marketing</span>
-                        <span class="module-tag">✓ Declaration</span>
-                    </div>
-                </div>
-                <div class="application-type-selector">
-                    <label>Application Type:</label>
-                    <div class="toggle-switch">
-                        <div class="toggle-option">
-                            <input type="radio" name="journey6_type" id="journey6_individual" value="individual" checked>
-                            <label for="journey6_individual" class="toggle-label">Individual</label>
-                        </div>
-                        <div class="toggle-option">
-                            <input type="radio" name="journey6_type" id="journey6_joint" value="joint">
-                            <label for="journey6_joint" class="toggle-label">Joint</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="journey-button" onclick="startJourney('journey6')">
-                    Start Marketing Update →
-                </button>
-            </div>
-
-            <!-- Journey 7: US Person Declaration -->
-            <div class="journey-card">
-                <div class="journey-header">
-                    <div class="journey-icon">🇺🇸</div>
-                    <div class="journey-title">
-                        <h3>US Person Declaration</h3>
-                        <span class="journey-badge standard">Standard • 5-7 mins</span>
-                    </div>
-                </div>
-                <p class="journey-description">
-                    FATCA compliance form for US persons. Required for tax reporting purposes.
-                </p>
-                <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>4 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>5-7 mins</span>
-                    </div>
-                </div>
-                <div class="modules-list">
-                    <h4>Included Modules:</h4>
-                    <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ US Person</span>
-                        <span class="module-tag">✓ Declaration</span>
-                    </div>
-                </div>
-                <div class="application-type-selector">
-                    <label>Application Type:</label>
-                    <div class="toggle-switch">
-                        <div class="toggle-option">
-                            <input type="radio" name="journey7_type" id="journey7_individual" value="individual" checked>
-                            <label for="journey7_individual" class="toggle-label">Individual</label>
-                        </div>
-                        <div class="toggle-option">
-                            <input type="radio" name="journey7_type" id="journey7_joint" value="joint">
-                            <label for="journey7_joint" class="toggle-label">Joint</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="journey-button" onclick="startJourney('journey7')">
-                    Start US Declaration →
-                </button>
-            </div>
-
-            <!-- Journey 8: Annual Review -->
+            <!-- Journey 3 -->
             <div class="journey-card">
                 <div class="journey-header">
                     <div class="journey-icon">📅</div>
                     <div class="journey-title">
-                        <h3>Annual Review Update</h3>
+                        <h3>Annual Review</h3>
                         <span class="journey-badge comprehensive">Comprehensive • 12-15 mins</span>
                     </div>
                 </div>
                 <p class="journey-description">
-                    Comprehensive annual review of client information and preferences. Excludes initial address history.
+                    Annual client information review including all key data points.
                 </p>
                 <div class="journey-meta">
-                    <div class="meta-item">
-                        <span class="meta-icon">📊</span>
-                        <span>6 Modules</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-icon">⏱️</span>
-                        <span>12-15 mins</span>
-                    </div>
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>6 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>12-15 mins</span></div>
                 </div>
                 <div class="modules-list">
-                    <h4>Included Modules:</h4>
+                    <h4>Modules:</h4>
                     <div class="module-tags">
-                        <span class="module-tag">✓ Customer ID</span>
-                        <span class="module-tag">✓ Contact Details</span>
-                        <span class="module-tag">✓ Tax Residency</span>
-                        <span class="module-tag">✓ US Person</span>
-                        <span class="module-tag">✓ Marketing</span>
-                        <span class="module-tag">✓ Declaration</span>
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Contact</span>
+                        <span class="module-tag">Tax</span>
+                        <span class="module-tag">US Person</span>
+                        <span class="module-tag">Marketing</span>
+                        <span class="module-tag">Declaration</span>
                     </div>
                 </div>
                 <div class="application-type-selector">
                     <label>Application Type:</label>
                     <div class="toggle-switch">
                         <div class="toggle-option">
-                            <input type="radio" name="journey8_type" id="journey8_individual" value="individual" checked>
-                            <label for="journey8_individual" class="toggle-label">Individual</label>
+                            <input type="radio" name="j3_type" id="j3_ind" value="individual" checked>
+                            <label for="j3_ind" class="toggle-label">Individual</label>
                         </div>
                         <div class="toggle-option">
-                            <input type="radio" name="journey8_type" id="journey8_joint" value="joint">
-                            <label for="journey8_joint" class="toggle-label">Joint</label>
+                            <input type="radio" name="j3_type" id="j3_joint" value="joint">
+                            <label for="j3_joint" class="toggle-label">Joint</label>
                         </div>
                     </div>
                 </div>
-                <button class="journey-button" onclick="startJourney('journey8')">
-                    Start Annual Review →
-                </button>
+                <button class="journey-button" onclick="startJourney('j3')">Start Annual Review →</button>
             </div>
         </div>
 
-        <!-- Modules Reference Section -->
+        <!-- AML/COMPLIANCE JOURNEYS -->
+        <div class="category-header">
+            <h2>🔒 AML & Compliance Journeys</h2>
+            <p>Anti-Money Laundering and regulatory compliance</p>
+        </div>
+
+        <div class="journeys-grid">
+            <!-- Journey 4 -->
+            <div class="journey-card">
+                <div class="journey-header">
+                    <div class="journey-icon">💎</div>
+                    <div class="journey-title">
+                        <h3>Full AML Assessment</h3>
+                        <span class="journey-badge comprehensive">Comprehensive • 20-25 mins</span>
+                    </div>
+                </div>
+                <p class="journey-description">
+                    Complete AML compliance check including source of wealth, funds, PEP screening, and risk assessments.
+                </p>
+                <div class="journey-meta">
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>7 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>20-25 mins</span></div>
+                </div>
+                <div class="modules-list">
+                    <h4>Modules:</h4>
+                    <div class="module-tags">
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Source of Wealth</span>
+                        <span class="module-tag">Source of Funds</span>
+                        <span class="module-tag">PEP Check</span>
+                        <span class="module-tag">High-Risk Business</span>
+                        <span class="module-tag">Jurisdiction Risk</span>
+                        <span class="module-tag">Declaration</span>
+                    </div>
+                </div>
+                <div class="application-type-selector">
+                    <label>Application Type:</label>
+                    <div class="toggle-switch">
+                        <div class="toggle-option">
+                            <input type="radio" name="j4_type" id="j4_ind" value="individual" checked>
+                            <label for="j4_ind" class="toggle-label">Individual</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" name="j4_type" id="j4_joint" value="joint">
+                            <label for="j4_joint" class="toggle-label">Joint</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="journey-button" onclick="startJourney('j4')">Start AML Assessment →</button>
+            </div>
+
+            <!-- Journey 5 -->
+            <div class="journey-card">
+                <div class="journey-header">
+                    <div class="journey-icon">🏛️</div>
+                    <div class="journey-title">
+                        <h3>PEP Screening</h3>
+                        <span class="journey-badge quick">Quick • 5-10 mins</span>
+                    </div>
+                </div>
+                <p class="journey-description">
+                    Politically Exposed Person screening with automated risk rating.
+                </p>
+                <div class="journey-meta">
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>3 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>5-10 mins</span></div>
+                </div>
+                <div class="modules-list">
+                    <h4>Modules:</h4>
+                    <div class="module-tags">
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">PEP Check</span>
+                        <span class="module-tag">Declaration</span>
+                    </div>
+                </div>
+                <div class="application-type-selector">
+                    <label>Application Type:</label>
+                    <div class="toggle-switch">
+                        <div class="toggle-option">
+                            <input type="radio" name="j5_type" id="j5_ind" value="individual" checked>
+                            <label for="j5_ind" class="toggle-label">Individual</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" name="j5_type" id="j5_joint" value="joint">
+                            <label for="j5_joint" class="toggle-label">Joint</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="journey-button" onclick="startJourney('j5')">Start PEP Screening →</button>
+            </div>
+
+            <!-- Journey 6 -->
+            <div class="journey-card">
+                <div class="journey-header">
+                    <div class="journey-icon">💰</div>
+                    <div class="journey-title">
+                        <h3>Source of Wealth & Funds</h3>
+                        <span class="journey-badge standard">Standard • 10-15 mins</span>
+                    </div>
+                </div>
+                <p class="journey-description">
+                    Detailed wealth and funds origin assessment for AML compliance.
+                </p>
+                <div class="journey-meta">
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>4 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>10-15 mins</span></div>
+                </div>
+                <div class="modules-list">
+                    <h4>Modules:</h4>
+                    <div class="module-tags">
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Source of Wealth</span>
+                        <span class="module-tag">Source of Funds</span>
+                        <span class="module-tag">Declaration</span>
+                    </div>
+                </div>
+                <div class="application-type-selector">
+                    <label>Application Type:</label>
+                    <div class="toggle-switch">
+                        <div class="toggle-option">
+                            <input type="radio" name="j6_type" id="j6_ind" value="individual" checked>
+                            <label for="j6_ind" class="toggle-label">Individual</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" name="j6_type" id="j6_joint" value="joint">
+                            <label for="j6_joint" class="toggle-label">Joint</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="journey-button" onclick="startJourney('j6')">Start Wealth Assessment →</button>
+            </div>
+        </div>
+
+        <!-- SUITABILITY JOURNEYS -->
+        <div class="category-header">
+            <h2>📊 Suitability & Investment Journeys</h2>
+            <p>Investment knowledge and risk assessment</p>
+        </div>
+
+        <div class="journeys-grid">
+            <!-- Journey 7 -->
+            <div class="journey-card">
+                <div class="journey-header">
+                    <div class="journey-icon">📊</div>
+                    <div class="journey-title">
+                        <h3>Investment Suitability</h3>
+                        <span class="journey-badge standard">Standard • 15-20 mins</span>
+                    </div>
+                </div>
+                <p class="journey-description">
+                    Comprehensive suitability assessment including employment, investment knowledge, and circumstances.
+                </p>
+                <div class="journey-meta">
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>6 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>15-20 mins</span></div>
+                </div>
+                <div class="modules-list">
+                    <h4>Modules:</h4>
+                    <div class="module-tags">
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Employment</span>
+                        <span class="module-tag">Dependants</span>
+                        <span class="module-tag">Investment Knowledge</span>
+                        <span class="module-tag">Lifestyle & Health</span>
+                        <span class="module-tag">Declaration</span>
+                    </div>
+                </div>
+                <div class="application-type-selector">
+                    <label>Application Type:</label>
+                    <div class="toggle-switch">
+                        <div class="toggle-option">
+                            <input type="radio" name="j7_type" id="j7_ind" value="individual" checked>
+                            <label for="j7_ind" class="toggle-label">Individual</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" name="j7_type" id="j7_joint" value="joint">
+                            <label for="j7_joint" class="toggle-label">Joint</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="journey-button" onclick="startJourney('j7')">Start Suitability →</button>
+            </div>
+
+            <!-- Journey 8 -->
+            <div class="journey-card">
+                <div class="journey-header">
+                    <div class="journey-icon">🤝</div>
+                    <div class="journey-title">
+                        <h3>Vulnerable Client Assessment</h3>
+                        <span class="journey-badge quick">Quick • 5-8 mins</span>
+                    </div>
+                </div>
+                <p class="journey-description">
+                    Assessment for vulnerable clients requiring additional support and safeguarding.
+                </p>
+                <div class="journey-meta">
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>3 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>5-8 mins</span></div>
+                </div>
+                <div class="modules-list">
+                    <h4>Modules:</h4>
+                    <div class="module-tags">
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Vulnerable Clients</span>
+                        <span class="module-tag">Declaration</span>
+                    </div>
+                </div>
+                <div class="application-type-selector">
+                    <label>Application Type:</label>
+                    <div class="toggle-switch">
+                        <div class="toggle-option">
+                            <input type="radio" name="j8_type" id="j8_ind" value="individual" checked>
+                            <label for="j8_ind" class="toggle-label">Individual</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" name="j8_type" id="j8_joint" value="joint">
+                            <label for="j8_joint" class="toggle-label">Joint</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="journey-button" onclick="startJourney('j8')">Start Assessment →</button>
+            </div>
+
+            <!-- Journey 9 -->
+            <div class="journey-card">
+                <div class="journey-header">
+                    <div class="journey-icon">🎯</div>
+                    <div class="journey-title">
+                        <h3>Complete Onboarding & Suitability</h3>
+                        <span class="journey-badge comprehensive">Comprehensive • 30-40 mins</span>
+                    </div>
+                </div>
+                <p class="journey-description">
+                    Full client journey including KYC, AML compliance, and investment suitability.
+                </p>
+                <div class="journey-meta">
+                    <div class="meta-item"><span class="meta-icon">📊</span><span>13 Modules</span></div>
+                    <div class="meta-item"><span class="meta-icon">⏱️</span><span>30-40 mins</span></div>
+                </div>
+                <div class="modules-list">
+                    <h4>Modules:</h4>
+                    <div class="module-tags">
+                        <span class="module-tag">Customer ID</span>
+                        <span class="module-tag">Contact</span>
+                        <span class="module-tag">Tax</span>
+                        <span class="module-tag">US Person</span>
+                        <span class="module-tag">Source of Wealth</span>
+                        <span class="module-tag">PEP Check</span>
+                        <span class="module-tag">Employment</span>
+                        <span class="module-tag">Dependants</span>
+                        <span class="module-tag">Investment Knowledge</span>
+                        <span class="module-tag">Lifestyle</span>
+                        <span class="module-tag">Vulnerable Clients</span>
+                        <span class="module-tag">Marketing</span>
+                        <span class="module-tag">Declaration</span>
+                    </div>
+                </div>
+                <div class="application-type-selector">
+                    <label>Application Type:</label>
+                    <div class="toggle-switch">
+                        <div class="toggle-option">
+                            <input type="radio" name="j9_type" id="j9_ind" value="individual" checked>
+                            <label for="j9_ind" class="toggle-label">Individual</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" name="j9_type" id="j9_joint" value="joint">
+                            <label for="j9_joint" class="toggle-label">Joint</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="journey-button" onclick="startJourney('j9')">Start Complete Journey →</button>
+            </div>
+        </div>
+
+        <!-- Modules Reference -->
         <div class="modules-reference">
-            <h2>Available Modules Reference</h2>
+            <h2>All Available Modules (18 Total)</h2>
             <div class="module-categories">
                 <div class="module-category">
-                    <h3>Core KYC Modules</h3>
+                    <h3>Core KYC (7)</h3>
                     <ul>
                         <li>Customer Identification</li>
                         <li>Contact Details</li>
@@ -811,117 +818,67 @@
                     </ul>
                 </div>
                 <div class="module-category">
-                    <h3>System Features</h3>
-                    <ul>
-                        <li>Individual/Joint Applications</li>
-                        <li>Conditional Field Logic</li>
-                        <li>Real-time Progress Tracking</li>
-                        <li>Digital Signatures</li>
-                        <li>URL Pre-population</li>
-                        <li>Mobile Responsive</li>
-                        <li>n8n Integration Ready</li>
-                    </ul>
-                </div>
-                <div class="module-category">
-                    <h3>Coming Soon</h3>
+                    <h3>AML/Compliance (5)</h3>
                     <ul>
                         <li>Source of Wealth</li>
                         <li>Source of Funds</li>
                         <li>PEP Check</li>
-                        <li>Investment Knowledge</li>
-                        <li>Risk Questionnaire</li>
-                        <li>Employment Details</li>
+                        <li>High-Risk Business</li>
+                        <li>Jurisdiction Risk</li>
                     </ul>
                 </div>
-            </div>
-
-            <div class="tech-note">
-                <h4>🔧 Technical Integration</h4>
-                <p>All forms support URL parameter pre-population for n8n workflows. Example format:</p>
-                <p><code>form.html?firstName=John&email=john@example.com&firstName_customer2=Jane</code></p>
-                <p>Joint applications are automatically detected when <code>_customer2</code> parameters are present.</p>
-                <p>All fields use standardized naming: <code>fieldName</code> for primary applicant, <code>fieldName_customer2</code> for joint applicant.</p>
+                <div class="module-category">
+                    <h3>Suitability (6)</h3>
+                    <ul>
+                        <li>Employment Details</li>
+                        <li>Dependants</li>
+                        <li>Investment Knowledge</li>
+                        <li>Lifestyle & Health</li>
+                        <li>Vulnerable Clients</li>
+                        <li>Oxford Risk (Coming Soon)</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Journey configurations - maps to formConfig.modules in unified-modular-form-revised.html
         const journeyConfigs = {
-            journey1: {
+            j1: {
                 name: 'Full Client Onboarding',
-                modules: [
-                    'customerIdentification',
-                    'contactDetails',
-                    'previousAddress',
-                    'taxResidency',
-                    'usPersonStatus',
-                    'marketingPreferences',
-                    'declaration'
-                ]
+                modules: ['customerIdentification', 'contactDetails', 'previousAddress', 'taxResidency', 'usPersonStatus', 'marketingPreferences', 'declaration']
             },
-            journey2: {
+            j2: {
                 name: 'Basic Client Onboarding',
-                modules: [
-                    'customerIdentification',
-                    'contactDetails',
-                    'marketingPreferences',
-                    'declaration'
-                ]
+                modules: ['customerIdentification', 'contactDetails', 'marketingPreferences', 'declaration']
             },
-            journey3: {
-                name: 'Address Change',
-                modules: [
-                    'customerIdentification',
-                    'contactDetails',
-                    'previousAddress',
-                    'declaration'
-                ]
-            },
-            journey4: {
-                name: 'Contact Details Update',
-                modules: [
-                    'customerIdentification',
-                    'contactDetails',
-                    'declaration'
-                ]
-            },
-            journey5: {
-                name: 'Tax Information Update',
-                modules: [
-                    'customerIdentification',
-                    'taxResidency',
-                    'usPersonStatus',
-                    'declaration'
-                ]
-            },
-            journey6: {
-                name: 'Marketing Preferences',
-                modules: [
-                    'customerIdentification',
-                    'marketingPreferences',
-                    'declaration'
-                ]
-            },
-            journey7: {
-                name: 'US Person Declaration',
-                modules: [
-                    'customerIdentification',
-                    'contactDetails',
-                    'usPersonStatus',
-                    'declaration'
-                ]
-            },
-            journey8: {
+            j3: {
                 name: 'Annual Review Update',
-                modules: [
-                    'customerIdentification',
-                    'contactDetails',
-                    'taxResidency',
-                    'usPersonStatus',
-                    'marketingPreferences',
-                    'declaration'
-                ]
+                modules: ['customerIdentification', 'contactDetails', 'taxResidency', 'usPersonStatus', 'marketingPreferences', 'declaration']
+            },
+            j4: {
+                name: 'Full AML Assessment',
+                modules: ['customerIdentification', 'sourceOfWealth', 'sourceOfFunds', 'pepCheck', 'highRiskBusiness', 'jurisdictionRisk', 'declaration']
+            },
+            j5: {
+                name: 'PEP Screening',
+                modules: ['customerIdentification', 'pepCheck', 'declaration']
+            },
+            j6: {
+                name: 'Source of Wealth & Funds',
+                modules: ['customerIdentification', 'sourceOfWealth', 'sourceOfFunds', 'declaration']
+            },
+            j7: {
+                name: 'Investment Suitability',
+                modules: ['customerIdentification', 'employment', 'dependants', 'investmentKnowledge', 'lifestyleHealth', 'declaration']
+            },
+            j8: {
+                name: 'Vulnerable Client Assessment',
+                modules: ['customerIdentification', 'vulnerableClients', 'declaration']
+            },
+            j9: {
+                name: 'Complete Onboarding & Suitability',
+                modules: ['customerIdentification', 'contactDetails', 'taxResidency', 'usPersonStatus', 'sourceOfWealth', 'pepCheck', 'employment', 'dependants', 'investmentKnowledge', 'lifestyleHealth', 'vulnerableClients', 'marketingPreferences', 'declaration']
             }
         };
 
@@ -930,66 +887,16 @@
             const applicationType = document.querySelector(`input[name="${journeyId}_type"]:checked`).value;
             const isJoint = applicationType === 'joint';
             
-            // Build URL to unified form
-            let url = 'unified-modular-form-revised.html';
-            
-            // Add journey name as URL parameter
+            let url = 'unified-modular-form-complete.html';
             url += '?journey=' + encodeURIComponent(config.name);
-            
-            // Add modules configuration
             url += '&modules=' + encodeURIComponent(JSON.stringify(config.modules));
             
-            // If joint application, add a dummy customer2 parameter to trigger joint mode
             if (isJoint) {
-                url += '&_joint=true';
+                url += '&joint=true';
             }
             
-            // Navigate to the unified form
             window.location.href = url;
         }
-
-        // Optional: Test URL generation
-        function generateTestURL(journeyId) {
-            const config = journeyConfigs[journeyId];
-            
-            // Example pre-populated data
-            const testData = {
-                // Journey info
-                journey: config.name,
-                modules: JSON.stringify(config.modules),
-                
-                // Customer 1 sample data
-                title: 'Mr',
-                firstName: 'John',
-                surname: 'Smith',
-                dateOfBirth: '1980-05-15',
-                nationalInsurance: 'AB123456C',
-                addressLine1: '123 High Street',
-                city: 'London',
-                postcode: 'SW1A 1AA',
-                country: 'United Kingdom',
-                phoneNumber: '07700900123',
-                email: 'john.smith@example.com',
-                
-                // Customer 2 sample data (for joint)
-                title_customer2: 'Mrs',
-                firstName_customer2: 'Jane',
-                surname_customer2: 'Smith',
-                dateOfBirth_customer2: '1982-08-20',
-                nationalInsurance_customer2: 'CD789012E',
-                phoneNumber_customer2: '07700900456',
-                email_customer2: 'jane.smith@example.com'
-            };
-            
-            const params = new URLSearchParams(testData);
-            const testURL = 'unified-modular-form-revised.html?' + params.toString();
-            
-            console.log('Test URL for ' + config.name + ':', testURL);
-            return testURL;
-        }
-
-        // Expose for testing in console
-        window.generateTestURL = generateTestURL;
     </script>
 </body>
 </html>
