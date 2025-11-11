@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Form - Stevelyn Partners</title>
+    <title>Dynamic Form - Evelyn Partners</title>
     <style>
         * {
             margin: 0;
@@ -94,26 +94,24 @@
         }
 
         .customer-header {
-            background: linear-gradient(90deg, #6b4c9a, #8b6baf);
-            color: white;
-            padding: 15px 25px;
+            background: #e8e8e8;
+            color: #666;
+            padding: 12px 20px;
             margin-bottom: 25px;
-            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 10px rgba(107, 76, 154, 0.2);
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Hide customer headers for individual applications */
+        body:not(.joint-application) .customer-header {
+            display: none;
         }
 
         .customer-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
+            font-size: 16px;
         }
 
         .customer-title {
@@ -121,14 +119,14 @@
         }
 
         .customer-title h3 {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 3px;
+            margin: 0;
+            display: inline;
         }
 
         .customer-title .subtitle {
-            font-size: 12px;
-            opacity: 0.9;
+            display: none;
         }
 
         .joint-divider {
@@ -163,11 +161,13 @@
         }
 
         body.joint-application .customer-1-section .customer-header {
-            background: linear-gradient(90deg, #1976d2, #42a5f5);
+            background: #e3f2fd;
+            color: #1565c0;
         }
 
         body.joint-application .customer-2-section .customer-header {
-            background: linear-gradient(90deg, #7b1fa2, #ba68c8);
+            background: #f3e5f5;
+            color: #7b1fa2;
         }
 
         .content {
@@ -502,7 +502,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 id="formTitle">Stevelyn Partners</h1>
+            <h1 id="formTitle">Evelyn Partners</h1>
             <div class="journey-badge" id="journeyBadge">New Client Onboarding</div>
             <span class="application-type-badge" id="appTypeBadge">Individual Application</span>
         </div>
@@ -939,10 +939,9 @@
 
             let html = `<div class="customer-section ${customerClass}">`;
             html += `<div class="customer-header">
-                <div class="customer-icon">${customerIcon}</div>
+                <span class="customer-icon">${customerIcon}</span>
                 <div class="customer-title">
                     <h3>${customerLabel}</h3>
-                    <div class="subtitle">${moduleDef.title}</div>
                 </div>
             </div>`;
 
