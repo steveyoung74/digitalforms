@@ -530,6 +530,13 @@
     </div>
 
     <script>
+        // Helper function to generate session ID
+        function generateSessionId() {
+            const id = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('session_id', id);
+            return id;
+        }
+        
         // Configuration - will be overridden by URL parameters if present
         let formConfig = {
             journeyType: 'New Client Onboarding',
@@ -854,7 +861,7 @@
         let isJointApplication = false;
         let signaturePads = {};
         let moduleCounter = 0;
-
+        
         // Initialize
         function initialize() {
             document.getElementById('journeyBadge').textContent = formConfig.journeyType;
