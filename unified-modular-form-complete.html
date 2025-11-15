@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Form - Stevelyn Partners</title>
+    <title>Dynamic Form - Evelyn Partners</title>
     <style>
         * {
             margin: 0;
@@ -502,7 +502,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 id="formTitle">Stevelyn Partners</h1>
+            <h1 id="formTitle">Evelyn Partners</h1>
             <div class="journey-badge" id="journeyBadge">New Client Onboarding</div>
             <span class="application-type-badge" id="appTypeBadge">Individual Application</span>
         </div>
@@ -863,10 +863,7 @@
             setupEventListeners();
             populateFromURL();
             updateProgress();
-            loadURLParameters();
-            updateRequiredFields();
         }
-        
 
         // Detect joint application from URL or any _customer2 parameter
         function detectJointApplication() {
@@ -1221,126 +1218,22 @@
         }
 
         // Handle submit
-        async function handleSubmit(event) {
+        function handleSubmit(event) {
             event.preventDefault();
             
-            // Disable validation for Customer 2 fields if individual application
-            //const params = new URLSearchParams(window.location.search);
-            //const isJoint = params.get('joint') === 'true';
+            const formData = new FormData(event.target);
+            const data = {};
             
-            if (!isJoint) {
-                // Remove required from all customer2 fields
-                const customer2Fields = event.target.querySelectorAll('[name*="_customer2"]');
-                customer2Fields.forEach(field => field.removeAttribute('required'));
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
             }
             
-            // Show loading state
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Submitting...';
-            submitBtn.disabled = true;
-            
-            try {
-                // Collect all form data
-                const formData = new FormData(event.target);
-                const data = {};
-                
-                // Convert FormData to object
-                for (let [key, value] of formData.entries()) {
-                    data[key] = value;
-                }
-                
-                // Get URL parameters
-                const params = new URLSearchParams(window.location.search);
-                
-                // Add metadata
-                data.application_type = params.get('joint') === 'true' ? 'joint' : 'individual';
-                data.journey_type = params.get('journey') || 'unknown';
-                data.modules = params.get('modules') || '';
-                data.start_time = sessionStorage.getItem('form_start_time') || new Date().toISOString();
-                data.session_id = sessionStorage.getItem('session_id') || generateSessionId();
-                data.user_agent = navigator.userAgent;
-                data.referrer_url = document.referrer || '';
-                
-                console.log('Submitting data to n8n:', data);
-                
-                // Send to n8n webhook
-                const response = await fetch('https://steveyoung.app.n8n.cloud/webhook-test/4ac4494b-4576-46d0-a5ff-8584e37588bd', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const result = await response.json();
-                
-                console.log('N8N Response:', result);
-                
-                if (result.success) {
-                    alert(`Application submitted successfully!\n\nReference: ${result.application_id}\n\nYou will receive a confirmation email shortly.`);
-                } else {
-                    throw new Error(result.message || 'Submission failed');
-                }
-                
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('There was an error submitting your application. Please try again or contact support.\n\nError: ' + error.message);
-                
-                // Restore button
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
+            console.log('Form submitted:', data);
+            alert('Form submitted successfully!\n\nCheck console for data.');
         }
-        
-        // Helper function to generate session ID
-        function generateSessionId() {
-            const id = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-            sessionStorage.setItem('session_id', id);
-            return id;
-        }
-        
-        // Store start time when form loads
-        if (!sessionStorage.getItem('form_start_time')) {
-            sessionStorage.setItem('form_start_time', new Date().toISOString());
-        }
-        
-        function updateRequiredFields() {
-            const params = new URLSearchParams(window.location.search);
-            const isJoint = params.get('joint') === 'true';
-            
-            if (!isJoint) {
-                // Remove required from all customer2 fields for individual applications
-                const customer2Fields = document.querySelectorAll('[name*="_customer2"][required]');
-                customer2Fields.forEach(field => {
-                    field.removeAttribute('required');
-                });
-                console.log(`Removed 'required' from ${customer2Fields.length} Customer 2 fields`);
-            }
-        }
-        // latest loaded Steve
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', initialize);
-        window.addEventListener('load', function() {
-            try {
-                const params = new URLSearchParams(window.location.search);
-                const isJoint = params.get('joint') === 'true';
-                
-                if (!isJoint) {
-                    const customer2Fields = document.querySelectorAll('[name*="_customer2"][required]');
-                    customer2Fields.forEach(function(field) {
-                        field.removeAttribute('required');
-                    });
-                    console.log('Removed required from ' + customer2Fields.length + ' Customer 2 fields');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        });
     </script>
 </body>
 </html>
