@@ -856,53 +856,17 @@
         let moduleCounter = 0;
 
         // Initialize
-        //function initialize() {
-        //    document.getElementById('journeyBadge').textContent = formConfig.journeyType;
-        //    detectJointApplication();
-        //    renderModules();
-        //    setupEventListeners();
-        //    populateFromURL();
-        //    updateProgress();
-        //    loadURLParameters();
-        //    updateRequiredFields();
-        //}
         function initialize() {
-            // Get URL parameters
-            const params = new URLSearchParams(window.location.search);
-            const isJoint = params.get('joint') === 'true';
-            
-            // Remove required from Customer 2 fields if individual application
-            if (!isJoint) {
-                const customer2Fields = document.querySelectorAll('[name*="_customer2"][required]');
-                customer2Fields.forEach(field => {
-                    field.removeAttribute('required');
-                });
-                console.log(`Individual application - removed 'required' from ${customer2Fields.length} Customer 2 fields`);
-            }
-            
-            // Populate fields from URL parameters
-            params.forEach((value, key) => {
-                if (['modules', 'journey', 'joint'].includes(key)) return;
-                
-                const element = document.querySelector(`[name="${key}"]`);
-                if (element && value) {
-                    if (element.type === 'radio') {
-                        const radio = document.querySelector(`[name="${key}"][value="${value}"]`);
-                        if (radio) radio.checked = true;
-                    } else if (element.type === 'checkbox') {
-                        element.checked = value === 'true' || value === '1';
-                    } else {
-                        element.value = decodeURIComponent(value);
-                    }
-                }
-            });
-            
-            // Update progress
+            document.getElementById('journeyBadge').textContent = formConfig.journeyType;
+            detectJointApplication();
+            renderModules();
+            setupEventListeners();
+            populateFromURL();
             updateProgress();
+            loadURLParameters();
+            updateRequiredFields();
         }
         
-        // Make sure initialize is called when page loads
-        document.addEventListener('DOMContentLoaded', initialize);
 
         // Detect joint application from URL or any _customer2 parameter
         function detectJointApplication() {
@@ -1361,6 +1325,22 @@
         // latest loaded Steve
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', initialize);
+        window.addEventListener('load', function() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const isJoint = params.get('joint') === 'true';
+                
+                if (!isJoint) {
+                    const customer2Fields = document.querySelectorAll('[name*="_customer2"][required]');
+                    customer2Fields.forEach(function(field) {
+                        field.removeAttribute('required');
+                    });
+                    console.log('Removed required from ' + customer2Fields.length + ' Customer 2 fields');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
     </script>
 </body>
 </html>
