@@ -863,6 +863,8 @@
             setupEventListeners();
             populateFromURL();
             updateProgress();
+            loadURLParameters();
+            updateRequiredFields();
         }
 
         // Detect joint application from URL or any _customer2 parameter
@@ -1299,6 +1301,21 @@
         // Store start time when form loads
         if (!sessionStorage.getItem('form_start_time')) {
             sessionStorage.setItem('form_start_time', new Date().toISOString());
+        }
+        
+        function updateRequiredFields() {
+            const params = new URLSearchParams(window.location.search);
+            const isJoint = params.get('joint') === 'true';
+            
+            // Get all customer2 fields
+            const customer2Fields = document.querySelectorAll('[name*="_customer2"]');
+            
+            customer2Fields.forEach(field => {
+                if (!isJoint) {
+                    // Remove required attribute for individual applications
+                    field.removeAttribute('required');
+                }
+            });
         }
 
         // Initialize on page load
