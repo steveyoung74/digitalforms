@@ -1224,8 +1224,8 @@
             event.preventDefault();
             
             // Disable validation for Customer 2 fields if individual application
-            const params = new URLSearchParams(window.location.search);
-            const isJoint = params.get('joint') === 'true';
+            //const params = new URLSearchParams(window.location.search);
+            //const isJoint = params.get('joint') === 'true';
             
             if (!isJoint) {
                 // Remove required from all customer2 fields
@@ -1312,15 +1312,14 @@
             const params = new URLSearchParams(window.location.search);
             const isJoint = params.get('joint') === 'true';
             
-            // Get all customer2 fields
-            const customer2Fields = document.querySelectorAll('[name*="_customer2"]');
-            
-            customer2Fields.forEach(field => {
-                if (!isJoint) {
-                    // Remove required attribute for individual applications
+            if (!isJoint) {
+                // Remove required from all customer2 fields for individual applications
+                const customer2Fields = document.querySelectorAll('[name*="_customer2"][required]');
+                customer2Fields.forEach(field => {
                     field.removeAttribute('required');
-                }
-            });
+                });
+                console.log(`Removed 'required' from ${customer2Fields.length} Customer 2 fields`);
+            }
         }
 
         // Initialize on page load
