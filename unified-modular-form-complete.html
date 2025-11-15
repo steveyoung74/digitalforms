@@ -1275,8 +1275,10 @@
                 
                 console.log('N8N Response:', result);
                 
-                if (result.success) {
-                    alert('Application submitted successfully!\n\nReference: ' + result.application_id + '\n\nYou will receive a confirmation email shortly.');
+                // Accept either result.success OR result.message (n8n's default response)
+                if (result.success || result.message === 'Workflow was started') {
+                    const refId = result.application_id || data.session_id || 'Pending';
+                    alert('Application submitted successfully!\n\nReference: ' + refId + '\n\nYou will receive a confirmation email shortly.');
                 } else {
                     throw new Error(result.message || 'Submission failed');
                 }
