@@ -1294,6 +1294,30 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', initialize);
+
+        // Remove required from Customer 2 fields for individual applications
+        window.addEventListener('load', function() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const isJoint = params.get('joint') === 'true';
+                
+                if (!isJoint) {
+                    const customer2Fields = document.querySelectorAll('[name*="_customer2"][required]');
+                    customer2Fields.forEach(function(field) {
+                        field.removeAttribute('required');
+                    });
+                    console.log('Individual application - removed required from ' + customer2Fields.length + ' Customer 2 fields');
+                }
+                
+                // Store start time when form loads
+                if (!sessionStorage.getItem('form_start_time')) {
+                    sessionStorage.setItem('form_start_time', new Date().toISOString());
+                }
+            } catch (error) {
+                console.error('Error in form initialization:', error);
+            }
+        });
+        
     </script>
 </body>
 </html>
