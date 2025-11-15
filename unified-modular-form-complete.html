@@ -1225,19 +1225,72 @@
         }
 
         // Handle submit
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault();
             
-            const formData = new FormData(event.target);
-            const data = {};
+            // Show loading state
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
             
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
+            try {
+                // Collect all form data
+                const formData = new FormData(event.target);
+                const data = {};
+                
+                // Convert FormData to object
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                
+                // Get URL parameters
+                const params = new URLSearchParams(window.location.search);
+                
+                // Add metadata
+                data.application_type = params.get('joint') === 'true' ? 'joint' : 'individual';
+                data.journey_type = params.get('journey') || 'unknown';
+                data.modules = params.get('modules') || '';
+                data.start_time = sessionStorage.getItem('form_start_time') || new Date().toISOString();
+                data.session_id = sessionStorage.getItem('session_id') || generateSessionId();
+                data.user_agent = navigator.userAgent;
+                data.referrer_url = document.referrer || '';
+                
+                console.log('Submitting data to n8n:', data);
+                
+                // Send to n8n webhook
+                const response = await fetch('https://steveyoung.app.n8n.cloud/webhook-test/4ac4494b-4576-46d0-a5ff-8584e37588bd', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('HTTP error! status: ' + response.status);
+                }
+                
+                const result = await response.json();
+                
+                console.log('N8N Response:', result);
+                
+                if (result.success) {
+                    alert('Application submitted successfully!\n\nReference: ' + result.application_id + '\n\nYou will receive a confirmation email shortly.');
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+                
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('There was an error submitting your application. Please try again or contact support.\n\nError: ' + error.message);
+                
+                // Restore button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
-            
-            console.log('Form submitted:', data);
-            alert('Form submitted successfully!\n\nCheck console for data.');
         }
+        
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', initialize);
