@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATCA/CRS Classification - Evelyn Partners</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            animation: slide 20s linear infinite;
+        }
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        .form-header h1, .form-header p { position: relative; z-index: 1; }
+        .form-header h1 { font-size: 32px; margin-bottom: 10px; font-weight: 600; }
+        .form-header p { font-size: 16px; opacity: 0.95; }
+        .form-content { padding: 40px; }
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .info-box h3 { color: #667eea; margin-bottom: 10px; font-size: 18px; }
+        .info-box p { color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; font-size: 14px; }
+        .required { color: #e91e63; margin-left: 4px; }
+        .radio-group { display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
+        .radio-option { display: flex; align-items: center; gap: 8px; }
+        input[type="radio"] { width: 18px; height: 18px; cursor: pointer; }
+        .radio-option label { margin: 0; cursor: pointer; font-weight: 400; }
+        .classification-card {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .classification-card:hover { border-color: #667eea; background: #f8f9ff; }
+        .classification-card.selected { border-color: #667eea; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); }
+        .classification-card h4 { color: #667eea; margin-bottom: 8px; }
+        .classification-card p { font-size: 13px; color: #666; line-height: 1.5; }
+        input[type="text"], input[type="checkbox"] {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        input[type="text"] { width: 100%; }
+        input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .conditional-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+        .conditional-section.show { display: block; }
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+        }
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .error-message { color: #d32f2f; font-size: 13px; margin-top: 5px; display: none; }
+        .error-message.show { display: block; }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background: #d0d0d0; transform: translateY(-2px); }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
+        @media (max-width: 768px) {
+            .form-content { padding: 25px; }
+            .button-group { flex-direction: column; }
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>FATCA/CRS Classification</h1>
+            <p>Module 25 - Trust Entity Classification</p>
+        </div>
+        <div class="form-content">
+            <div class="info-box">
+                <h3>About FATCA/CRS Classification</h3>
+                <p>The Foreign Account Tax Compliance Act (FATCA) and Common Reporting Standard (CRS) require proper classification of trust entities for international tax compliance.</p>
+            </div>
+            <form id="fatcaForm" novalidate>
+                <!-- Professionally Managed -->
+                <div class="form-group">
+                    <label>Is the trust professionally managed by Evelyn Partners?<span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="managedYes" name="professionallyManaged" value="Yes" required>
+                            <label for="managedYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="managedNo" name="professionallyManaged" value="No" required>
+                            <label for="managedNo">No</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="managedError">Please select an option</div>
+                </div>
+                <!-- Classification -->
+                <div class="form-group">
+                    <label>Trust Classification<span class="required">*</span></label>
+                    
+                    <div class="classification-card" data-value="participating-fi">
+                        <input type="radio" id="classParticipating" name="trustClassification" value="Participating FI" required style="float: left; margin-right: 10px;">
+                        <h4>Participating Financial Institution</h4>
+                        <p>Trust is registered with IRS as Participating FI with a valid GIIN</p>
+                    </div>
+                    
+                    <div class="classification-card" data-value="trustee-documented">
+                        <input type="radio" id="classTrusteeDoc" name="trustClassification" value="Trustee Documented Trust" required style="float: left; margin-right: 10px;">
+                        <h4>Trustee Documented Trust</h4>
+                        <p>Trust with corporate trustee who provides FATCA compliance</p>
+                    </div>
+                    
+                    <div class="classification-card" data-value="non-participating">
+                        <input type="radio" id="classNonPart" name="trustClassification" value="Non-Participating FI" required style="float: left; margin-right: 10px;">
+                        <h4>Non-Participating Financial Institution</h4>
+                        <p>Trust does not participate in FATCA reporting (contact investment manager required)</p>
+                    </div>
+                    
+                    <div class="classification-card" data-value="owner-documented">
+                        <input type="radio" id="classOwnerDoc" name="trustClassification" value="Owner Documented FI" required style="float: left; margin-right: 10px;">
+                        <h4>Owner Documented Financial Institution</h4>
+                        <p>Trust qualifies for owner documentation requirements</p>
+                    </div>
+                    
+                    <div class="classification-card" data-value="non-reporting">
+                        <input type="radio" id="classNonReport" name="trustClassification" value="Non-Reporting FI" required style="float: left; margin-right: 10px;">
+                        <h4>Non-Reporting Financial Institution</h4>
+                        <p>Trust is exempt from FATCA/CRS reporting</p>
+                    </div>
+                    
+                    <div class="classification-card" data-value="active-nffe">
+                        <input type="radio" id="classActiveNFFE" name="trustClassification" value="Active NFFE" required style="float: left; margin-right: 10px;">
+                        <h4>Active Non-Financial Foreign Entity (NFFE)</h4>
+                        <p>Trust is not a financial institution and is actively managed</p>
+                    </div>
+                    
+                    <div class="error-message" id="classificationError">Please select a classification</div>
+                </div>
+                <!-- Participating FI Section -->
+                <div class="conditional-section" id="participatingSection">
+                    <h3 style="margin-bottom: 15px; color: #667eea;">Participating FI Details</h3>
+                    <div class="form-group">
+                        <label for="giinNumber">GIIN Number<span class="required">*</span></label>
+                        <input type="text" id="giinNumber" name="giinNumber" placeholder="Enter GIIN number">
+                        <div class="error-message" id="giinError">GIIN number is required</div>
+                    </div>
+                </div>
+                <!-- Trustee Documented Section -->
+                <div class="conditional-section" id="trusteeDocSection">
+                    <h3 style="margin-bottom: 15px; color: #667eea;">Trustee Details</h3>
+                    <div class="form-group">
+                        <label for="trusteeGiin">Corporate Trustee GIIN<span class="required">*</span></label>
+                        <input type="text" id="trusteeGiin" name="trusteeGiin" placeholder="Enter trustee GIIN">
+                        <div class="error-message" id="trusteeGiinError">Trustee GIIN is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="trusteeName">Corporate Trustee Name<span class="required">*</span></label>
+                        <input type="text" id="trusteeName" name="trusteeName" placeholder="Enter trustee name">
+                        <div class="error-message" id="trusteeNameError">Trustee name is required</div>
+                    </div>
+                </div>
+                <!-- Owner Documented Section -->
+                <div class="conditional-section" id="ownerDocSection">
+                    <h3 style="margin-bottom: 15px; color: #667eea;">Owner Documentation Requirements</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">All three conditions must be met to qualify:</p>
+                    <div class="checkbox-list">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="condition1" name="odfiCondition1" value="true">
+                            <label for="condition1">No account maintained for benefit of Non-Participating FI</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="condition2" name="odfiCondition2" value="true">
+                            <label for="condition2">Trust is not owned by or member of any FI group</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="condition3" name="odfiCondition3" value="true">
+                            <label for="condition3">20 or fewer persons hold interests in the trust</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="odfiError">All conditions must be checked to qualify as Owner Documented FI</div>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                    <button type="submit" class="btn-primary">Continue →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('fatcaForm');
+        const classificationRadios = document.querySelectorAll('input[name="trustClassification"]');
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.forEach((value, key) => {
+                const field = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    if (field.type === 'radio') {
+                        field.checked = true;
+                        handleClassificationChange();
+                    } else if (field.type === 'checkbox') {
+                        field.checked = value === 'true';
+                    } else {
+                        field.value = value;
+                    }
+                }
+            });
+        });
+        classificationRadios.forEach(radio => {
+            radio.addEventListener('change', handleClassificationChange);
+        });
+        document.querySelectorAll('.classification-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    radio.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+        function handleClassificationChange() {
+            const selectedValue = document.querySelector('input[name="trustClassification"]:checked')?.value;
+            document.querySelectorAll('.classification-card').forEach(card => card.classList.remove('selected'));
+            if (selectedValue) {
+                const selectedCard = document.querySelector(`input[name="trustClassification"]:checked`).closest('.classification-card');
+                selectedCard?.classList.add('selected');
+            }
+            document.getElementById('participatingSection').classList.remove('show');
+            document.getElementById('trusteeDocSection').classList.remove('show');
+            document.getElementById('ownerDocSection').classList.remove('show');
+            document.getElementById('giinNumber').required = false;
+            document.getElementById('trusteeGiin').required = false;
+            document.getElementById('trusteeName').required = false;
+            if (selectedValue === 'Participating FI') {
+                document.getElementById('participatingSection').classList.add('show');
+                document.getElementById('giinNumber').required = true;
+            } else if (selectedValue === 'Trustee Documented Trust') {
+                document.getElementById('trusteeDocSection').classList.add('show');
+                document.getElementById('trusteeGiin').required = true;
+                document.getElementById('trusteeName').required = true;
+            } else if (selectedValue === 'Owner Documented FI') {
+                document.getElementById('ownerDocSection').classList.add('show');
+            }
+        }
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            const managedRadio = document.querySelector('input[name="professionallyManaged"]:checked');
+            const classRadio = document.querySelector('input[name="trustClassification"]:checked');
+            if (!managedRadio) {
+                document.getElementById('managedError').classList.add('show');
+                isValid = false;
+            }
+            if (!classRadio) {
+                document.getElementById('classificationError').classList.add('show');
+                isValid = false;
+            }
+            if (classRadio?.value === 'Owner Documented FI') {
+                const allChecked = document.getElementById('condition1').checked && 
+                                 document.getElementById('condition2').checked && 
+                                 document.getElementById('condition3').checked;
+                if (!allChecked) {
+                    document.getElementById('odfiError').classList.add('show');
+                    isValid = false;
+                }
+            }
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (field.offsetParent !== null) {
+                    if (!field.value.trim()) {
+                        field.classList.add('error');
+                        const errorEl = document.getElementById(field.id + 'Error');
+                        if (errorEl) errorEl.classList.add('show');
+                        isValid = false;
+                    }
+                }
+            });
+            if (!isValid) {
+                alert('Please complete all required fields');
+                return;
+            }
+            const formData = new FormData(form);
+            const params = new URLSearchParams(window.location.search);
+            params.forEach((value, key) => {
+                if (!formData.has(key)) {
+                    formData.append(key, value);
+                }
+            });
+            formData.forEach((value, key) => {
+                params.set(key, value);
+            });
+            const nextModule = params.get('nextModule') || 'module_07_declaration.html';
+            window.location.href = nextModule + '?' + params.toString();
+        });
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

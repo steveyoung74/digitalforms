@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Details - Evelyn Partners</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            animation: slide 20s linear infinite;
+        }
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        .form-header h1, .form-header p { position: relative; z-index: 1; }
+        .form-header h1 { font-size: 32px; margin-bottom: 10px; font-weight: 600; }
+        .form-header p { font-size: 16px; opacity: 0.95; }
+        .form-content { padding: 40px; }
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .info-box h3 { color: #667eea; margin-bottom: 10px; font-size: 18px; }
+        .info-box p { color: #555; font-size: 14px; line-height: 1.6; }
+        .form-group { margin-bottom: 25px; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; font-size: 14px; }
+        .required { color: #e91e63; margin-left: 4px; }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .radio-group { display: flex; gap: 20px; margin-top: 10px; }
+        .radio-option { display: flex; align-items: center; gap: 8px; }
+        input[type="radio"] { width: 18px; height: 18px; cursor: pointer; }
+        .radio-option label { margin: 0; cursor: pointer; font-weight: 400; }
+        .help-text { font-size: 13px; color: #666; margin-top: 6px; font-style: italic; }
+        .payment-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #667eea;
+        }
+        .error-message { color: #d32f2f; font-size: 13px; margin-top: 5px; display: none; }
+        .error-message.show { display: block; }
+        input.error, select.error { border-color: #d32f2f; }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background: #d0d0d0; transform: translateY(-2px); }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
+        @media (max-width: 768px) {
+            .form-content { padding: 25px; }
+            .form-row { grid-template-columns: 1fr; }
+            .button-group { flex-direction: column; }
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Banking Details</h1>
+            <p>Module 26 - Trust Banking & Payment Information</p>
+        </div>
+        <div class="form-content">
+            <div class="info-box">
+                <h3>About This Module</h3>
+                <p>Please provide the trust's banking details for distributions, transactions, and regular payment activity.</p>
+            </div>
+            <form id="bankingForm" novalidate>
+                <!-- Bank Account Details -->
+                <h3 style="color: #667eea; margin-bottom: 20px;">Bank Account Information</h3>
+                
+                <div class="form-group">
+                    <label for="bankName">Bank Name<span class="required">*</span></label>
+                    <input type="text" id="bankName" name="bankName" required placeholder="Enter bank name">
+                    <div class="error-message" id="bankNameError">Bank name is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="accountName">Account Name<span class="required">*</span></label>
+                    <input type="text" id="accountName" name="accountName" required placeholder="Account holder name">
+                    <div class="error-message" id="accountNameError">Account name is required</div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sortCode">Sort Code<span class="required">*</span></label>
+                        <input type="text" id="sortCode" name="sortCode" required placeholder="00-00-00" maxlength="8" pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}">
+                        <div class="help-text">Format: 00-00-00</div>
+                        <div class="error-message" id="sortCodeError">Valid sort code is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number<span class="required">*</span></label>
+                        <input type="text" id="accountNumber" name="accountNumber" required placeholder="00000000" maxlength="8" pattern="[0-9]{8}">
+                        <div class="help-text">8 digits</div>
+                        <div class="error-message" id="accountNumberError">Valid 8-digit account number is required</div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="iban">IBAN (if applicable)</label>
+                        <input type="text" id="iban" name="iban" placeholder="GB00 0000 0000 0000 00">
+                        <div class="help-text">International Bank Account Number</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="swift">SWIFT/BIC Code</label>
+                        <input type="text" id="swift" name="swift" placeholder="ABCDGB2X">
+                        <div class="help-text">For international transfers</div>
+                    </div>
+                </div>
+                
+                <!-- Currency -->
+                <div class="form-group">
+                    <label for="accountCurrency">Account Currency<span class="required">*</span></label>
+                    <select id="accountCurrency" name="accountCurrency" required>
+                        <option value="">Select currency...</option>
+                        <option value="GBP">GBP (British Pound)</option>
+                        <option value="EUR">EUR (Euro)</option>
+                        <option value="USD">USD (US Dollar)</option>
+                        <option value="CHF">CHF (Swiss Franc)</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="error-message" id="accountCurrencyError">Currency is required</div>
+                </div>
+                
+                <!-- Regular Payment Activity -->
+                <div class="payment-section">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">Regular Payment Activity</h3>
+                    
+                    <div class="form-group">
+                        <label>Are there regular payments required from the trust?<span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="regularPaymentsYes" name="regularPayments" value="Yes" required>
+                                <label for="regularPaymentsYes">Yes</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="regularPaymentsNo" name="regularPayments" value="No" required>
+                                <label for="regularPaymentsNo">No</label>
+                            </div>
+                        </div>
+                        <div class="error-message" id="regularPaymentsError">Please select an option</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentFrequency">Payment Frequency</label>
+                        <select id="paymentFrequency" name="paymentFrequency">
+                            <option value="">Select frequency...</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Semi-annually">Semi-annually</option>
+                            <option value="Annually">Annually</option>
+                            <option value="Ad-hoc">Ad-hoc</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estimatedPaymentAmount">Estimated Payment Amount (per payment)</label>
+                        <input type="number" id="estimatedPaymentAmount" name="estimatedPaymentAmount" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                
+                <!-- Additional Instructions -->
+                <div class="form-group">
+                    <label for="bankingInstructions">Additional Banking Instructions (Optional)</label>
+                    <textarea id="bankingInstructions" name="bankingInstructions" style="width: 100%; min-height: 80px; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 14px;" placeholder="Any special instructions for payments or distributions..."></textarea>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                    <button type="submit" class="btn-primary">Continue →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('bankingForm');
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.forEach((value, key) => {
+                const field = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    if (field.type === 'radio') {
+                        field.checked = true;
+                    } else {
+                        field.value = value;
+                    }
+                }
+            });
+        });
+        document.getElementById('sortCode')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (value.length >= 2) {
+                value = value.substr(0, 2) + '-' + value.substr(2);
+            }
+            if (value.length >= 5) {
+                value = value.substr(0, 5) + '-' + value.substr(5, 2);
+            }
+            e.target.value = value.substr(0, 8);
+        });
+        document.getElementById('accountNumber')?.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').substr(0, 8);
+        });
+        function validateField(field) {
+            const errorElement = document.getElementById(field.id + 'Error') || document.getElementById(field.name + 'Error');
+            if (field.type === 'radio') {
+                const checked = document.querySelector(`input[name="${field.name}"]:checked`);
+                if (!checked && field.required) {
+                    if (errorElement) errorElement.classList.add('show');
+                    return false;
+                }
+                if (errorElement) errorElement.classList.remove('show');
+                return true;
+            }
+            if (field.required && !field.value.trim()) {
+                field.classList.add('error');
+                if (errorElement) errorElement.classList.add('show');
+                return false;
+            }
+            if (field.id === 'sortCode' && field.value && !/^[0-9]{2}-[0-9]{2}-[0-9]{2}$/.test(field.value)) {
+                field.classList.add('error');
+                if (errorElement) errorElement.classList.add('show');
+                return false;
+            }
+            if (field.id === 'accountNumber' && field.value && !/^[0-9]{8}$/.test(field.value)) {
+                field.classList.add('error');
+                if (errorElement) errorElement.classList.add('show');
+                return false;
+            }
+            field.classList.remove('error');
+            if (errorElement) errorElement.classList.remove('show');
+            return true;
+        }
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
+            if (!isValid) {
+                alert('Please complete all required fields correctly');
+                return;
+            }
+            const formData = new FormData(form);
+            const params = new URLSearchParams(window.location.search);
+            params.forEach((value, key) => {
+                if (!formData.has(key)) {
+                    formData.append(key, value);
+                }
+            });
+            formData.forEach((value, key) => {
+                params.set(key, value);
+            });
+            const nextModule = params.get('nextModule') || 'module_25_fatca_crs.html';
+            window.location.href = nextModule + '?' + params.toString();
+        });
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

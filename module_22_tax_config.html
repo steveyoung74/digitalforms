@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Tax Configuration - Evelyn Partners</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .form-header h1, .form-header p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .form-content { padding: 40px; }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h3 { color: #667eea; margin-bottom: 10px; font-size: 18px; }
+        .info-box p { color: #555; font-size: 14px; line-height: 1.6; }
+
+        .form-group { margin-bottom: 25px; }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .required { color: #e91e63; margin-left: 4px; }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-group { display: flex; gap: 20px; margin-top: 10px; }
+        .radio-option { display: flex; align-items: center; gap: 8px; }
+        input[type="radio"] { width: 18px; height: 18px; cursor: pointer; }
+        .radio-option label { margin: 0; cursor: pointer; font-weight: 400; }
+
+        .conditional-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .conditional-section.show { display: block; }
+
+        .help-text {
+            font-size: 13px;
+            color: #666;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show { display: block; }
+        input.error, select.error { border-color: #d32f2f; }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn-secondary:hover {
+            background: #d0d0d0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .form-content { padding: 25px; }
+            .form-row { grid-template-columns: 1fr; }
+            .button-group { flex-direction: column; }
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Trust Tax Configuration</h1>
+            <p>Module 22 - Tax Settings & IHT Position</p>
+        </div>
+
+        <div class="form-content">
+            <div class="info-box">
+                <h3>About This Module</h3>
+                <p>Please provide the trust's tax configuration details. This information is essential for proper tax treatment and compliance.</p>
+            </div>
+
+            <form id="taxForm" novalidate>
+                <!-- Income Tax Rate -->
+                <div class="form-group">
+                    <label for="incomeTaxRate">
+                        Income Tax Rate<span class="required">*</span>
+                    </label>
+                    <select id="incomeTaxRate" name="incomeTaxRate" required>
+                        <option value="">Select rate...</option>
+                        <option value="Trustee rate">Trustee rate (45%)</option>
+                        <option value="Basic rate">Basic rate (20%)</option>
+                    </select>
+                    <div class="error-message" id="incomeTaxRateError">Income tax rate is required</div>
+                </div>
+
+                <!-- CGT Rate -->
+                <div class="form-group">
+                    <label for="cgtRate">
+                        Capital Gains Tax (CGT) Rate
+                    </label>
+                    <select id="cgtRate" name="cgtRate">
+                        <option value="">Select rate...</option>
+                        <option value="28%">28%</option>
+                        <option value="20%">20%</option>
+                        <option value="18%">18%</option>
+                        <option value="10%">10%</option>
+                    </select>
+                </div>
+
+                <!-- Full Trust Exemption -->
+                <div class="form-group">
+                    <label>
+                        Full Trust Exemption?<span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="exemptionYes" name="fullTrustExemption" value="Yes" required>
+                            <label for="exemptionYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exemptionNo" name="fullTrustExemption" value="No" required>
+                            <label for="exemptionNo">No</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="exemptionError">Please select an option</div>
+                </div>
+
+                <!-- Fraction of Exemption (Conditional) -->
+                <div class="conditional-section" id="fractionSection">
+                    <div class="form-group">
+                        <label>
+                            Fraction of Exemption?
+                        </label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="fractionYes" name="fractionExemption" value="Yes">
+                                <label for="fractionYes">Yes</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="fractionNo" name="fractionExemption" value="No">
+                                <label for="fractionNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-section" id="fractionAmountSection">
+                        <div class="form-group">
+                            <label for="fractionAmount">
+                                Specify Exemption Amount (£)<span class="required">*</span>
+                            </label>
+                            <input type="number" id="fractionAmount" name="fractionAmount" min="0" step="0.01" placeholder="0.00">
+                            <div class="error-message" id="fractionAmountError">Amount is required when fraction exemption is selected</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IHT Position -->
+                <div class="form-group">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Inheritance Tax (IHT) Position</h3>
+                    
+                    <!-- Decennial Charges -->
+                    <div class="form-group">
+                        <label>
+                            Subject to Decennial Charges?<span class="required">*</span>
+                        </label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="decennialYes" name="decennialCharges" value="Yes" required>
+                                <label for="decennialYes">Yes</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="decennialNo" name="decennialCharges" value="No" required>
+                                <label for="decennialNo">No</label>
+                            </div>
+                        </div>
+                        <div class="help-text">10-year anniversary charges for relevant property trusts</div>
+                        <div class="error-message" id="decennialError">Please select an option</div>
+                    </div>
+
+                    <div class="conditional-section" id="decennialDateSection">
+                        <div class="form-group">
+                            <label for="chargingStartDate">
+                                Start Date for Charging Purposes<span class="required">*</span>
+                            </label>
+                            <input type="date" id="chargingStartDate" name="chargingStartDate">
+                            <div class="error-message" id="chargingStartDateError">Start date is required</div>
+                        </div>
+                    </div>
+
+                    <!-- Aggregable with Estate -->
+                    <div class="form-group">
+                        <label>
+                            Aggregable with Personal Estate on Death?<span class="required">*</span>
+                        </label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="aggregableYes" name="aggregableWithEstate" value="Yes" required>
+                                <label for="aggregableYes">Yes</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="aggregableNo" name="aggregableWithEstate" value="No" required>
+                                <label for="aggregableNo">No</label>
+                            </div>
+                        </div>
+                        <div class="help-text">Relevant for certain trust types where assets may form part of personal estate</div>
+                        <div class="error-message" id="aggregableError">Please select an option</div>
+                    </div>
+
+                    <div class="conditional-section" id="estateOwnerSection">
+                        <div class="form-group">
+                            <label for="estateOwner">
+                                Whose Estate?<span class="required">*</span>
+                            </label>
+                            <input type="text" id="estateOwner" name="estateOwner" placeholder="Enter name of estate owner">
+                            <div class="error-message" id="estateOwnerError">Estate owner name is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                    <button type="submit" class="btn-primary">Continue →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('taxForm');
+
+        // Populate from URL
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.forEach((value, key) => {
+                const field = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    if (field.type === 'radio') {
+                        field.checked = true;
+                    } else {
+                        field.value = value;
+                    }
+                }
+            });
+            
+            // Trigger conditional logic
+            handleExemptionChange();
+            handleDecennialChange();
+            handleAggregableChange();
+            handleFractionChange();
+        });
+
+        // Exemption logic
+        document.querySelectorAll('input[name="fullTrustExemption"]').forEach(radio => {
+            radio.addEventListener('change', handleExemptionChange);
+        });
+
+        function handleExemptionChange() {
+            const value = document.querySelector('input[name="fullTrustExemption"]:checked')?.value;
+            const fractionSection = document.getElementById('fractionSection');
+            
+            if (value === 'No') {
+                fractionSection.classList.add('show');
+            } else {
+                fractionSection.classList.remove('show');
+                document.getElementById('fractionAmountSection').classList.remove('show');
+            }
+        }
+
+        // Fraction logic
+        document.querySelectorAll('input[name="fractionExemption"]').forEach(radio => {
+            radio.addEventListener('change', handleFractionChange);
+        });
+
+        function handleFractionChange() {
+            const value = document.querySelector('input[name="fractionExemption"]:checked')?.value;
+            const amountSection = document.getElementById('fractionAmountSection');
+            const amountField = document.getElementById('fractionAmount');
+            
+            if (value === 'Yes') {
+                amountSection.classList.add('show');
+                amountField.required = true;
+            } else {
+                amountSection.classList.remove('show');
+                amountField.required = false;
+            }
+        }
+
+        // Decennial logic
+        document.querySelectorAll('input[name="decennialCharges"]').forEach(radio => {
+            radio.addEventListener('change', handleDecennialChange);
+        });
+
+        function handleDecennialChange() {
+            const value = document.querySelector('input[name="decennialCharges"]:checked')?.value;
+            const dateSection = document.getElementById('decennialDateSection');
+            const dateField = document.getElementById('chargingStartDate');
+            
+            if (value === 'Yes') {
+                dateSection.classList.add('show');
+                dateField.required = true;
+            } else {
+                dateSection.classList.remove('show');
+                dateField.required = false;
+            }
+        }
+
+        // Aggregable logic
+        document.querySelectorAll('input[name="aggregableWithEstate"]').forEach(radio => {
+            radio.addEventListener('change', handleAggregableChange);
+        });
+
+        function handleAggregableChange() {
+            const value = document.querySelector('input[name="aggregableWithEstate"]:checked')?.value;
+            const ownerSection = document.getElementById('estateOwnerSection');
+            const ownerField = document.getElementById('estateOwner');
+            
+            if (value === 'Yes') {
+                ownerSection.classList.add('show');
+                ownerField.required = true;
+            } else {
+                ownerSection.classList.remove('show');
+                ownerField.required = false;
+            }
+        }
+
+        // Validation
+        function validateField(field) {
+            const errorElement = document.getElementById(field.id + 'Error') || document.getElementById(field.name + 'Error');
+            
+            if (field.type === 'radio') {
+                const checked = document.querySelector(`input[name="${field.name}"]:checked`);
+                if (!checked && field.required) {
+                    if (errorElement) errorElement.classList.add('show');
+                    return false;
+                }
+                if (errorElement) errorElement.classList.remove('show');
+                return true;
+            }
+
+            if (field.required && !field.value.trim()) {
+                field.classList.add('error');
+                if (errorElement) errorElement.classList.add('show');
+                return false;
+            }
+            
+            field.classList.remove('error');
+            if (errorElement) errorElement.classList.remove('show');
+            return true;
+        }
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert('Please complete all required fields');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const params = new URLSearchParams(window.location.search);
+            
+            params.forEach((value, key) => {
+                if (!formData.has(key)) {
+                    formData.append(key, value);
+                }
+            });
+
+            formData.forEach((value, key) => {
+                params.set(key, value);
+            });
+
+            const nextModule = params.get('nextModule') || 'module_23_policy_objectives.html';
+            window.location.href = nextModule + '?' + params.toString();
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

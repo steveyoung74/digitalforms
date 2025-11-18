@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declaration & Signature - Evelyn Partners</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            animation: slide 20s linear infinite;
+        }
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        .form-header h1, .form-header p { position: relative; z-index: 1; }
+        .form-header h1 { font-size: 32px; margin-bottom: 10px; font-weight: 600; }
+        .form-header p { font-size: 16px; opacity: 0.95; }
+        .form-content { padding: 40px; }
+        .declaration-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .declaration-box h3 { color: #667eea; margin-bottom: 15px; font-size: 20px; }
+        .declaration-box p { color: #333; font-size: 14px; line-height: 1.8; margin-bottom: 15px; }
+        .declaration-box p:last-child { margin-bottom: 0; }
+        .applicant-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+        }
+        .applicant-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .applicant-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+        }
+        .applicant-badge.primary { background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); }
+        .applicant-badge.joint { background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%); }
+        .applicant-badge.trustee { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .applicant-header h3 { color: #333; font-size: 20px; margin: 0; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; font-size: 14px; }
+        .required { color: #e91e63; margin-left: 4px; }
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .signature-canvas-container {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .signature-canvas {
+            width: 100%;
+            height: 150px;
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            background: white;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .signature-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-clear {
+            padding: 8px 16px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-clear:hover { background: #d32f2f; }
+        .signature-instruction {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .error-message { color: #d32f2f; font-size: 13px; margin-top: 5px; display: none; }
+        .error-message.show { display: block; }
+        input.error { border-color: #d32f2f; }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background: #d0d0d0; transform: translateY(-2px); }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); }
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        .divider span {
+            background: white;
+            padding: 0 20px;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+        }
+        @media (max-width: 768px) {
+            .form-content { padding: 25px; }
+            .button-group { flex-direction: column; }
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Declaration & Signature</h1>
+            <p>Module 7 - Final Declaration & Signatures</p>
+        </div>
+        <div class="form-content">
+            <div class="declaration-box">
+                <h3>Declaration</h3>
+                <p><strong>I declare that:</strong></p>
+                <p>• I am not tax resident in, or citizen of, any other country beside those listed above and confirm that all the information provided on this form is to the best of my knowledge and belief, accurate and complete.</p>
+                <p>• I agree to notify Evelyn Partners within 30 days of any changes to the information provided in this form and to provide a suitably updated Self-Certification form within 90 days of such a change.</p>
+                <p>• I certify that I am the beneficial owner or am authorised to sign for the individual who is the beneficial owner of all the income to which this form relates and/or am using this form to document myself as an individual who is the Account Holder.</p>
+                <p>• I consent to Evelyn Partners processing my personal data in accordance with their Privacy Policy and for the purposes described in this application.</p>
+            </div>
+            <form id="declarationForm" novalidate>
+                <!-- Primary Applicant / First Trustee -->
+                <div class="applicant-section">
+                    <div class="applicant-header">
+                        <div class="applicant-badge primary" id="applicant1Badge">Primary Applicant</div>
+                        <h3 id="applicant1Title">Signature Required</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullName1">Full Name<span class="required">*</span></label>
+                        <input type="text" id="fullName1" name="fullName1" required placeholder="Enter full legal name">
+                        <div class="error-message" id="fullName1Error">Full name is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signatureDate1">Date<span class="required">*</span></label>
+                        <input type="date" id="signatureDate1" name="signatureDate1" required>
+                        <div class="error-message" id="signatureDate1Error">Date is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Signature<span class="required">*</span></label>
+                        <div class="signature-canvas-container">
+                            <canvas id="signatureCanvas1" class="signature-canvas"></canvas>
+                            <div class="signature-controls">
+                                <button type="button" class="btn-clear" onclick="clearSignature('signatureCanvas1')">Clear Signature</button>
+                            </div>
+                            <p class="signature-instruction">Sign above using your mouse or touch screen</p>
+                        </div>
+                        <input type="hidden" id="signatureData1" name="signatureData1" required>
+                        <div class="error-message" id="signatureData1Error">Signature is required</div>
+                    </div>
+                </div>
+                <!-- Joint Applicant / Second Trustee (Dynamic) -->
+                <div id="applicant2Section" style="display: none;">
+                    <div class="divider"><span>AND</span></div>
+                    <div class="applicant-section">
+                        <div class="applicant-header">
+                            <div class="applicant-badge joint" id="applicant2Badge">Joint Applicant</div>
+                            <h3 id="applicant2Title">Signature Required</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullName2">Full Name<span class="required">*</span></label>
+                            <input type="text" id="fullName2" name="fullName2" placeholder="Enter full legal name">
+                            <div class="error-message" id="fullName2Error">Full name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signatureDate2">Date<span class="required">*</span></label>
+                            <input type="date" id="signatureDate2" name="signatureDate2">
+                            <div class="error-message" id="signatureDate2Error">Date is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Signature<span class="required">*</span></label>
+                            <div class="signature-canvas-container">
+                                <canvas id="signatureCanvas2" class="signature-canvas"></canvas>
+                                <div class="signature-controls">
+                                    <button type="button" class="btn-clear" onclick="clearSignature('signatureCanvas2')">Clear Signature</button>
+                                </div>
+                                <p class="signature-instruction">Sign above using your mouse or touch screen</p>
+                            </div>
+                            <input type="hidden" id="signatureData2" name="signatureData2">
+                            <div class="error-message" id="signatureData2Error">Signature is required</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Additional Trustee Signatures Container -->
+                <div id="additionalTrusteesContainer"></div>
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                    <button type="submit" class="btn-primary">Submit Application →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('declarationForm');
+        const signaturePads = {};
+        let numTrustees = 0;
+        let isTrustApp = false;
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isJoint = urlParams.has('_joint') || urlParams.get('applicationType') === 'joint';
+            numTrustees = parseInt(urlParams.get('numTrustees')) || 0;
+            isTrustApp = numTrustees > 0;
+            if (isTrustApp) {
+                document.getElementById('applicant1Badge').textContent = 'Trustee 1';
+                document.getElementById('applicant1Badge').classList.remove('primary');
+                document.getElementById('applicant1Badge').classList.add('trustee');
+                document.getElementById('applicant1Title').textContent = 'First Trustee Signature';
+                if (numTrustees >= 2) {
+                    document.getElementById('applicant2Section').style.display = 'block';
+                    document.getElementById('applicant2Badge').textContent = 'Trustee 2';
+                    document.getElementById('applicant2Badge').classList.remove('joint');
+                    document.getElementById('applicant2Badge').classList.add('trustee');
+                    document.getElementById('applicant2Title').textContent = 'Second Trustee Signature';
+                    document.getElementById('fullName2').required = true;
+                    document.getElementById('signatureDate2').required = true;
+                    document.getElementById('signatureData2').required = true;
+                }
+                if (numTrustees > 2) {
+                    const container = document.getElementById('additionalTrusteesContainer');
+                    for (let i = 3; i <= numTrustees; i++) {
+                        container.innerHTML += `
+                            <div class="divider"><span>AND</span></div>
+                            <div class="applicant-section">
+                                <div class="applicant-header">
+                                    <div class="applicant-badge trustee">Trustee ${i}</div>
+                                    <h3>Additional Trustee Signature</h3>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fullName${i}">Full Name<span class="required">*</span></label>
+                                    <input type="text" id="fullName${i}" name="fullName${i}" required placeholder="Enter full legal name">
+                                    <div class="error-message" id="fullName${i}Error">Full name is required</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="signatureDate${i}">Date<span class="required">*</span></label>
+                                    <input type="date" id="signatureDate${i}" name="signatureDate${i}" required>
+                                    <div class="error-message" id="signatureDate${i}Error">Date is required</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Signature<span class="required">*</span></label>
+                                    <div class="signature-canvas-container">
+                                        <canvas id="signatureCanvas${i}" class="signature-canvas"></canvas>
+                                        <div class="signature-controls">
+                                            <button type="button" class="btn-clear" onclick="clearSignature('signatureCanvas${i}')">Clear Signature</button>
+                                        </div>
+                                        <p class="signature-instruction">Sign above using your mouse or touch screen</p>
+                                    </div>
+                                    <input type="hidden" id="signatureData${i}" name="signatureData${i}" required>
+                                    <div class="error-message" id="signatureData${i}Error">Signature is required</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            } else if (isJoint) {
+                document.getElementById('applicant2Section').style.display = 'block';
+                document.getElementById('fullName2').required = true;
+                document.getElementById('signatureDate2').required = true;
+                document.getElementById('signatureData2').required = true;
+            }
+            urlParams.forEach((value, key) => {
+                const field = document.getElementById(key);
+                if (field && field.type !== 'hidden') {
+                    field.value = value;
+                }
+            });
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('signatureDate1').value = today;
+            if (isJoint || numTrustees >= 2) {
+                document.getElementById('signatureDate2').value = today;
+            }
+            setupSignaturePads();
+        });
+        function setupSignaturePads() {
+            const canvases = document.querySelectorAll('.signature-canvas');
+            canvases.forEach(canvas => {
+                const context = canvas.getContext('2d');
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                const pad = {
+                    canvas: canvas,
+                    context: context,
+                    isDrawing: false,
+                    hiddenInput: document.getElementById(canvas.id.replace('Canvas', 'Data'))
+                };
+                signaturePads[canvas.id] = pad;
+                canvas.addEventListener('mousedown', (e) => startDrawing(e, pad));
+                canvas.addEventListener('mousemove', (e) => draw(e, pad));
+                canvas.addEventListener('mouseup', () => stopDrawing(pad));
+                canvas.addEventListener('mouseout', () => stopDrawing(pad));
+                canvas.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousedown', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(mouseEvent);
+                });
+                canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousemove', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(mouseEvent);
+                });
+                canvas.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    const mouseEvent = new MouseEvent('mouseup', {});
+                    canvas.dispatchEvent(mouseEvent);
+                });
+            });
+        }
+        function startDrawing(e, pad) {
+            pad.isDrawing = true;
+            const rect = pad.canvas.getBoundingClientRect();
+            pad.context.beginPath();
+            pad.context.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+        function draw(e, pad) {
+            if (!pad.isDrawing) return;
+            const rect = pad.canvas.getBoundingClientRect();
+            pad.context.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            pad.context.strokeStyle = '#000';
+            pad.context.lineWidth = 2;
+            pad.context.lineCap = 'round';
+            pad.context.stroke();
+            pad.hiddenInput.value = pad.canvas.toDataURL();
+        }
+        function stopDrawing(pad) {
+            pad.isDrawing = false;
+        }
+        function clearSignature(canvasId) {
+            const pad = signaturePads[canvasId];
+            if (pad) {
+                pad.context.clearRect(0, 0, pad.canvas.width, pad.canvas.height);
+                pad.hiddenInput.value = '';
+            }
+        }
+        function validateField(field) {
+            const errorElement = document.getElementById(field.id + 'Error');
+            if (field.required && !field.value.trim()) {
+                field.classList.add('error');
+                if (errorElement) errorElement.classList.add('show');
+                return false;
+            }
+            field.classList.remove('error');
+            if (errorElement) errorElement.classList.remove('show');
+            return true;
+        }
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (field.offsetParent !== null && !validateField(field)) {
+                    isValid = false;
+                }
+            });
+            if (!isValid) {
+                alert('Please complete all required fields including signatures');
+                return;
+            }
+            // Collect all form data
+            const formData = new FormData(form);
+            const params = new URLSearchParams(window.location.search);
+            
+            // Merge URL parameters with form data
+            params.forEach((value, key) => {
+                if (!formData.has(key)) {
+                    formData.append(key, value);
+                }
+            });
+            
+            // Get all data from localStorage
+            const storedData = JSON.parse(localStorage.getItem('evelynFormData') || '{}');
+            
+            // Combine everything into a single object
+            const submissionData = { ...storedData };
+            
+            // Add current form data
+            formData.forEach((value, key) => {
+                submissionData[key] = value;
+            });
+            
+            // Add URL params
+            params.forEach((value, key) => {
+                if (!submissionData[key]) {
+                    submissionData[key] = value;
+                }
+            });
+            
+            console.log('Submitting application data:', submissionData);
+            
+            // Submit to n8n webhook
+            // ⚠️ IMPORTANT: Update this URL with your actual n8n webhook URL
+            const webhookURL = 'https://steveyoung.app.n8n.cloud/webhook/evelyn-form-submit';
+            
+            // Show loading state
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                
+                // Clear localStorage after successful submission
+                localStorage.removeItem('evelynFormData');
+                
+                // Show success message
+                alert(`✅ Application submitted successfully!\n\nApplication ID: ${data.applicationId || 'Pending'}\n\nThank you for completing your application with Evelyn Partners.`);
+                
+                // Optional: Redirect to thank you page
+                // window.location.href = 'thank-you.html?id=' + (data.applicationId || '');
+                
+                // Or reload to clear form
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                
+                // Re-enable button
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+                
+                // Show error message
+                alert('❌ There was an error submitting your application.\n\nPlease check your internet connection and try again.\n\nIf the problem persists, please contact support.');
+            });
+        });
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

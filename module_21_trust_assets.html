@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Assets & Income - Evelyn Partners</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .form-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header p {
+            font-size: 16px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-content { padding: 40px; }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h3 { color: #667eea; margin-bottom: 10px; font-size: 18px; }
+        .info-box p { color: #555; font-size: 14px; line-height: 1.6; }
+
+        .form-group { margin-bottom: 25px; }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .required { color: #e91e63; margin-left: 4px; }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea { resize: vertical; min-height: 80px; }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .conditional-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .conditional-section.show { display: block; }
+
+        .property-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .property-header h4 {
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .btn-remove {
+            padding: 6px 12px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover { background: #d32f2f; }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-add:hover { background: #45a049; }
+
+        .total-row {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show { display: block; }
+        input.error, select.error, textarea.error { border-color: #d32f2f; }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .form-content { padding: 25px; }
+            .form-row { grid-template-columns: 1fr; }
+            .button-group { flex-direction: column; }
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Trust Assets & Income</h1>
+            <p>Module 21 - Trust Financial Structure</p>
+        </div>
+
+        <div class="form-content">
+            <div class="info-box">
+                <h3>About This Module</h3>
+                <p>Please provide details about the trust's assets and income sources. This helps us understand the trust's financial structure and investment requirements.</p>
+            </div>
+
+            <form id="assetsForm" novalidate>
+                <!-- All Assets at Evelyn Partners -->
+                <div class="form-group">
+                    <label>
+                        Are all trust assets held at Evelyn Partners?<span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="allAssetsYes" name="allAssetsAtEvelyn" value="Yes" required>
+                            <label for="allAssetsYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="allAssetsNo" name="allAssetsAtEvelyn" value="No" required>
+                            <label for="allAssetsNo">No</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="allAssetsError">Please select an option</div>
+                </div>
+
+                <!-- Income Details (Conditional) -->
+                <div class="conditional-section" id="incomeSection">
+                    <h3 style="margin-bottom: 20px; color: #667eea;">Estimated Gross Income Per Annum</h3>
+                    
+                    <div class="form-group">
+                        <label for="incomeInvestments">Investments (£)</label>
+                        <input type="number" id="incomeInvestments" name="incomeInvestments" min="0" step="0.01" placeholder="0.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incomeRental">Rental Income (£)</label>
+                        <input type="number" id="incomeRental" name="incomeRental" min="0" step="0.01" placeholder="0.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incomeOther">Other Income (£)</label>
+                        <input type="number" id="incomeOther" name="incomeOther" min="0" step="0.01" placeholder="0.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incomeDescription">Description of Other Income Sources</label>
+                        <textarea id="incomeDescription" name="incomeDescription" placeholder="Please describe any other income sources..."></textarea>
+                    </div>
+
+                    <div class="total-row">
+                        <span>Total Annual Income:</span>
+                        <span id="totalIncome">£0.00</span>
+                    </div>
+                </div>
+
+                <!-- Property Assets (Conditional) -->
+                <div class="conditional-section" id="propertiesSection">
+                    <h3 style="margin-bottom: 20px; color: #667eea;">Property Assets</h3>
+                    
+                    <div id="propertiesContainer"></div>
+                    
+                    <button type="button" class="btn-add" onclick="addProperty()">+ Add Property</button>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                    <button type="submit" class="btn-primary">Continue →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('assetsForm');
+        const allAssetsRadios = document.querySelectorAll('input[name="allAssetsAtEvelyn"]');
+        const incomeSection = document.getElementById('incomeSection');
+        const propertiesSection = document.getElementById('propertiesSection');
+        let propertyCount = 0;
+
+        // Populate from URL
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.forEach((value, key) => {
+                const field = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    if (field.type === 'radio') {
+                        field.checked = true;
+                        handleAllAssetsChange();
+                    } else {
+                        field.value = value;
+                    }
+                }
+            });
+            calculateTotal();
+        });
+
+        // Handle all assets radio change
+        allAssetsRadios.forEach(radio => {
+            radio.addEventListener('change', handleAllAssetsChange);
+        });
+
+        function handleAllAssetsChange() {
+            const selectedValue = document.querySelector('input[name="allAssetsAtEvelyn"]:checked')?.value;
+            
+            if (selectedValue === 'No') {
+                incomeSection.classList.add('show');
+                propertiesSection.classList.add('show');
+                if (propertyCount === 0) {
+                    addProperty();
+                }
+            } else {
+                incomeSection.classList.remove('show');
+                propertiesSection.classList.remove('show');
+            }
+        }
+
+        // Calculate total income
+        ['incomeInvestments', 'incomeRental', 'incomeOther'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', calculateTotal);
+        });
+
+        function calculateTotal() {
+            const investments = parseFloat(document.getElementById('incomeInvestments')?.value) || 0;
+            const rental = parseFloat(document.getElementById('incomeRental')?.value) || 0;
+            const other = parseFloat(document.getElementById('incomeOther')?.value) || 0;
+            const total = investments + rental + other;
+            document.getElementById('totalIncome').textContent = `£${total.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
+
+        // Add property
+        function addProperty() {
+            propertyCount++;
+            const container = document.getElementById('propertiesContainer');
+            const propertyDiv = document.createElement('div');
+            propertyDiv.className = 'property-section';
+            propertyDiv.id = `property${propertyCount}`;
+            propertyDiv.innerHTML = `
+                <div class="property-header">
+                    <h4>Property ${propertyCount}</h4>
+                    <button type="button" class="btn-remove" onclick="removeProperty(${propertyCount})">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="property${propertyCount}_description" placeholder="e.g., 3-bedroom house">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="property${propertyCount}_location" placeholder="City, Country">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Borrowings Secured (£)</label>
+                        <input type="number" name="property${propertyCount}_borrowings" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Approximate Value (£)</label>
+                        <input type="number" name="property${propertyCount}_value" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Is it let?</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="property${propertyCount}_letYes" name="property${propertyCount}_isLet" value="Yes">
+                                <label for="property${propertyCount}_letYes">Yes</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="property${propertyCount}_letNo" name="property${propertyCount}_isLet" value="No">
+                                <label for="property${propertyCount}_letNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Used by beneficiary?</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="property${propertyCount}_usedYes" name="property${propertyCount}_usedByBeneficiary" value="Yes">
+                                <label for="property${propertyCount}_usedYes">Yes</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="property${propertyCount}_usedNo" name="property${propertyCount}_usedByBeneficiary" value="No">
+                                <label for="property${propertyCount}_usedNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(propertyDiv);
+        }
+
+        function removeProperty(id) {
+            document.getElementById(`property${id}`)?.remove();
+        }
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const allAssets = document.querySelector('input[name="allAssetsAtEvelyn"]:checked');
+            if (!allAssets) {
+                document.getElementById('allAssetsError').classList.add('show');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const params = new URLSearchParams(window.location.search);
+            
+            params.forEach((value, key) => {
+                if (!formData.has(key)) {
+                    formData.append(key, value);
+                }
+            });
+
+            formData.forEach((value, key) => {
+                params.set(key, value);
+            });
+
+            const nextModule = params.get('nextModule') || 'module_22_tax_config.html';
+            window.location.href = nextModule + '?' + params.toString();
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
