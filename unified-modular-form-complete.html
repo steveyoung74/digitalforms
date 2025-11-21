@@ -324,6 +324,18 @@
             flex: 1;
         }
 
+        .checkbox-option label a {
+            color: #6b4c9a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .checkbox-option label a:hover {
+            border-bottom-color: #6b4c9a;
+        }
+
         .info-box {
             background: #e3f2fd;
             border-left: 4px solid #2196f3;
@@ -672,8 +684,8 @@
                 icon: '✍️',
                 fields: [
                     { name: 'dataAccuracy', label: 'I confirm that all information provided is true, complete, and accurate', type: 'checkbox', required: true, width: 'full' },
-                    { name: 'termsAccepted', label: 'I have read and agree to the Terms and Conditions', type: 'checkbox', required: true, width: 'full' },
-                    { name: 'privacyAccepted', label: 'I have read and understood the Privacy Policy', type: 'checkbox', required: true, width: 'full' },
+                    { name: 'termsAccepted', label: 'I have read and agree to the <a href="https://www.evelyn.com/terms-and-conditions" target="_blank">Terms and Conditions</a>', type: 'checkbox', required: true, width: 'full' },
+                    { name: 'privacyAccepted', label: 'I have read and understood the <a href="https://www.evelyn.com/privacy-policy" target="_blank">Privacy Policy</a>', type: 'checkbox', required: true, width: 'full' },
                     { name: 'signatureName', label: 'Full Name', type: 'text', required: true, placeholder: 'Type your full name', width: 'half' },
                     { name: 'signatureDate', label: 'Date', type: 'date', required: true, width: 'half' },
                     { name: 'signature', label: 'Signature', type: 'signature', required: true, width: 'full' }
