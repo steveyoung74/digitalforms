@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - Evelyn Partners</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .document-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .document-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .document-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .document-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .document-header p {
+            font-size: 16px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .document-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+            color: #333;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .content-block {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .content-block p {
+            margin-bottom: 12px;
+        }
+
+        .numbered-list {
+            margin-left: 25px;
+        }
+
+        .numbered-list li {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .nested-list {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .nested-list li {
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .contact-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .contents {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .contents h2 {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .contents-list {
+            columns: 2;
+            column-gap: 30px;
+        }
+
+        .contents-list li {
+            margin-bottom: 8px;
+            color: #555;
+            break-inside: avoid;
+        }
+
+        .contents-list a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .contents-list a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .contents-list {
+                columns: 1;
+            }
+
+            .document-content {
+                padding: 20px;
+            }
+
+            .document-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        .clause-number {
+            color: #667eea;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <div class="document-header">
+            <h1>📋 Terms and Conditions</h1>
+            <p>Evelyn Partners Financial Planning Limited</p>
+            <p style="font-size: 14px; margin-top: 10px;">Effective: April 2024</p>
+        </div>
+
+        <div class="document-content">
+            <div class="contents">
+                <h2>Contents</h2>
+                <ol class="contents-list">
+                    <li><a href="#section1">Authorisation</a></li>
+                    <li><a href="#section2">Our Services</a></li>
+                    <li><a href="#section3">This Agreement</a></li>
+                    <li><a href="#section4">Right to Cancel</a></li>
+                    <li><a href="#section5">Client Categorisation</a></li>
+                    <li><a href="#section6">Authority to Act</a></li>
+                    <li><a href="#section7">Joint Clients</a></li>
+                    <li><a href="#section8">Communications</a></li>
+                    <li><a href="#section9">Instructions</a></li>
+                    <li><a href="#section10">Our Duties</a></li>
+                    <li><a href="#section11">Safeguarding Your Documents</a></li>
+                    <li><a href="#section12">Delegation and Use of Agents</a></li>
+                    <li><a href="#section13">Conflicts</a></li>
+                    <li><a href="#section14">Fees</a></li>
+                    <li><a href="#section15">Non-Investment Insurance Commission</a></li>
+                    <li><a href="#section16">Tax</a></li>
+                    <li><a href="#section17">Data Protection</a></li>
+                    <li><a href="#section18">Confidentiality</a></li>
+                    <li><a href="#section19">Credit Reference and Fraud Prevention Agencies</a></li>
+                    <li><a href="#section20">Reporting</a></li>
+                    <li><a href="#section21">Liability and Indemnity</a></li>
+                    <li><a href="#section22">Changes to This Agreement</a></li>
+                    <li><a href="#section23">Termination</a></li>
+                    <li><a href="#section24">Effect of Cancellation or Termination</a></li>
+                    <li><a href="#section25">Force Majeure</a></li>
+                    <li><a href="#section26">Notices</a></li>
+                    <li><a href="#section27">Complaints</a></li>
+                    <li><a href="#section28">Compensation</a></li>
+                    <li><a href="#section29">Assignment</a></li>
+                    <li><a href="#section30">Entire Agreement, Waiver and Remedies</a></li>
+                    <li><a href="#section31">Illegality</a></li>
+                    <li><a href="#section32">Rights of Third Parties</a></li>
+                    <li><a href="#section33">Governing Law</a></li>
+                    <li><a href="#section34">Definitions and Interpretation</a></li>
+                </ol>
+            </div>
+
+            <div id="section1" class="section">
+                <div class="section-title">1. Authorisation</div>
+                <div class="content-block">
+                    <p><span class="clause-number">1.1</span> Evelyn Partners Financial Planning Limited ("Evelyn Partners") is registered in England and Wales under number 00607039 at 45 Gresham Street, London EC2V 7BG and is authorised and regulated by the FCA (registration number 136414). The FCA is based at 12 Endeavour Square, London, E20 1JN. Our registration can be verified by calling the FCA on 0800 111 6768 or online at <a href="https://register.fca.org.uk/" target="_blank">https://register.fca.org.uk/</a>.</p>
+                </div>
+            </div>
+
+            <div id="section2" class="section">
+                <div class="section-title">2. Our Services</div>
+                <div class="content-block">
+                    <p><span class="clause-number">2.1</span> We can provide advice on, and arrange, all aspects of financial planning such as:</p>
+                    
+                    <div class="subsection-title">2.1.1 Investments, including advice on:</div>
+                    <ul class="nested-list">
+                        <li>(a) individual savings account (ISA) and general investment account (GIA) wrappers;</li>
+                        <li>(b) offshore and onshore bonds;</li>
+                        <li>(c) the underlying investment solutions held within (a) and (b) above (e.g., investment solutions provided by Evelyn Partners Affiliates, third-party funds on external platforms, funds within third-party packaged investment products); and</li>
+                        <li>(d) tax-advantaged products (e.g., venture capital trusts (VCT), enterprise investment schemes (EIS), business property relief (BPR), alternative investment market (AIM) portfolios);</li>
+                    </ul>
+
+                    <div class="subsection-title">2.1.2 Pensions, including:</div>
+                    <ul class="nested-list">
+                        <li>(a) personal pensions;</li>
+                        <li>(b) stakeholder pensions;</li>
+                        <li>(c) self-invested personal pensions (SIPPs);</li>
+                        <li>(d) small, self-administered schemes (SSAS);</li>
+                        <li>(e) the underlying investment solutions held within (a) to (d) above; and</li>
+                        <li>(f) defined benefit pension transfers.</li>
+                    </ul>
+
+                    <div class="subsection-title">2.1.3 Non-investment insurance contracts, including:</div>
+                    <ul class="nested-list">
+                        <li>(a) life cover (e.g. family income benefit, gift inter vivos cover, shareholder protection, keyman cover, relevant life);</li>
+                        <li>(b) critical illness cover; and</li>
+                        <li>(c) income protection;</li>
+                    </ul>
+
+                    <div class="subsection-title">2.1.4 Retirement income advice, including:</div>
+                    <ul class="nested-list">
+                        <li>(a) annuities; and</li>
+                        <li>(b) flexi-access drawdown;</li>
+                    </ul>
+
+                    <div class="subsection-title">2.1.5 Estate planning, including:</div>
+                    <ul class="nested-list">
+                        <li>(a) gifting advice;</li>
+                        <li>(b) offshore bond suitability;</li>
+                        <li>(c) packaged estate planning products (e.g. discounted gift trust, gift trust, loan trust);</li>
+                        <li>(d) whole of life insurance; and</li>
+                    </ul>
+
+                    <div class="subsection-title">2.1.6 Cashflow modelling.</div>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.2</span> We may also agree to advise on or arrange products for other types of business that are not investments under FSMA. Some of the services that we may provide are not regulated by the FCA, such as some aspects of taxation and trust guidance.</p>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.3</span> We may provide advice to non-UK resident or domiciled clients in relation to UK assets or wrappers. We may also provide advice to corporate bodies, trustees and to deputies.</p>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.4</span> We do not provide advice or any services in relation to the following:</p>
+                    <ol class="nested-list">
+                        <li>2.4.1 corporate bonds, treasury bonds and warrants;</li>
+                        <li>2.4.2 exchange-traded funds (ETFs);</li>
+                        <li>2.4.3 employer-financed unapproved retirement benefits schemes (EFURBS) or funded unapproved retirement benefit schemes (FURBS);</li>
+                        <li>2.4.4 structured products/deposits;</li>
+                        <li>2.4.5 employee benefits;</li>
+                        <li>2.4.6 general insurance (e.g. personal accident insurance, private medical insurance);</li>
+                        <li>2.4.7 mortgage and equity release;</li>
+                        <li>2.4.8 completion of tax returns;</li>
+                        <li>2.4.9 drafting wills or trust deeds;</li>
+                        <li>2.4.10 debt management counselling services except the repayment of loans/credit cards;</li>
+                        <li>2.4.11 buying or selling single company shares (other than investment trusts);</li>
+                        <li>2.4.12 derivatives;</li>
+                        <li>2.4.13 rights issues or other corporate actions;</li>
+                        <li>2.4.14 opting out of active membership of a defined benefit scheme;</li>
+                        <li>2.4.15 acting as attorney, deputy, guardian or trustee for you;</li>
+                        <li>2.4.16 buying or selling any investments or products without your prior written authority or delegation; or</li>
+                        <li>2.4.17 any areas of advice for which we do not have the requisite regulatory permissions.</li>
+                    </ol>
+                </div>
+
+                <div class="highlight-box">
+                    <p><span class="clause-number">2.5</span> <strong>Restricted Advice:</strong> When we provide you with advice, our advice is classed as "restricted advice" under the FCA Rules. A firm offering restricted advice might restrict its recommendations only to products offered by a single product provider. Or it might offer a broad selection of products but including products and services offered by an Affiliate.</p>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.6</span> Our advice is classed as "restricted" because, whereas we research a wide range of products and providers to assess those which are the most capable of meeting your needs and objectives, where we provide advice or recommend a discretionary managed service or fund investment, we will often recommend a fund or service managed by an Affiliate unless these are not suitable for you. In addition, there are certain products that we do not advise on (e.g, equities, mortgages or derivatives, and as set out in clause 2.4).</p>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.7</span> Our Risk Warning Notice includes information on risks relevant to certain classes of investment and/or the service we may provide to you. A copy of our Risk Warning Notice is on our website <a href="https://evelyn.com/legal-compliance-regulatory/risk-warnings" target="_blank">https://evelyn.com/legal-compliance-regulatory/risk-warnings</a>. It is important that you read our Risk Warning Notice and contact us if you require clarification on any point. We may provide further risk information during the course of our services to you.</p>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.8</span> When we provide our service to you, we may also make available to you Investment Information. Investment Information is prepared for the benefit of all our clients and is not based on a consideration of your particular circumstances. You should not treat any Investment Information as a Recommendation or advice given to you.</p>
+                </div>
+
+                <div class="content-block">
+                    <p><span class="clause-number">2.9</span> Where we are making a payment to a third party for an Introduction, we will inform you of the amount and the name of the introducer.</p>
+                </div>
+
+                <div class="subsection-title">2.10 Execution-only service for clients who also use Bestinvest</div>
+                <div class="content-block">
+                    <p><span class="clause-number">2.10.1</span> Subject to receipt of your specific instructions, we are happy to arrange for Bestinvest to execute transactions on your behalf in respect of accounts that you hold with Bestinvest. In such circumstances we are not providing any advice and the passing of the order to Bestinvest is on an execution only basis.</p>
+
+                    <p><span class="clause-number">2.10.2</span> In respect of non-complex instruments (for example shares trades on a Trading Venue such as the London Stock Exchange, gilts, corporate bonds and authorised unit trusts) we will not exercise any judgement on your behalf about the merits, suitability or appropriateness of any transaction you instruct us to arrange.</p>
+
+                    <p><span class="clause-number">2.10.3</span> We will not arrange for Bestinvest to execute transactions in complex instruments without advice.</p>
+                </div>
+            </div>
+
+            <div id="section3" class="section">
+                <div class="section-title">3. This Agreement</div>
+                <div class="content-block">
+                    <p><span class="clause-number">3.1</span> These terms and conditions alongside any Scope of Work Letter, Service Agreement, Schedule of Fees, and Adviser Charging Agreement set out the basis upon which we agree to provide our financial planning and advice services.</p>
+
+                    <p><span class="clause-number">3.2</span> This Agreement will come into force and be legally binding once you have accepted the applicable Scope of Work Letter or Service Agreement. We reserve the right to reject your application for us to provide services in whole or in part without providing any reason.</p>
+
+                    <p><span class="clause-number">3.3</span> This Agreement will remain in force until terminated in accordance with clause 23.</p>
+                </div>
+            </div>
+
+            <div id="section4" class="section">
+                <div class="section-title">4. Right to Cancel</div>
+                <div class="content-block">
+                    <p><span class="clause-number">4.1</span> If this Agreement is concluded "at a distance", which means you did not meet an Evelyn Partners employee prior to its conclusion, you may cancel this Agreement within 14 days from the date it began. You can do this by notifying Evelyn Partners of your decision to cancel by using the contact details set out under clause 26.1.</p>
+
+                    <p><span class="clause-number">4.2</span> If you exercise your right to cancel properly, we will cease the provision of our services to you and terminate this Agreement, but such cancellation will not affect those services that have already been provided or are in the course of being provided and you will be liable for any fees and charges incurred as further described in clause 24.</p>
+
+                    <p><span class="clause-number">4.3</span> If you do not cancel this Agreement in accordance with the provisions of this clause 4, this Agreement will continue until terminated in accordance with clause 23.</p>
+
+                    <p><span class="clause-number">4.4</span> You may have other cancellation rights depending on the product we have arranged. The product provider will separately give you information about the contract terms you have entered into in respect of that product, including cancellation rights.</p>
+                </div>
+            </div>
+
+            <div id="section5" class="section">
+                <div class="section-title">5. Client Categorisation</div>
+                <div class="content-block">
+                    <p><span class="clause-number">5.1</span> In the course of all dealings with you, we will treat you as a retail client (as defined in the FCA Rules) unless we notify you to the contrary. As a retail client, you will benefit from the greatest level of protection available under the FCA Rules. You may request a different client categorisation. You understand that if we agree to your request for a different client categorisation, this will result in fewer protections for you under the FCA Rules. We are not obliged to agree to your request, however, where we do so we will provide you with a written notice of the protections lost.</p>
+                </div>
+            </div>
+
+            <div id="section6" class="section">
+                <div class="section-title">6. Authority to Act</div>
+                <div class="content-block">
+                    <p><span class="clause-number">6.1</span> If you would like an attorney to deal on your behalf with matters relating to this Agreement, we will only act on the instructions of your attorney if you provide us with a certified copy of the relevant power of attorney and we confirm that we are prepared to act on the instructions of that attorney (either expressly, or when we first act on the instructions of your attorney, whichever is earliest). Where we agree to act on the instructions of an attorney you notify to us, we may continue to do so until you notify us to the contrary.</p>
+
+                    <p><span class="clause-number">6.2</span> If you are a company, you confirm that:</p>
+                    <ol class="nested-list">
+                        <li>6.2.1 you are duly incorporated and validly existing under the laws of the jurisdiction in which you are registered;</li>
+                        <li>6.2.2 you have full power and authority to enter into and perform this Agreement; and</li>
+                        <li>6.2.3 neither the signing, delivery or performance of this Agreement nor any instructions contravene or constitute a default (or will contravene or constitute a default) under any of the following:
+                            <ul class="nested-list">
+                                <li>(a) any law by which you or any of your assets are governed or affected;</li>
+                                <li>(b) any right of a third party against you or in respect of your assets;</li>
+                                <li>(c) any agreement to which you are a party or by which any of your assets are bound; or</li>
+                                <li>(d) any charitable or other purpose to which you are subject by virtue of your documents of incorporation.</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <p><span class="clause-number">6.3</span> If you are a company, you agree to provide upon request a copy of the company's constitutional documents and a certified copy of the resolution of the board which (a) authorises the person signing this Agreement so to act; and (b) authorises certain officers of the company to give us instructions regarding your assets. You undertake to notify us promptly of the withdrawal of any such authority. We may continue to act on the instructions of any person previously notified to us until you have notified us to the contrary and we have had reasonable opportunity to amend our records.</p>
+
+                    <p><span class="clause-number">6.4</span> If you are a trustee or trustees:</p>
+                    <ol class="nested-list">
+                        <li>6.4.1 your obligations under this Agreement are joint and several. This means that each of the trustees is responsible individually and for the other trustees and we may take action against one or more of them for any breach of the obligations that apply to the trustees under this Agreement;</li>
+                        <li>6.4.2 upon request, you agree to provide certified copies of the instrument constituting the trust and of any other supplemental document(s) that limit, extend or vary the powers of the trustees and of any deeds appointing new trustees;</li>
+                        <li>6.4.3 you confirm that you have full power and authority to enter into and perform this Agreement;</li>
+                        <li>6.4.4 for the purposes of this Agreement, we will treat you as if you were the absolute beneficial owners of investments or assets of the trust;</li>
+                        <li>6.4.5 you enter into this Agreement on behalf of yourselves and your successors in title and the death of any one of you will not affect the continuance or operation of this Agreement. If any one of you dies, retires, or is removed, we will treat the appointed survivors or survivor as parties to this Agreement;</li>
+                        <li>6.4.6 you will provide us, prior to the commencement of this Agreement, with an investment policy statement in accordance with Section 15 of the Trustee Act 2000 that we will take into account in providing services under this Agreement; and</li>
+                        <li>6.4.7 you agree that, where two or more trustees have entered into this Agreement, and save as otherwise notified, we may act on the instructions of, and give notices to, only one of them.</li>
+                    </ol>
+
+                    <p><span class="clause-number">6.5</span> You undertake, represent and warrant on the date that this Agreement comes into force and on a continuing basis that:</p>
+                    <ol class="nested-list">
+                        <li>6.5.1 (unless you are acting as trustee), you are acting as principal and for your own account in respect of all the transactions contemplated under this Agreement and will accordingly be liable as principal for all obligations under this Agreement;</li>
+                        <li>6.5.2 you will provide us with such information as we may from time to time reasonably request;</li>
+                        <li>6.5.3 any information that you provide to us during the course of our relationship, including information in relation to your status, residence and domicile for taxation purposes and information about your financial circumstances, is accurate and complete, and you will provide any further information properly required by us or any court or competent authority; and</li>
+                        <li>6.5.4 any restrictions to which we are subject relating to this Agreement or any transaction contemplated by this Agreement have been notified to us.</li>
+                    </ol>
+
+                    <p><span class="clause-number">6.6</span> You acknowledge that we will be unable to provide any service under this Agreement where we are responsible for transaction reporting obligations under Applicable Law, unless you provide us with certain information. You agree:</p>
+                    <ol class="nested-list">
+                        <li>6.6.1 if you are a legal entity (e.g. a company, trust or charity), to provide us upon request with a valid LEI. Alternatively, you may instruct us to obtain a valid LEI on your behalf in which case you will promptly provide us with all information that is necessary for us to obtain a LEI; or</li>
+                        <li>6.6.2 if you are an individual, to provide us upon request with such information (e.g. UK national insurance number) that is necessary to enable us to discharge your obligations under Applicable Law for transaction reporting purposes.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="section7" class="section">
+                <div class="section-title">7. Joint Clients</div>
+                <div class="content-block">
+                    <p><span class="clause-number">7.1</span> If you have entered into this Agreement jointly with another person or other persons, you agree that:</p>
+                    <ol class="nested-list">
+                        <li>7.1.1 any one of you may give us instructions or exercise the rights provided for under this Agreement (for example, the right to terminate this Agreement) and we are not obliged to verify that any one of you has authority to give such instructions or exercise such rights;</li>
+                        <li>7.1.2 we will send communications as agreed between us. If there is no agreement, or your requirement is not clear to us, we will send communications only to the address of the first named person, whom we will treat as authorised to receive them on behalf of both or all of you;</li>
+                        <li>7.1.3 all of you are jointly and severally liable to us. This means that each person is responsible individually and for the other person(s) and we may take action against one or more of them for any breach of the obligations that apply to you under this Agreement;</li>
+                        <li>7.1.4 the Objectives and preferred level of risk chosen are identical for all of you; and</li>
+                        <li>7.1.5 if one of you dies, this Agreement remains binding on the other(s) until terminated in accordance with clause 23.</li>
+                    </ol>
+
+                    <p><span class="clause-number">7.2</span> Please see clause 14.7.3 for information on additional administrative expenses or legal or other professional costs that you may be liable for in relation to any dispute connected with your status as a joint client, where such expenses and/or costs are incurred as a result of us agreeing or being obliged to carry on activities outside the ordinary scope of our services, and clause 19.2 for information on how we and credit reference agencies may link your records where joint applications are made for our services.</p>
+                </div>
+            </div>
+
+            <div id="section8" class="section">
+                <div class="section-title">8. Communications</div>
+                <div class="content-block">
+                    <p><span class="clause-number">8.1</span> We will communicate with you in English and, subject to clause 26, will communicate with you in a manner that we consider is appropriate, including by Electronic Means (e.g. through our website or by email).</p>
+
+                    <p><span class="clause-number">8.2</span> You confirm that you have regular access to the internet and you consent to receiving communications and reports under this Agreement by Electronic Means including via our secure client portal, to the extent permitted by Applicable Law. You understand that if documents are only available online you will not receive a printed version. A paper copy of such communications and reports will be available to you upon request. We will also notify you by email where a message or information is provided in the client portal.</p>
+
+                    <p><span class="clause-number">8.3</span> We will maintain contact details for you including name, postal address, preferred telephone number and email address. You acknowledge that we will rely on the accuracy of the contact details you provide and agree that you will notify us if your contact details change.</p>
+
+                    <p><span class="clause-number">8.4</span> There are risks inherent in the use of Electronic Communications and we cannot guarantee the confidentiality, accuracy or completeness of Electronic Communications. Unless you notify us otherwise, we will assume that we may communicate with you by means of unencrypted email. We are not responsible or liable to you for any Loss that you incur arising from the use of Electronic Communications, other than where such Loss is caused by our own negligence, wilful default or fraud. Nothing in this clause 8 will exclude or restrict any duty or liability which we owe to you under Applicable Law. We virus scan all emails but will not be responsible for any damage caused by a virus or alteration by a third party after it is sent.</p>
+
+                    <p><span class="clause-number">8.5</span> We may monitor or record telephone conversations or other communications between you or Authorised Persons and us. Recordings may take place without the use of a warning tone. You agree that we may deliver copies or transcripts of such recordings to any court or competent authority. A copy of any such conversations and communications with you will be available to you on reasonable request for a period of at least five years (and where requested by the FCA for a period of up to seven years) from the date when the record is made.</p>
+                </div>
+            </div>
+
+            <div id="section9" class="section">
+                <div class="section-title">9. Instructions</div>
+                <div class="content-block">
+                    <p><span class="clause-number">9.1</span> We are entitled to rely on any instruction from you or an Authorised Person, or from such other person where we reasonably believe the instruction to be from you or an Authorised Person, whether or not the authority of such person is then effective and without further enquiry of you in relation to the genuineness, authority or identity of the Authorised Person.</p>
+
+                    <p><span class="clause-number">9.2</span> We will acknowledge an instruction received from you by acting on it, but we are not required to act on it where we believe:</p>
+                    <ol class="nested-list">
+                        <li>9.2.1 we require further information from you before we give effect to such instruction;</li>
+                        <li>9.2.2 such instruction was conflicting or ambiguous;</li>
+                        <li>9.2.3 such instruction was not given by you, an Authorised Person or in accordance with clause 9.1; or</li>
+                        <li>9.2.4 such action may not be practicable or may result in a breach of this Agreement or Applicable Law.</li>
+                    </ol>
+
+                    <p><span class="clause-number">9.3</span> We are not obliged to give or make any other acknowledgement of instructions.</p>
+
+                    <p><span class="clause-number">9.4</span> Notwithstanding anything in this Agreement to the contrary, we may in our absolute discretion refuse to act on, or delay giving effect to, an instruction from you or an Authorised Person without giving any reason for doing so. We will notify you as soon as reasonably practicable if we refuse or delay giving effect to your instruction.</p>
+                </div>
+            </div>
+
+            <div id="section10" class="section">
+                <div class="section-title">10. Our Duties</div>
+                <div class="content-block">
+                    <p><span class="clause-number">10.1</span> We will at all times act in accordance with your best interests in the performance of our duties under this Agreement.</p>
+
+                    <p><span class="clause-number">10.2</span> In order for us to be able to provide services to you, you must provide us with appropriate information (which may include certain documentation) so that we can verify your identity. We, acting in our sole discretion, will decide whether you have provided us with the appropriate information and may decline to provide services to you. We will be under no obligation to inform you of the reason why we have declined to provide services to you.</p>
+
+                    <p><span class="clause-number">10.3</span> You agree that information provided by you during the "fact find" exercise undertaken by Evelyn Partners or otherwise notified by you is complete and accurate and fully reflects your needs, Objectives and requirements.</p>
+
+                    <p><span class="clause-number">10.4</span> Based on information provided by you and documented by Evelyn Partners during the "fact find" exercise or otherwise notified by you, we will be responsible for assessing the suitability of any advice or Recommendation we provide as required by the FCA Rules. The reason for assessing the suitability of our advice and Recommendations is to enable us to act in your best interests. You are responsible for ensuring that information provided to us is kept accurate, complete and up to date so as to enable us to assess suitability for you in light of your circumstances, needs, Objectives and risk profile.</p>
+
+                    <p><span class="clause-number">10.5</span> We will provide you with a Suitability Report stating the reasons for our advice and recommendations. This will include details of your circumstances, needs, Objectives and risk profile and how our advice meets them. The Suitability Report also details any special risks in the products or services we recommend.</p>
+
+                    <p><span class="clause-number">10.6</span> For any advice or Recommendation provided to you other than face to face (for example, by telephone), you agree that you may receive a Suitability Report without undue delay after the conclusion of any relevant transaction. Alternatively, you may choose to delay the implementation of the advice or Recommendation until you have received the Suitability Report in which case you should tell us at the time we make the Recommendation or give the advice.</p>
+
+                    <p><span class="clause-number">10.7</span> The decision to implement or not to implement a Recommendation will be exclusively yours. This means that it will be your responsibility to decide whether or not you wish to follow the Recommendation in relation to a particular investment product, transaction or the use of a particular service. You agree and acknowledge that any investment product or service that you take out in implementing a Recommendation may be subject to separate terms and conditions whether or not such investment product or service will be provided by a third party.</p>
+
+                    <p><span class="clause-number">10.8</span> Where you decide to follow a Recommendation, you may instruct us to arrange transactions for you. We will use reasonable endeavours to carry out those instructions, subject to our legal and regulatory obligations. Where you delay instructing us in respect of a Recommendation, we may decline to follow your instructions if we reasonably believe that the Recommendation is no longer suitable for you. Where you decide not to follow the Recommendation, we may, but are not obliged to, make further Recommendations that we reasonably consider are consistent with seeking to achieve your Objectives. You agree and acknowledge that not following our Recommendations may reduce the likelihood of achieving your Objectives.</p>
+
+                    <p><span class="clause-number">10.9</span> Where we arrange the execution of transactions in investments on your behalf, we are generally under a regulatory duty to take all sufficient steps to obtain the best possible result for you. How we arrange transactions on your behalf is set out in our Order Execution Policy which you can find in the Appendix of these terms and conditions. By entering into this Agreement you consent to the terms of our Order Execution Policy and, where applicable, authorise us to make arrangements for the execution of transactions in investments on your behalf outside a Trading Venue.</p>
+
+                    <p><span class="clause-number">10.10</span> If you engage us to provide an ongoing advisory service (i.e. to provide advice and Recommendations on an ongoing basis), we will assess the suitability of our advice and your investments at least annually at a mutually agreed point. We will confirm to you the outcome of our suitability assessment in writing. We will also review your circumstances, needs and Objectives. We may carry out this assessment more frequently if you notify us of a material change to your circumstances, if we agree a more frequent review period with you, or if you specifically request us to.</p>
+
+                    <p><span class="clause-number">10.11</span> You may, at any time, notify us of changes to the information provided by you and documented by Evelyn Partners during the "fact find" exercise or otherwise notified by you. Any such change(s) will become effective once we have confirmed receipt of your notice explicitly and will not affect any outstanding transaction or any rights or obligations which have already arisen.</p>
+
+                    <p><span class="clause-number">10.12</span> We will use our reasonable endeavours to achieve your Objectives, but we will not be responsible if your Objectives are not achieved for any Recommendation, whether or not you acted on our advice.</p>
+                </div>
+            </div>
+
+            <div id="section11" class="section">
+                <div class="section-title">11. Safeguarding Your Documents</div>
+                <div class="content-block">
+                    <p><span class="clause-number">11.1</span> When we arrange transactions for you, we also arrange for your investments to be registered in your name. If we are not able to register them in your name, we will send you the documents showing your ownership as soon as possible after receiving them.</p>
+
+                    <p><span class="clause-number">11.2</span> We do not hold your investments or cash.</p>
+                </div>
+            </div>
+
+            <div id="section12" class="section">
+                <div class="section-title">12. Delegation and Use of Agents</div>
+                <div class="content-block">
+                    <p><span class="clause-number">12.1</span> You consent to us appointing or retaining any person as our agent (whether an Affiliate or a non-Affiliate) to perform any aspect of a service provided by us under this Agreement.</p>
+
+                    <p><span class="clause-number">12.2</span> We will act in good faith and with due diligence in our choice of such agents.</p>
+                </div>
+            </div>
+
+            <div id="section13" class="section">
+                <div class="section-title">13. Conflicts</div>
+                <div class="content-block">
+                    <p><span class="clause-number">13.1</span> We have rigorous processes to ensure we act in our clients' best interests. It may happen that we or one of our other clients have some form of interest in the business we are transacting for you. We have policies and procedures to help us identify conflicts when they arise and we will make every effort to ensure that all appropriate steps are taken to prevent or manage any conflicts of interest. If there is a conflict which we are unable to manage through our policies and procedures, we will ensure that you receive fair treatment in line with Applicable Law. In particular, where there is a risk that a conflict will adversely affect your interests, we will disclose the general nature or sources of the conflict (or both) and the steps we have taken to mitigate the risk to you before providing the service(s).</p>
+
+                    <p><span class="clause-number">13.2</span> A summary of our Conflicts Policy is on our website <a href="https://evelyn.com/legal-compliance-regulatory/conflicts-of-interest-policy-statement" target="_blank">https://evelyn.com/legal-compliance-regulatory/conflicts-of-interest-policy-statement</a>. Further details are available on request by contacting the Client Resolution Director using the contact details set out at clause 26.1.</p>
+                </div>
+            </div>
+
+            <div id="section14" class="section">
+                <div class="section-title">14. Fees</div>
+                <div class="content-block">
+                    <p><span class="clause-number">14.1</span> Our fees for our services will be charged in accordance with the Scope of Work Letter and/or the Service Agreement along with the Schedule of Fees and the Adviser Charging Agreement (if fees are to be collected via a Third Party Wrapper).</p>
+
+                    <p><span class="clause-number">14.2</span> If we have been asked to advise on investments (including cash, assets within pension schemes, assets within trusts or existing portfolios or policies), we may make a charge based on a percentage of the value of those assets. This is set out in the applicable Schedule of Fees.</p>
+
+                    <p><span class="clause-number">14.3</span> Should you elect to pay our fees via a deduction from your Third Party Wrapper, as opposed to paying them directly via regular invoice, this will reduce the net return achieved by the investment.</p>
+
+                    <p><span class="clause-number">14.4</span> Our fees will accrue from the date this Agreement comes into force (see clause 3.2) unless we agree otherwise. The basis upon which you will pay our fees is described in the Scope of Work Letter and/or Service Agreement along with the Schedule of Fees and the Adviser Charging Agreement (if fees are to be collected via a Third Party Wrapper).</p>
+
+                    <p><span class="clause-number">14.5</span> Our fees are exclusive of any VAT or similar taxes which will be payable in addition by you (to the extent that VAT is applicable to such services).</p>
+
+                    <p><span class="clause-number">14.6</span> Our fees are payable by you even if you decide not to follow our Recommendations.</p>
+
+                    <p><span class="clause-number">14.7</span> In addition to our fees, you will be liable for:</p>
+                    <ol class="nested-list">
+                        <li>14.7.1 any costs payable and properly incurred under this Agreement, including all costs charged by a product provider or investment manager and reasonable expenses, liabilities, charges and costs, stamp duty, tax or other fiscal liabilities or any other transaction related expenses and fees arising out of transactions arranged by us, our Affiliates or Delegates in performing the services under this Agreement;</li>
+                        <li>14.7.2 any interest in respect of overdue amounts payable and properly incurred under this Agreement;</li>
+                        <li>14.7.3 any additional administrative expenses or legal or other professional costs that we may incur if we agree or are obliged to carry on activities outside the ordinary scope of our services, for example because of a dispute between joint clients; and</li>
+                        <li>14.7.4 any costs related to the cancellation or termination of this Agreement (see clause 24 for more information).</li>
+                    </ol>
+
+                    <p><span class="clause-number">14.8</span> Our Suitability Report will set out the costs and charges of any advice or Recommendations we provide.</p>
+
+                    <p><span class="clause-number">14.9</span> Unless permitted under the FCA Rules, or separately disclosed to you, we will not (i) pay to or accept from any party (other than you or a person acting on your behalf) any fee or commission in connection with the provision of our services to you; or (ii) provide to or receive from any party (other than you or a person acting on your behalf) any non-monetary benefit in connection with the provision of our services to you.</p>
+
+                    <p><span class="clause-number">14.10</span> We may provide to, or accept from, any party, an Acceptable Minor Non-monetary Benefit in connection with the provision of our services to you. Any such Acceptable Minor Non-monetary Benefit must enhance the service provided to our clients in the way contemplated by the FCA Rules and be of a scale or nature that it could not affect our duty to act in your best interests.</p>
+
+                    <p><span class="clause-number">14.11</span> Acceptable Minor Non-monetary Benefits consist of:</p>
+                    <ol class="nested-list">
+                        <li>14.11.1 information or documentation relating to a financial instrument or an investment service, that is generic in nature or personalised to reflect a client's individual circumstances;</li>
+                        <li>14.11.2 written material from a third party that is commissioned and paid for by a corporate issuer or potential issuer to promote a new issuance by the company, or where the third party firm is contractually engaged and paid by the issuer to produce such material on an ongoing basis, provided that the relationship is clearly disclosed in the material and that the material is made available at the same time to any firms wishing to receive it, or to the general public;</li>
+                        <li>14.11.3 participation in conferences, seminars and other training events on the benefits and features of a specific financial instrument or an investment service;</li>
+                        <li>14.11.4 hospitality of a reasonable de minimis value, such as food and drink during a business meeting or a conference, seminar or other training events mentioned under clause 14.11.3;</li>
+                        <li>14.11.5 research relating to an issue of shares, debentures, warrants or certificates representing certain securities by an issuer as set out in the FCA Rules;</li>
+                        <li>14.11.6 research material meeting certain conditions set out in the FCA Rules.</li>
+                    </ol>
+
+                    <p><span class="clause-number">14.12</span> The provisions in this clause 14 will continue to apply even if we stop providing services to you, so long as any of your obligations under this Agreement remain outstanding.</p>
+                </div>
+            </div>
+
+            <div id="section15" class="section">
+                <div class="section-title">15. Non-Investment Insurance Commission</div>
+                <div class="content-block">
+                    <p><span class="clause-number">15.1</span> Similar to our investment services, we will advise on and arrange non-investment insurance policies including for example, whole of life insurance and critical illness cover.</p>
+
+                    <p><span class="clause-number">15.2</span> Our charge for this service varies according to the client profile and objectives and takes into account the complexity of the work required to deliver suitable solutions and the time required for administration and support services.</p>
+
+                    <p><span class="clause-number">15.3</span> We will discuss and agree with you to use one of the following three charging structures as appropriate to your circumstances:</p>
+
+                    <div class="subsection-title">15.3.1 Commission only;</div>
+                    <p>You will not pay us any fee directly and the entirety of our earnings will be received from insurers by way of commission. If you chose this charging structure your regular premium cost for the cover will be higher for the duration of the policy.</p>
+                    <p>If you subsequently cease to pay premiums on the policy, or cancel, surrender or alter the policy within a four year period of the original policy commencing and in consequence we are required to refund the commission that has been paid to us, we reserve the right to recover the same amount via an invoice to you. We will write to you when we do this and say how much we will reclaim.</p>
+
+                    <div class="subsection-title">15.3.2 Fee with commission offset; or</div>
+                    <p>Our fee will be offset by any commission received directly from insurers. Where the commission is lower than the agreed fee you will be responsible for the shortfall.</p>
+                    <p>If you ask us to make arrangements for the commission entitlement from the policy to be offset against our charges to you, then your regular premium cost for the cover will be higher for the duration of the policy.</p>
+                    <p>If you subsequently cease to pay premiums on the policy, or cancel, surrender or alter the policy within a four year period of the original policy commencing and in consequence we are required to refund the commission that has been paid to us and offset against any fees paid by you, we reserve the right to charge you a fee based on the original cost for the advice and service we provided, the number of hours we spent advising you and the complexity of the work arranging the policy. We will write to you when we do this and say how much we will reclaim.</p>
+
+                    <div class="subsection-title">15.3.3 Fee only.</div>
+                    <p>If you decide to settle our fee invoice directly, via a cheque or bank transfer, then the commission entitlement is not taken and this will reduce the cost to you of maintaining the cover for the duration of the policy.</p>
+
+                    <p>We will agree which of the three charging structures is most appropriate with you before any chargeable activity commences. It can cover the financial review and recommendation as well as the implementation of the recommendation, including liaising with product providers.</p>
+                </div>
+            </div>
+
+            <div id="section16" class="section">
+                <div class="section-title">16. Tax</div>
+                <div class="content-block">
+                    <p><span class="clause-number">16.1</span> We are not tax or legal advisers. You remain responsible for the management of your tax and legal affairs, including making any applicable filings or payments and complying with any Applicable Law. We recommend that you obtain your own tax and legal advice as needed. You should not rely on any information provided by us as a substitute for taking your own tax or legal advice. Subject to any specific requirements notified by you, we will have no responsibility to take into account your tax status in providing any service under this Agreement.</p>
+
+                    <p><span class="clause-number">16.2</span> You will promptly provide to us all information and documents in respect of you and your tax affairs that we request for ourselves or for any tax authority to which we are responsible or you are subject.</p>
+
+                    <p><span class="clause-number">16.3</span> We are under no obligation to report to you on the tax consequences of buying or selling assets.</p>
+                </div>
+            </div>
+
+            <div id="section17" class="section">
+                <div class="section-title">17. Data Protection</div>
+                <div class="content-block">
+                    <p><span class="clause-number">17.1</span> The privacy of our clients' personal information is very important to us. We process all personal information in line with Data Protection Laws. For the purposes of Data Protection Laws, the data controller is Evelyn Partners.</p>
+
+                    <p><span class="clause-number">17.2</span> Certain information which we collect from you is needed by us in order to provide our services to you. If you do not provide us with information which we advise is necessary, we will be unable to enter into or continue a relationship with you for the services under this Agreement.</p>
+
+                    <p><span class="clause-number">17.3</span> Under Data Protection Laws you have a number of rights in relation to how your personal information is held and used by us. Details of these rights, as well as further details of what information we collect from you, how we use the information we collect about you, and with whom we may share this information are set out in our privacy policy which can be found at <a href="https://evelyn.com/legal-compliance-regulatory/privacy-notice" target="_blank">https://evelyn.com/legal-compliance-regulatory/privacy-notice</a>.</p>
+
+                    <p><span class="clause-number">17.4</span> Where you are a trust, company or other legal entity we may, in certain circumstances, process personal information on your behalf in providing our services to you. In the event that we do, the provisions set out in <a href="https://www.evelyn.com/legal-compliance-regulatory/data-processing-annexure/" target="_blank">https://www.evelyn.com/legal-compliance-regulatory/data-processing-annexure/</a> will apply to the processing of that personal information.</p>
+
+                    <p><span class="clause-number">17.5</span> We may use cookies and similar technologies on our websites and in our emails. These technologies do many different things, such as letting you navigate between web pages efficiently and remembering your preferences. In emails they help us to understand whether you have opened the email and how you have interacted with it. Our cookies policy available at <a href="www.evelyn.com" target="_blank">www.evelyn.com</a> gives you more information on these technologies, how and where we use them and how you can control them.</p>
+
+                    <p><span class="clause-number">17.6</span> If you have any questions relating to how we hold and use your personal information, or if you change your mind about how you wish us to contact you or no longer wish to receive our marketing communications, please notify us using the following contact details: The Data Protection Officer, Evelyn Partners, 45 Gresham Street, London EC2V 7BG. Email: dataprotection@evelyn.com marked "Data Protection".</p>
+                </div>
+            </div>
+
+            <div id="section18" class="section">
+                <div class="section-title">18. Confidentiality</div>
+                <div class="content-block">
+                    <p><span class="clause-number">18.1</span> Each party to this Agreement will treat Confidential Information as confidential and will not disclose such information except if:</p>
+                    <ol class="nested-list">
+                        <li>18.1.1 it is required to do so under Applicable Law;</li>
+                        <li>18.1.2 it is so requested (whether by compulsion of law or not) by competent regulatory or fiscal authorities or a court or tribunal of competent jurisdiction; or</li>
+                        <li>18.1.3 it is disclosed in confidence to its advisers, auditors or insurers where reasonably necessary for the performance of their professional services.</li>
+                    </ol>
+
+                    <p><span class="clause-number">18.2</span> Notwithstanding clause 18.1 above, we may disclose in confidence any Confidential Information to any person (including our Affiliates and Delegates) to assist or enable the proper performance of our services and to enforce our rights and obligations under this Agreement.</p>
+
+                    <p><span class="clause-number">18.3</span> In addition to clauses 18.1 and 18.2 above, we may disclose any Confidential Information to any person in the following circumstances:</p>
+                    <ol class="nested-list">
+                        <li>18.3.1 to investigate or prevent fraud or other illegal activity;</li>
+                        <li>18.3.2 for purposes ancillary to the provision of services under this Agreement, or the administration to your account(s), including for the purposes of credit enquiries or assessments;</li>
+                        <li>18.3.3 if it is in the public interest to disclose such information; and/or</li>
+                        <li>18.3.4 at your request or with your consent.</li>
+                    </ol>
+
+                    <p><span class="clause-number">18.4</span> In providing the services under this Agreement, neither we, our Affiliates or Delegates, will be obliged to disclose or to take into consideration (or require any third party to disclose or take into consideration) any information:</p>
+                    <ol class="nested-list">
+                        <li>18.4.1 the disclosure or use of which might breach any prohibition, duty or confidence to any other person or arising under Applicable Law; or</li>
+                        <li>18.4.2 which comes to the notice of an employee, officer or agent of Evelyn Partners, its Affiliates or Delegates, but properly does not come to the actual notice of your Evelyn Partners personal financial planning adviser.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="section19" class="section">
+                <div class="section-title">19. Credit Reference and Fraud Prevention Agencies</div>
+                <div class="content-block">
+                    <p><span class="clause-number">19.1</span> We may access and use information from credit reference agencies when you enter into this Agreement and periodically to:</p>
+                    <ol class="nested-list">
+                        <li>19.1.1 detect and prevent fraud and money laundering;</li>
+                        <li>19.1.2 check your identity; and</li>
+                        <li>19.1.3 trace debtors and recover debts.</li>
+                    </ol>
+
+                    <p><span class="clause-number">19.2</span> If you make a joint application for our services and provide details about a spouse or civil partner (in particular, in the context of jointly held accounts), we will link your records together. Credit reference agencies will also link records together and these links will remain on the credit reference agency's files until such time as one of the individuals concerned successfully files for a disassociation with the credit reference agencies to break that link.</p>
+
+                    <p><span class="clause-number">19.3</span> If you give us false or inaccurate information about yourself or any third party referred to in this clause 19, or if we suspect or identify fraud, details will be passed to fraud prevention agencies and other organisations involved in crime and fraud prevention. Law enforcement agencies may access and use this information.</p>
+
+                    <p><span class="clause-number">19.4</span> We and other organisations may access and share fraud prevention agency information which relates to you or any third parties referred to in this clause 19 to prevent fraud and money laundering. We and other organisations may access and use this information from other countries.</p>
+
+                    <p><span class="clause-number">19.5</span> If you would like a copy of your information held by the credit reference and fraud prevention agencies that we use, please contact the Client Resolution Director using the contact details set out at clause 26.1 who will provide the agencies' contact details.</p>
+                </div>
+            </div>
+
+            <div id="section20" class="section">
+                <div class="section-title">20. Reporting</div>
+                <div class="content-block">
+                    <p><span class="clause-number">20.1</span> We will provide you with information about all costs and charges incurred by you in relation to the services provided to you under this Agreement, the cost of any investments recommended to you and, if applicable, details of any payments made to third parties in accordance with the FCA Rules. This information will be included in the Suitability Report and, where you receive an ongoing advisory service, at least annually.</p>
+
+                    <p><span class="clause-number">20.2</span> We may also provide you with a contract note or third party transaction confirmation (unless the third party transaction confirmation is provided to you directly) if required by FCA Rules.</p>
+
+                    <p><span class="clause-number">20.3</span> We rely on the reports and information supplied by third parties (such as product providers) in order for us to produce reports for you, which may cause a delay. The information provided by third parties may be subject to certain assumptions and estimates. We will use reasonable endeavours to ensure that the information provided to you is accurate, but you acknowledge and agree that we cannot guarantee that it will be accurate and that we will not be liable for Loss that may result as a consequence of errors in information provided by third parties.</p>
+
+                    <p><span class="clause-number">20.4</span> We reserve the right to charge for non-standard reporting requested by you at a rate agreed with you ahead of supplying any such reporting.</p>
+                </div>
+            </div>
+
+            <div id="section21" class="section">
+                <div class="section-title">21. Liability and Indemnity</div>
+                <div class="content-block">
+                    <p><span class="clause-number">21.1</span> We will be liable to you for any Losses incurred by you only to the extent that such Losses are the direct result of any act or omission taken or omitted by us or a Delegate during the term of, and under, this Agreement which constitutes a breach of contract, wilful default, negligence or fraud of us, such Delegate or their directors, officers or employees in providing any of the services under this Agreement.</p>
+
+                    <p><span class="clause-number">21.2</span> Without limiting clause 21.1, we will not otherwise be liable for any other Losses suffered by you including Losses arising from:</p>
+                    <ol class="nested-list">
+                        <li>21.2.1 Evelyn Partners carrying out or relying on any instructions or on any information provided or made available to Evelyn Partners by you, any agent of you or any person appointed or retained by Evelyn Partners under clause 12;</li>
+                        <li>21.2.2 any delays due to market conditions or changes in market conditions;</li>
+                        <li>21.2.3 any delayed receipt, non-receipt, loss or corruption of any information contained in any Electronic Communication or for any breach of confidentiality resulting from email communication or any consequential loss arising from either of the foregoing;</li>
+                        <li>21.2.4 the performance of any investments recommended by us; or</li>
+                        <li>21.2.5 acts or omissions (including negligence, wilful default, fraud or insolvency) of any other person, unless otherwise specified in this Agreement.</li>
+                    </ol>
+
+                    <p><span class="clause-number">21.3</span> Without limiting clause 21.1, we will only be liable for direct Losses. We will not be responsible for any Loss that was unforeseeable to both us and you at the time you entered into this Agreement, or which does not arise as a direct result of our acts or omissions (such as, but not limited to, loss of profits or failure to make any capital gains).</p>
+
+                    <p><span class="clause-number">21.4</span> Nothing in this Agreement will exclude or restrict any duty or liability which we may have to you under Applicable Law.</p>
+
+                    <p><span class="clause-number">21.5</span> You agree to reimburse us for any Losses that we incur as a result of your breach of any provision of this Agreement or any failure to make payment of your fees when due.</p>
+
+                    <p><span class="clause-number">21.6</span> The provisions of this clause 21 will continue to apply notwithstanding the fact that we cease to provide services and will be in addition to any other right of reimbursement or claim of any person entitled to be reimbursed, whether pursuant to this Agreement or otherwise, and will not be affected by any accommodation provided by us, whether as to payment, time, performance or otherwise.</p>
+                </div>
+            </div>
+
+            <div id="section22" class="section">
+                <div class="section-title">22. Changes to This Agreement</div>
+                <div class="content-block">
+                    <p><span class="clause-number">22.1</span> We may amend any part of this Agreement by giving you at least 30 days' written notice, subject to clause 22.2 below. Reasons for such amendments may include but are not limited to the following:</p>
+                    <ol class="nested-list">
+                        <li>22.1.1 to take account of changes in Applicable Law or market practices;</li>
+                        <li>22.1.2 to fix any errors, inaccuracies or ambiguities we may discover in the future;</li>
+                        <li>22.1.3 to take account of any changes in the way we, our Affiliates or Delegates do business;</li>
+                        <li>22.1.4 to reflect legitimate changes in our costs of providing our services to our clients, including increases that we reasonably expect to occur in future;</li>
+                        <li>22.1.5 to take account of any reorganisation we may conduct within the group of companies of which we are a member, or to transfer our rights and obligations under this Agreement;</li>
+                        <li>22.1.6 to provide for the introduction of new or improved systems, methods of operation, services or facilities; and</li>
+                        <li>22.1.7 to make this Agreement clearer or more favourable to you.</li>
+                    </ol>
+
+                    <p><span class="clause-number">22.2</span> Any amendment which is made to reflect a change (or an expected change) of Applicable Law, or to make the terms of this Agreement more favourable to you, may take effect immediately or otherwise as we may specify.</p>
+
+                    <p><span class="clause-number">22.3</span> If you object to a change that we propose to make to this Agreement, you may terminate this Agreement free of charge by providing us with written notice before the date on which the change takes effect. If you terminate after that date in accordance with clause 23, you may be liable to pay such costs and charges as may be applicable on termination. Clause 24 will continue to apply in the ordinary way in respect of such termination.</p>
+
+                    <p><span class="clause-number">22.4</span> No change to this Agreement will affect any outstanding order or transaction or any other legal rights or obligations which may have arisen before the date of the change.</p>
+                </div>
+            </div>
+
+            <div id="section23" class="section">
+                <div class="section-title">23. Termination</div>
+                <div class="content-block">
+                    <p><span class="clause-number">23.1</span> You may terminate this Agreement at any time by giving not less than 30 days' written notice to us.</p>
+
+                    <p><span class="clause-number">23.2</span> We may terminate this Agreement on written notice to you. We will usually provide you with at least 30 days' written notice, although we may terminate with shorter notice or immediate effect where we have a valid reason for doing so, including:</p>
+                    <ol class="nested-list">
+                        <li>23.2.1 your death or legal incapacity;</li>
+                        <li>23.2.2 your bankruptcy, insolvency or inability to pay your debts as they fall due or where we reasonably believe you may not be able to meet your obligations to us under this Agreement;</li>
+                        <li>23.2.3 if you fail to provide, within a reasonable time, any information or documents we have requested under clause 19 or for the verification of your identity, source of funds and purpose of the transaction(s), or if you supply us with false, misleading or unsatisfactory information;</li>
+                        <li>23.2.4 if we reasonably suspect that you have acted or will act fraudulently or in breach of Applicable Law in relation to the matters covered by this Agreement; or</li>
+                        <li>23.2.5 where continuing to provide you with services under this Agreement would cause, or would in our reasonable opinion be likely to cause, us to be in breach of Applicable Law or expose us to action or censure from any government, regulator or law enforcement agency.</li>
+                    </ol>
+
+                    <p><span class="clause-number">23.3</span> Either you or we may terminate this Agreement on written notice to the other party if the other party commits a serious or persistent breach of their obligations under this Agreement.</p>
+                </div>
+            </div>
+
+            <div id="section24" class="section">
+                <div class="section-title">24. Effect of Cancellation or Termination of This Agreement</div>
+                <div class="content-block">
+                    <p><span class="clause-number">24.1</span> Cancellation or termination of this Agreement under clauses 4 or 23 will not affect:</p>
+                    <ol class="nested-list">
+                        <li>24.1.1 transactions already initiated which will be completed in accordance with this Agreement;</li>
+                        <li>24.1.2 any fees or charges that you have incurred for which you will remain liable; or</li>
+                        <li>24.1.3 any provisions of this Agreement intended to remain in force after we cease to provide services to you.</li>
+                    </ol>
+
+                    <p><span class="clause-number">24.2</span> On cancellation or termination of this Agreement we will be entitled to:</p>
+                    <ol class="nested-list">
+                        <li>24.2.1 retain all fees and charges for investment planning and strategic advice provided prior to cancellation or termination; and</li>
+                        <li>24.2.2 any additional expenses necessarily incurred by us in cancelling or terminating this Agreement.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="section25" class="section">
+                <div class="section-title">25. Force Majeure</div>
+                <div class="content-block">
+                    <p><span class="clause-number">25.1</span> We will not be in breach of this Agreement or otherwise liable to any person as a result of any delay or failure in the performance of our obligations under this Agreement if and to the extent that such delay or failure is caused by Force Majeure and the time for performance of the relevant obligation(s) will be extended accordingly.</p>
+
+                    <p><span class="clause-number">25.2</span> For the purpose of this clause 25, "Force Majeure" means any circumstances not within the reasonable control of us including:</p>
+                    <ol class="nested-list">
+                        <li>25.2.1 any strike, lockout or other industrial action, or any shortage of or difficulty in obtaining labour, fuel, raw materials or components;</li>
+                        <li>25.2.2 any destruction, temporary or permanent breakdown, malfunction or damage of or to any premises, plant, equipment (including computer systems) or materials;</li>
+                        <li>25.2.3 any breach of contract, default or insolvency by or of any third party, other than an Affiliate, or an employee or officer of that party;</li>
+                        <li>25.2.4 any action taken by a governmental or public authority of any kind, including, without limitation, imposing an embargo, export or import restriction, rationing, quota or other restriction or prohibition;</li>
+                        <li>25.2.5 any civil commotion or disorder, riot, invasion, war, threat of or preparation for war;</li>
+                        <li>25.2.6 any accident, fire, or explosion, (other than in each case, one caused by a breach of contract by or assistance of the party concerned) storm, flood, earthquake, subsidence, epidemic or other natural physical disaster; and</li>
+                        <li>25.2.7 any act or attempt by a third party, successful or unsuccessful, to gain unauthorised access to, disrupt, or misuse our electronic systems or information stored on such systems.</li>
+                    </ol>
+
+                    <p><span class="clause-number">25.3</span> If the performance by us of our obligations under this Agreement is delayed or prevented by Force Majeure, we will:</p>
+                    <ol class="nested-list">
+                        <li>25.3.1 notify you of the nature, extent, effect and likely duration of the circumstances constituting the Force Majeure;</li>
+                        <li>25.3.2 use all reasonable endeavours to minimise the effect of the Force Majeure on the performance of our obligations under this Agreement, including the making of any alternative arrangements for resuming the performance of our obligations which may be practicable without incurring material additional expense; and</li>
+                        <li>25.3.3 after the cessation of the Force Majeure, notify you and resume full performance of our obligations under this Agreement.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="section26" class="section">
+                <div class="section-title">26. Notices</div>
+                <div class="content-block">
+                    <p><span class="clause-number">26.1</span> Subject to clause 17.6, your notices to us in respect of this Agreement may be given in any manner set forth below and should be addressed to your adviser using the contact details they have provided to you or to the Group General Counsel, Evelyn Partners, 45 Gresham Street, London EC2V 7BG and marked "Notice".</p>
+
+                    <p><span class="clause-number">26.2</span> Unless otherwise set out in this Agreement, a notice will be effective on receipt and will be deemed to have been received:</p>
+                    <ol class="nested-list">
+                        <li>26.2.1 if delivered in person or by courier, registered or certified mail or equivalent, on the date it is delivered;</li>
+                        <li>26.2.2 if sent by first class post, two Business Days after having been posted or, where posted to an address outside the UK, five Business Days after having been posted; and</li>
+                        <li>26.2.3 if sent by other Electronic Means (e.g. by email), one Business Day after transmission, unless the date of delivery or that receipt, as applicable, is not a Business Day or that notice is delivered or received, as applicable, after 5pm local time in London on a Business Day, in which case that notice will be deemed given and effective on the first following day that is a Business Day.</li>
+                    </ol>
+
+                    <p><span class="clause-number">26.3</span> You agree that any notice will be properly served on you if correctly addressed to the last address notified by you to us.</p>
+                </div>
+            </div>
+
+            <div id="section27" class="section">
+                <div class="section-title">27. Complaints</div>
+                <div class="content-block">
+                    <p><span class="clause-number">27.1</span> You should contact us immediately if you are dissatisfied in any way with any aspect of the service we provide to you. All complaints should be directed in the first instance to our Client Resolution Director at 45 Gresham Street, London EC2V 7BG. A copy of our complaint handling procedure will be made available at the point of making a complaint or on request.</p>
+
+                    <p><span class="clause-number">27.2</span> We will communicate our position on the complaint to you and inform you about your options, including, where applicable, that you may be able to refer the complaint to an alternative dispute resolution entity, or that you may be able to take civil action.</p>
+
+                    <p><span class="clause-number">27.3</span> Your complaint will be handled in accordance with Applicable Law. We treat every complaint seriously and aim to resolve each complaint fairly and promptly.</p>
+
+                    <p><span class="clause-number">27.4</span> We hope to resolve all complaints amicably. However, should we fail to resolve a complaint to your satisfaction or if we fail to do so within eight weeks of receiving your complaint, you may be able to refer your complaint to the FOS. You can find full details of the FOS on its website at <a href="www.financial-ombudsman.org.uk" target="_blank">www.financial-ombudsman.org.uk</a>, or you can phone the FOS on 0800 023 4567 or 0300 123 9123, or email the FOS at complaint.info@financial-ombudsman.org.uk.</p>
+                </div>
+            </div>
+
+            <div id="section28" class="section">
+                <div class="section-title">28. Compensation</div>
+                <div class="content-block">
+                    <p><span class="clause-number">28.1</span> We are covered by the FSCS. Compensation may be available from the FSCS if we cannot meet our obligations to you because of our financial circumstances.</p>
+
+                    <p><span class="clause-number">28.2</span> Your potential entitlement to compensation will depend upon the type of business and the circumstances of the claim. Eligible claims for most types of investment business are covered up to a maximum limit of £85,000 per person per firm. FSCS cover is not available for loss of money resulting from performance of an investment. Details of the cover available will be provided to you at your request.</p>
+
+                    <p><span class="clause-number">28.3</span> For further information about compensation arrangements, please refer to the FSCS website at <a href="www.fscs.org.uk" target="_blank">www.fscs.org.uk</a>.</p>
+                </div>
+            </div>
+
+            <div id="section29" class="section">
+                <div class="section-title">29. Assignment</div>
+                <div class="content-block">
+                    <p><span class="clause-number">29.1</span> You may not assign or transfer any of your rights or obligations under this Agreement to anyone else.</p>
+
+                    <p><span class="clause-number">29.2</span> We may assign or transfer all or any part of our rights or obligations under this Agreement to any person (which may include an Affiliate) that is duly authorised with all necessary regulatory permissions to lawfully provide our services under this Agreement and whom we reasonably believe will provide those services to at least a similar standard.</p>
+
+                    <p><span class="clause-number">29.3</span> We will give you at least 30 days' prior written notice of any such transfer.</p>
+
+                    <p><span class="clause-number">29.4</span> If you do not wish to accept such a transfer, you may terminate this Agreement free of charge by providing us with written notice before the date on which the transfer takes effect. If you terminate after that date in accordance with clause 23, you may be liable to pay such costs and charges as may be applicable on termination. Clause 24 will continue to apply in the ordinary way in respect of any such termination.</p>
+                </div>
+            </div>
+
+            <div id="section30" class="section">
+                <div class="section-title">30. Entire Agreement, Waiver and Remedies</div>
+                <div class="content-block">
+                    <p><span class="clause-number">30.1</span> This Agreement and any current instructions constitutes the entire agreement between us and you. This Agreement supersedes all prior understandings, arrangements, agreements, representations, proposals or communications between us and you, whether written or oral.</p>
+
+                    <p><span class="clause-number">30.2</span> No failure on the part of Evelyn Partners to exercise, nor delay by it in exercising, any right or remedy under this Agreement will operate as a waiver, nor will any single or partial exercise or any right or remedy preclude any other further exercise of that right or remedy or the exercise of any other right or remedy. The rights and remedies provided in this Agreement are cumulative and not exclusive of any rights or remedies provided by law.</p>
+                </div>
+            </div>
+
+            <div id="section31" class="section">
+                <div class="section-title">31. Illegality</div>
+                <div class="content-block">
+                    <p><span class="clause-number">31.1</span> The illegality, invalidity or unenforceability of any provision of this Agreement will not affect the legality, validity or enforceability of this Agreement nor the legality, validity or enforceability of any other provision.</p>
+                </div>
+            </div>
+
+            <div id="section32" class="section">
+                <div class="section-title">32. Rights of Third Parties</div>
+                <div class="content-block">
+                    <p><span class="clause-number">32.1</span> A person who is not a party to this Agreement, or does not become a party to this Agreement in accordance with its terms, has no right under the Contracts (Rights of Third Parties) Act 1999 to enforce any term of this Agreement but this does not affect any right or remedy of a third party which exists or is available apart from that Act.</p>
+                </div>
+            </div>
+
+            <div id="section33" class="section">
+                <div class="section-title">33. Governing Law</div>
+                <div class="content-block">
+                    <p><span class="clause-number">33.1</span> This Agreement (and any non-contractual obligations and/or pre-contractual negotiations between us and you) will be governed by, and construed in accordance with, the laws of England and Wales. You agree to submit to the exclusive jurisdiction of the English courts in respect of any dispute or claim arising.</p>
+                </div>
+            </div>
+
+            <div id="section34" class="section">
+                <div class="section-title">34. Definitions and Interpretation</div>
+                <div class="content-block">
+                    <p><span class="clause-number">34.1</span> In this Agreement, unless the context otherwise requires:</p>
+                    <ol class="nested-list">
+                        <li>34.1.1 clause headings will not affect the interpretation of this Agreement;</li>
+                        <li>34.1.2 a person includes a natural person, corporate or unincorporated body (whether or not having separate legal personality) and that person's legal and personal representatives, successors and permitted assigns as provided for in this Agreement;</li>
+                        <li>34.1.3 a reference to a company will include any company, corporation or other body corporate, wherever and however incorporated or established;</li>
+                        <li>34.1.4 words in the singular will include the plural and vice versa;</li>
+                        <li>34.1.5 a reference to one gender will include a reference to the other genders;</li>
+                        <li>34.1.6 references to Applicable Law mean as amended, extended, consolidated, substituted or re-enacted from time to time;</li>
+                        <li>34.1.7 a reference to "notify", "notified", "notice", "notification", "request", "agree" or any similar expression means a notice, request or agreement in writing and includes Electronic Communications;</li>
+                        <li>34.1.8 a reference to a document is a reference to that document as varied or novated (in each case, other than in breach of this Agreement) at any time; and</li>
+                        <li>34.1.9 any phrase introduced by the terms "including", "include", "in particular" or any similar expression will be construed as illustrative and will not limit the sense of the words preceding those terms.</li>
+                    </ol>
+
+                    <div class="highlight-box">
+                        <p><strong>Key Definitions:</strong></p>
+                        <p>For a complete list of defined terms used in this Agreement, please refer to clauses 34.2.1 through 34.2.45 which include definitions for terms such as Adviser Charging Agreement, Affiliate, Agreement, Application Form, Applicable Law, Authorised Person, Business Day, Confidential Information, and many others essential to understanding your rights and obligations.</p>
+                        <p>These definitions can be found in the full document and include specific meanings for important concepts like "Third Party Wrapper", "Trading Venue", "Suitability Report", "Objectives", and "Recommendation".</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Contact Information</h3>
+                <p><strong>Evelyn Partners Financial Planning Limited</strong></p>
+                <p>45 Gresham Street, London EC2V 7BG</p>
+                <p>Tel: 020 7131 4000</p>
+                <p>Email: dataprotection@evelyn.com</p>
+                <p style="margin-top: 15px; font-size: 14px;">Registered in England and Wales (No. 00607039)</p>
+                <p style="font-size: 14px;">Authorised and regulated by the Financial Conduct Authority (FCA No. 136414)</p>
+            </div>
+
+            <button class="back-button" onclick="window.close()">Close Window</button>
+        </div>
+    </div>
+</body>
+</html>
