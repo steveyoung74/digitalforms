@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Onboarding | Evelyn Partners</title>
+    <style>
+        :root {
+            /* Primary Brand Colours - Evelyn Partners Rebrand */
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --primary-light: #6B3FA0;
+            
+            /* Secondary Accent Colours */
+            --accent-teal: #34675C;
+            --accent-coral: #E07065;
+            --accent-blue: #5299E0;
+            --accent-gold: #C4A35A;
+            
+            /* Semantic Colours */
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --warning-light: #fff3cd;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            
+            /* Neutral Grays */
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            
+            /* UI Properties */
+            --border-radius: 12px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #2D2047 0%, #1E1530 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 48px 24px;
+            text-align: center;
+        }
+
+        .hero-logo { margin-bottom: 16px; display: flex; justify-content: center; }
+        .hero-logo svg { height: 60px; width: auto; }
+        .hero h1 { font-size: 36px; font-weight: 300; margin-bottom: 12px; }
+        .hero p { font-size: 16px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+        /* Progress Overview */
+        .progress-overview {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .progress-title { font-size: 18px; font-weight: 600; color: var(--gray-800); }
+        .progress-percentage { font-size: 24px; font-weight: 700; color: var(--primary); }
+        
+        .progress-bar-container { height: 12px; background: var(--gray-200); border-radius: 6px; overflow: hidden; margin-bottom: 20px; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%); border-radius: 6px; transition: width 0.5s ease; }
+
+        .progress-steps { display: flex; justify-content: space-between; }
+        .progress-step { text-align: center; flex: 1; position: relative; }
+        .progress-step::before { content: ''; position: absolute; top: 16px; left: 50%; right: -50%; height: 2px; background: var(--gray-200); z-index: 0; }
+        .progress-step:last-child::before { display: none; }
+        .step-circle { width: 36px; height: 36px; border-radius: 50%; background: var(--gray-200); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; position: relative; z-index: 1; font-weight: 600; font-size: 14px; color: var(--gray-500); }
+        .progress-step.complete .step-circle { background: var(--success); color: white; }
+        .progress-step.active .step-circle { background: var(--primary); color: white; box-shadow: 0 0 0 4px rgba(45, 32, 71, 0.25); }
+        .progress-step.complete::before { background: var(--success); }
+        .step-label { font-size: 12px; color: var(--gray-600); }
+        .progress-step.complete .step-label { color: var(--success); font-weight: 500; }
+        .progress-step.active .step-label { color: var(--primary); font-weight: 500; }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: var(--warning-light);
+            border: 1px solid var(--warning);
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: none;
+        }
+        .alert-banner.show { display: flex; align-items: center; gap: 12px; }
+        .alert-icon { font-size: 24px; }
+        .alert-content { flex: 1; }
+        .alert-title { font-weight: 600; color: #856404; margin-bottom: 2px; }
+        .alert-desc { font-size: 13px; color: #856404; }
+        .alert-btn { background: #856404; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; }
+        .alert-btn:hover { background: #6d5303; }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .section-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .section-number.locked { background: var(--gray-500); }
+        .section-title { font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+        .card.disabled { opacity: 0.6; pointer-events: none; }
+        .card.disabled:hover { transform: none; box-shadow: var(--shadow-md); }
+
+        /* Fact Find Card */
+        .fact-find-card {
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 2px solid var(--gray-200);
+        }
+        .fact-find-card.active { border-color: var(--primary); }
+        .fact-find-card.complete { border-color: var(--success); }
+
+        .fact-find-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+        .fact-find-info h2 { font-size: 22px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px; }
+        .fact-find-info p { font-size: 14px; color: var(--gray-600); max-width: 500px; }
+
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+        .status-badge.pending { background: var(--gray-100); color: var(--gray-600); }
+        .status-badge.in-progress { background: var(--warning-light); color: #856404; }
+        .status-badge.complete { background: var(--success-light); color: var(--success); }
+        .status-badge.locked { background: var(--gray-100); color: var(--gray-500); }
+
+        .fact-find-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+        .ff-section { background: var(--gray-50); border-radius: 8px; padding: 14px; display: flex; align-items: center; gap: 10px; }
+        .ff-section-icon { font-size: 20px; }
+        .ff-section-info h4 { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 2px; }
+        .ff-section-info span { font-size: 11px; color: var(--gray-500); }
+        .ff-section.complete { background: var(--success-light); }
+        .ff-section.complete h4 { color: var(--success); }
+
+        .type-toggle { display: flex; gap: 12px; margin-bottom: 24px; }
+        .type-btn { flex: 1; padding: 16px; border: 2px solid var(--gray-200); border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: var(--transition); }
+        .type-btn:hover { border-color: var(--primary-light); }
+        .type-btn.active { border-color: var(--primary); background: rgba(45, 32, 71, 0.08); }
+        .type-btn h4 { font-size: 15px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+        .type-btn p { font-size: 12px; color: var(--gray-500); }
+
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; transition: var(--transition); border: none; text-decoration: none; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #218838; }
+        .btn-outline { background: white; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background: rgba(45, 32, 71, 0.08); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Account Grid */
+        .account-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px; }
+
+        .account-card { padding: 24px; position: relative; }
+        .account-card.locked::after { content: '🔒'; position: absolute; top: 16px; right: 16px; font-size: 20px; }
+        .account-card.submitted::after { content: '✓'; position: absolute; top: 16px; right: 16px; width: 28px; height: 28px; background: var(--success); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+
+        .account-icon { font-size: 40px; margin-bottom: 16px; }
+        .account-card h3 { font-size: 18px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px; }
+        .account-card p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.5; }
+        .account-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .feature-tag { background: var(--gray-100); color: var(--gray-600); padding: 4px 10px; border-radius: 12px; font-size: 11px; }
+        
+        .account-type-select { display: flex; gap: 8px; margin-bottom: 16px; }
+        .account-type-btn { flex: 1; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: 6px; background: white; font-size: 12px; cursor: pointer; transition: var(--transition); }
+        .account-type-btn:hover { border-color: var(--primary); }
+        .account-type-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .account-btn { width: 100%; }
+
+        .submitted-info { background: var(--success-light); border-radius: 6px; padding: 10px; margin-top: 12px; font-size: 12px; color: var(--success); }
+        .submitted-info + .submitted-info { margin-top: 8px; }
+        .submitted-ref { font-weight: 600; }
+        .submitted-type { font-weight: 500; text-transform: capitalize; }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-800);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+            margin-top: 48px;
+        }
+        .footer p { font-size: 13px; opacity: 0.7; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 32px 16px; }
+            .hero h1 { font-size: 28px; }
+            .container { padding: 20px 16px; }
+            .progress-steps { flex-wrap: wrap; gap: 16px; }
+            .progress-step::before { display: none; }
+            .fact-find-header { flex-direction: column; gap: 16px; }
+            .type-toggle { flex-direction: column; }
+            .account-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-logo">
+            <svg width="184" height="72" viewBox="0 0 173.61 65.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_logo)">
+                    <path d="M69.2642 56.0118V54.4309H61.6699V65.723H69.4058V64.1421H63.4496V60.6973H68.4753V59.2007H63.4496V56.0118H69.2642Z" fill="#C4A35A"/>
+                    <path d="M49.6732 57.7613L56.054 65.723H57.5475V54.4309H55.7408V62.5612L49.2787 54.4309H47.8936V65.723H49.6732V57.7613Z" fill="#C4A35A"/>
+                    <path d="M40.9768 65.723V56.0118H44.7318V54.4309H35.415V56.0118H39.2001V65.723H40.9768Z" fill="#C4A35A"/>
+                    <path d="M32.8192 58.1016C32.8192 56.072 31.3347 54.4309 29.3171 54.4309H24.4028V65.723H26.1855V61.8084H28.8083L31.2383 65.723H33.2408L30.5879 61.432C31.9158 60.9773 32.8192 59.541 32.8192 58.1016ZM29.29 60.2094H26.1855V55.9937H29.1967C30.2235 55.9937 30.9733 56.9543 30.9733 58.0835C30.9733 59.2127 30.3681 60.2185 29.29 60.2185V60.2094Z" fill="#C4A35A"/>
+                    <path d="M81.3783 58.1016C81.3783 56.072 79.8938 54.4309 77.8762 54.4309H72.9619V65.723H74.7325V61.8084H77.3553L79.7854 65.723H81.7878L79.1349 61.432C80.4749 60.9773 81.3783 59.541 81.3783 58.1016ZM77.8491 60.2094H74.7325V55.9937H77.7437C78.7706 55.9937 79.5204 56.9543 79.5204 58.0835C79.5204 59.2127 78.9272 60.2185 77.8491 60.2185V60.2094Z" fill="#C4A35A"/>
+                    <path d="M10.9971 65.723H12.8881L14.0745 62.6485H18.4228L19.6272 65.723H21.4882L17.0286 54.4309H15.4748L10.9971 65.723ZM18.0825 61.3206H14.3847L16.2757 56.4605L18.0825 61.3206Z" fill="#C4A35A"/>
+                    <path d="M1.48438 54.4309V65.723H3.261V61.8084H6.31137C8.38309 61.8084 9.7261 60.0017 9.7261 58.1106C9.7261 56.1624 8.24156 54.4399 6.22705 54.4399L1.48438 54.4309ZM7.91936 58.1016C7.91936 59.2037 7.31712 60.2094 6.19694 60.2094H3.261V55.9937H6.11263C7.22076 56.0118 7.91936 56.9724 7.91936 58.1016Z" fill="#C4A35A"/>
+                    <path d="M84.6697 57.7914C84.6697 59.8149 86.4764 60.369 88.1537 60.8357C89.6774 61.2543 91.1348 61.5674 91.1348 62.787C91.1348 63.8319 90.1471 64.2294 88.9306 64.2294C87.5484 64.2294 85.8561 63.5217 85.1214 62.787L84.2451 64.3137C85.5919 65.3126 87.2267 65.8474 88.9035 65.8374C91.6979 65.8374 93.0258 64.4462 93.0258 62.5912C93.0258 60.4834 91.469 59.9173 89.6894 59.4174C88.1025 58.9687 86.5336 58.7369 86.5336 57.5083C86.5336 56.3791 87.437 55.9274 88.7349 55.9274C89.8068 55.9274 91.1619 56.4634 91.7822 57.0867L92.5742 55.6173C91.473 54.8023 90.1409 54.3593 88.771 54.3525C86.4554 54.3525 84.6697 55.5902 84.6697 57.7914Z" fill="#C4A35A"/>
+                    <path d="M94.0043 6.88667V37.0622C94.0043 40.9767 93.7032 42.2926 90.978 43.7712V44.274H105.57V43.7712C102.842 42.2926 102.544 40.9647 102.544 37.0622V0H90.7251V0.502874C93.5135 1.80372 94.0043 3.16179 94.0043 6.88667Z" fill="white"/>
+                    <path d="M14.9447 44.8643C21.5875 44.8643 26.3091 41.2267 28.1128 34.9935L27.372 34.8158C25.5924 38.9533 22.3945 40.8383 18.6214 40.8383C12.5719 40.8383 8.65727 35.9932 8.65727 28.5706H28.2302C28.2302 20.5667 24.0145 14.5955 14.8875 14.5955C6.82042 14.5955 0 20.6179 0 29.7871C0 39.3688 6.7602 44.8643 14.9447 44.8643ZM14.8273 15.7247C19.0972 15.7247 19.8078 20.8678 19.8078 27.1673H8.71749C8.95538 20.2746 11.3282 15.7247 14.8273 15.7247Z" fill="white"/>
+                    <path d="M74.9677 44.8643C81.6104 44.8643 86.332 41.2267 88.1358 34.9935L87.395 34.8158C85.6154 38.9533 82.4204 40.8383 78.6474 40.8383C72.5948 40.8383 68.6802 35.9932 68.6802 28.5706H88.2532C88.2532 20.5667 84.0375 14.5955 74.9104 14.5955C66.8434 14.5955 60.0229 20.6179 60.0229 29.7871C60.0229 39.3688 66.7832 44.8643 74.9677 44.8643ZM74.8502 15.7247C79.1201 15.7247 79.8338 20.8678 79.8338 27.1673H68.7404C68.9783 20.2746 71.3512 15.7247 74.8502 15.7247Z" fill="white"/>
+                    <path d="M61.0735 15.2068H52.2506V15.7097C55.2257 16.8208 55.6713 18.9738 54.1507 22.0061L48.1011 34.7135L38.8687 15.2068H28.4077V15.7097C30.6752 16.9413 30.9582 17.8175 32.8583 21.5906L44.4094 44.8794H44.9213L56.12 21.7682C57.9599 17.9861 59.1613 16.7817 61.0855 15.7097L61.0735 15.2068Z" fill="white"/>
+                    <path d="M170.544 37.062V24.8877C170.544 18.7387 167.283 14.6013 161.233 14.6013C156.192 14.6013 152.395 17.3506 150.853 22.7316V15.2066H139.627V15.8088C141.799 16.4924 142.313 18.1576 142.313 21.7409V37.05C142.313 40.9646 142.012 42.2805 139.302 43.759V44.2619H153.892V43.759C151.163 42.2805 150.88 40.9525 150.88 37.05V28.3174C150.88 22.4636 153.491 18.8291 157.168 18.8291C160.667 18.8291 162.031 21.5392 162.031 24.8515V32.6988V44.2378H173.597V43.7349C170.842 42.3076 170.544 40.9646 170.544 37.062Z" fill="white"/>
+                    <path d="M129.772 15.2068V15.7097C132.744 16.8208 132.97 18.7871 131.669 22.0061L126.035 35.659L116.429 15.2068H105.929V15.7097C108.193 16.9413 108.479 17.8175 110.377 21.5906L122.075 45.0781C118.501 53.1181 115.396 59.9446 112.49 61.8266C111.96 59.0653 110.383 57.3097 108.127 57.3097C107.598 57.3101 107.074 57.4153 106.586 57.6191C106.098 57.823 105.655 58.1215 105.282 58.4974C104.91 58.8734 104.616 59.3194 104.417 59.8096C104.218 60.2999 104.117 60.8247 104.122 61.3538C104.122 64.0368 106.125 65.8255 108.976 65.8255C113.894 65.8255 117.489 59.3544 123.731 44.8342L133.635 21.7411C133.711 21.5635 133.861 21.2774 133.861 21.2774C135.514 17.8928 136.237 16.6221 138.107 15.791V15.1887L129.772 15.2068Z" fill="white"/>
+                </g>
+                <defs>
+                    <clipPath id="clip0_logo">
+                        <rect width="173.57" height="65.8374" fill="white"/>
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+        <h1>Client Onboarding Portal</h1>
+        <p>Complete your Fact Find to unlock account applications. Your progress is saved automatically.</p>
+    </header>
+
+    <main class="container">
+        <!-- Progress Overview -->
+        <div class="progress-overview">
+            <div class="progress-header">
+                <span class="progress-title">Your Progress</span>
+                <span class="progress-percentage" id="overallProgress">0%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" id="step1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Fact Find</div>
+                </div>
+                <div class="progress-step" id="step2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Account Selection</div>
+                </div>
+                <div class="progress-step" id="step3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Application</div>
+                </div>
+                <div class="progress-step" id="step4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Complete</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Progress Alert -->
+        <div class="alert-banner" id="savedProgressAlert">
+            <span class="alert-icon">📋</span>
+            <div class="alert-content">
+                <div class="alert-title">You have saved progress</div>
+                <div class="alert-desc" id="savedProgressDesc">Continue where you left off</div>
+            </div>
+            <button class="alert-btn" onclick="continueProgress()">Continue</button>
+        </div>
+
+        <!-- Step 1: Fact Find -->
+        <div class="section-header">
+            <div class="section-number" id="sectionNum1">1</div>
+            <h2 class="section-title">Complete Your Fact Find</h2>
+        </div>
+
+        <div class="card fact-find-card" id="factFindCard">
+            <div class="fact-find-header">
+                <div class="fact-find-info">
+                    <h2>Fact Find A - Know Your Client</h2>
+                    <p>We need to gather information about you to ensure our services are suitable for your needs and to comply with regulatory requirements.</p>
+                </div>
+                <span class="status-badge pending" id="factFindStatus">Not Started</span>
+            </div>
+
+            <div class="fact-find-sections" id="factFindSections">
+                <div class="ff-section" data-section="personalInformation">
+                    <span class="ff-section-icon">👤</span>
+                    <div class="ff-section-info">
+                        <h4>Personal Information</h4>
+                        <span>Modules 1-8</span>
+                    </div>
+                </div>
+                <div class="ff-section" data-section="financialProfile">
+                    <span class="ff-section-icon">💰</span>
+                    <div class="ff-section-info">
+                        <h4>Financial Profile</h4>
+                        <span>Modules 9-12</span>
+                    </div>
+                </div>
+                <div class="ff-section" data-section="investmentSuitability">
+                    <span class="ff-section-icon">📊</span>
+                    <div class="ff-section-info">
+                        <h4>Investment Suitability</h4>
+                        <span>Modules 13-16</span>
+                    </div>
+                </div>
+                <div class="ff-section" data-section="amlCompliance">
+                    <span class="ff-section-icon">🔒</span>
+                    <div class="ff-section-info">
+                        <h4>AML/Compliance</h4>
+                        <span>Modules 17-19</span>
+                    </div>
+                </div>
+                <div class="ff-section" data-section="personalCircumstances">
+                    <span class="ff-section-icon">👨‍👩‍👧</span>
+                    <div class="ff-section-info">
+                        <h4>Personal Circumstances</h4>
+                        <span>Modules 20-22</span>
+                    </div>
+                </div>
+                <div class="ff-section" data-section="riskAssessment">
+                    <span class="ff-section-icon">⚖️</span>
+                    <div class="ff-section-info">
+                        <h4>Risk Assessment</h4>
+                        <span>Modules 23-26</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="type-toggle">
+                <button class="type-btn active" onclick="setFactFindType('individual')">
+                    <h4>👤 Individual</h4>
+                    <p>Single applicant</p>
+                </button>
+                <button class="type-btn" onclick="setFactFindType('joint')">
+                    <h4>👥 Joint</h4>
+                    <p>Two applicants</p>
+                </button>
+            </div>
+
+            <button class="btn btn-primary" id="factFindBtn" onclick="startFactFind()">
+                Start Fact Find →
+            </button>
+        </div>
+
+        <!-- Step 2: Account Selection -->
+        <div class="section-header">
+            <div class="section-number locked" id="sectionNum2">2</div>
+            <h2 class="section-title">Choose Your Account</h2>
+        </div>
+
+        <div class="account-grid" id="accountGrid">
+            <!-- ISA -->
+            <div class="card account-card disabled locked" id="isaCard" data-journey="isa">
+                <div class="account-icon">📈</div>
+                <h3>Stocks & Shares ISA</h3>
+                <p>Tax-efficient investing with annual allowance of £20,000. No capital gains or income tax on returns.</p>
+                <div class="account-features">
+                    <span class="feature-tag">Tax-Free</span>
+                    <span class="feature-tag">£20k Allowance</span>
+                    <span class="feature-tag">Flexible Access</span>
+                </div>
+                <div class="account-type-select">
+                    <button class="account-type-btn active" onclick="setAccountType('isa', 'individual')">Individual</button>
+                    <button class="account-type-btn" onclick="setAccountType('isa', 'joint')">Joint</button>
+                </div>
+                <button class="btn btn-primary account-btn" onclick="startAccountJourney('isa')">Open ISA →</button>
+            </div>
+
+            <!-- GIA -->
+            <div class="card account-card disabled locked" id="giaCard" data-journey="gia">
+                <div class="account-icon">💼</div>
+                <h3>General Investment Account</h3>
+                <p>Flexible investment account with no contribution limits. Ideal for investments beyond ISA allowance.</p>
+                <div class="account-features">
+                    <span class="feature-tag">No Limits</span>
+                    <span class="feature-tag">Flexible</span>
+                    <span class="feature-tag">Joint Available</span>
+                </div>
+                <div class="account-type-select">
+                    <button class="account-type-btn active" onclick="setAccountType('gia', 'individual')">Individual</button>
+                    <button class="account-type-btn" onclick="setAccountType('gia', 'joint')">Joint</button>
+                </div>
+                <button class="btn btn-primary account-btn" onclick="startAccountJourney('gia')">Open GIA →</button>
+            </div>
+
+            <!-- SIPP -->
+            <div class="card account-card disabled locked" id="sippCard" data-journey="sipp">
+                <div class="account-icon">🏦</div>
+                <h3>Self-Invested Personal Pension</h3>
+                <p>Take control of your retirement savings with flexible investment options and tax relief on contributions.</p>
+                <div class="account-features">
+                    <span class="feature-tag">Tax Relief</span>
+                    <span class="feature-tag">Pension</span>
+                    <span class="feature-tag">Retirement Planning</span>
+                </div>
+                <button class="btn btn-primary account-btn" onclick="startAccountJourney('sipp')">Open SIPP →</button>
+            </div>
+
+            <!-- JISA -->
+            <div class="card account-card disabled locked" id="jisaCard" data-journey="jisa">
+                <div class="account-icon">👶</div>
+                <h3>Junior ISA</h3>
+                <p>Tax-efficient savings for under-18s with £9,000 annual allowance. Funds accessible at age 18.</p>
+                <div class="account-features">
+                    <span class="feature-tag">Tax-Free</span>
+                    <span class="feature-tag">£9k Allowance</span>
+                    <span class="feature-tag">Children</span>
+                </div>
+                <button class="btn btn-primary account-btn" onclick="startAccountJourney('jisa')">Open JISA →</button>
+            </div>
+
+            <!-- AIM -->
+            <div class="card account-card disabled locked" id="aimCard" data-journey="aim">
+                <div class="account-icon">🚀</div>
+                <h3>AIM Portfolio Service</h3>
+                <p>Invest in AIM-listed companies with potential inheritance tax benefits after 2 years.</p>
+                <div class="account-features">
+                    <span class="feature-tag">IHT Benefits</span>
+                    <span class="feature-tag">Growth Focus</span>
+                    <span class="feature-tag">Higher Risk</span>
+                </div>
+                <div class="account-type-select">
+                    <button class="account-type-btn active" onclick="setAccountType('aim', 'individual')">Individual</button>
+                    <button class="account-type-btn" onclick="setAccountType('aim', 'joint')">Joint</button>
+                </div>
+                <button class="btn btn-primary account-btn" onclick="startAccountJourney('aim')">Open AIM →</button>
+            </div>
+        </div>
+
+        <!-- Data Flow Info -->
+        <div class="card" style="padding: 24px; margin-bottom: 32px;">
+            <h3 style="margin-bottom: 12px; color: var(--gray-700);">ℹ️ How Your Data Flows</h3>
+            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.7;">
+                Your Fact Find information is securely stored and automatically pre-populated into account applications. 
+                This means you won't need to re-enter personal details, employment information, or risk preferences. 
+                Each account application only asks for account-specific information like funding methods and investment strategy.
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Evelyn Partners. Authorised and regulated by the Financial Conduct Authority.</p>
+    </footer>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const STORAGE_KEYS = {
+            master: 'evelynFactFindMaster',
+            personal: 'evelynFactFindPersonal',
+            financial: 'evelynFactFindFinancial',
+            suitability: 'evelynFactFindSuitability',
+            aml: 'evelynFactFindAML',
+            circumstances: 'evelynFactFindCircumstances',
+            riskReview: 'evelynFactFindRiskReview',
+            accountForm: 'evelynAccountFormData'
+        };
+
+        const FACT_FIND_FORMS = {
+            personalInformation: { file: 'factfind_01_personal_information.html', storageKey: 'evelynFactFindPersonal' },
+            financialProfile: { file: 'factfind_02_financial_profile.html', storageKey: 'evelynFactFindFinancial' },
+            investmentSuitability: { file: 'factfind_03_investment_suitability.html', storageKey: 'evelynFactFindSuitability' },
+            amlCompliance: { file: 'factfind_04_aml_compliance.html', storageKey: 'evelynFactFindAML' },
+            personalCircumstances: { file: 'factfind_05_personal_circumstances.html', storageKey: 'evelynFactFindCircumstances' },
+            riskAssessment: { file: 'factfind_06_risk_assessment.html', storageKey: 'evelynFactFindRiskReview' }
+        };
+
+        const ACCOUNT_JOURNEYS = {
+            isa: { name: 'ISA', firstModule: 'account_isa_application.html' },
+            gia: { name: 'GIA', firstModule: 'account_gia_application.html' },
+            sipp: { name: 'SIPP', firstModule: 'account_sipp_application.html' },
+            jisa: { name: 'JISA', firstModule: 'account_jisa_application.html' },
+            aim: { name: 'AIM', firstModule: 'account_aim_application.html' }
+        };
+
+        // ============================================
+        // STATE
+        // ============================================
+        let factFindType = 'individual';
+        let accountTypes = { isa: 'individual', gia: 'individual', aim: 'individual' };
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            restoreSavedApplicationType();
+            checkProgress();
+            updateUI();
+        });
+
+        function restoreSavedApplicationType() {
+            // Check the master data for saved application type
+            const masterData = JSON.parse(localStorage.getItem(STORAGE_KEYS.master) || '{}');
+            
+            // Also check the personal information form for applicationType
+            const personalData = JSON.parse(localStorage.getItem('evelynFactFindPersonal') || '{}');
+            
+            let savedType = null;
+            
+            // First check master data
+            if (masterData.applicationType) {
+                savedType = masterData.applicationType;
+            }
+            // Then check personal form data
+            else if (personalData.applicationType) {
+                savedType = personalData.applicationType;
+            }
+            // Also check formData within personal data
+            else if (personalData.formData && personalData.formData.applicationType) {
+                savedType = personalData.formData.applicationType;
+            }
+            
+            // If we found a saved type, restore it
+            if (savedType === 'joint') {
+                factFindType = 'joint';
+                // Update the UI buttons
+                document.querySelectorAll('.type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.includes('Joint')) {
+                        btn.classList.add('active');
+                    }
+                });
+                // Also set account types to joint by default for ISA and GIA
+                accountTypes.isa = 'joint';
+                accountTypes.gia = 'joint';
+                accountTypes.aim = 'joint';
+                // Update account type buttons
+                updateAccountTypeButtons();
+            }
+        }
+
+        function updateAccountTypeButtons() {
+            // Update ISA buttons
+            const isaCard = document.getElementById('isaCard');
+            if (isaCard) {
+                isaCard.querySelectorAll('.account-type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if ((accountTypes.isa === 'joint' && btn.textContent.trim() === 'Joint') ||
+                        (accountTypes.isa === 'individual' && btn.textContent.trim() === 'Individual')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Update GIA buttons
+            const giaCard = document.getElementById('giaCard');
+            if (giaCard) {
+                giaCard.querySelectorAll('.account-type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if ((accountTypes.gia === 'joint' && btn.textContent.trim() === 'Joint') ||
+                        (accountTypes.gia === 'individual' && btn.textContent.trim() === 'Individual')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Update AIM buttons
+            const aimCard = document.getElementById('aimCard');
+            if (aimCard) {
+                aimCard.querySelectorAll('.account-type-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if ((accountTypes.aim === 'joint' && btn.textContent.trim() === 'Joint') ||
+                        (accountTypes.aim === 'individual' && btn.textContent.trim() === 'Individual')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        function checkProgress() {
+            const masterData = JSON.parse(localStorage.getItem(STORAGE_KEYS.master) || '{}');
+            
+            // Check each fact find section
+            Object.keys(FACT_FIND_FORMS).forEach(section => {
+                const sectionEl = document.querySelector(`[data-section="${section}"]`);
+                if (sectionEl && masterData[section]?.complete) {
+                    sectionEl.classList.add('complete');
+                }
+            });
+
+            // Update overall status
+            if (masterData.factFindComplete) {
+                setFactFindComplete();
+            } else {
+                // Check for any saved progress
+                const lastForm = findLastIncompleteForm();
+                if (lastForm) {
+                    showSavedProgressAlert(lastForm);
+                }
+            }
+
+            // Check for completed applications
+            if (masterData.completedApplications) {
+                masterData.completedApplications.forEach(app => {
+                    markAccountSubmitted(app.journey, app.reference, app.applicationType);
+                });
+            }
+        }
+
+        function findLastIncompleteForm() {
+            const masterData = JSON.parse(localStorage.getItem(STORAGE_KEYS.master) || '{}');
+            const sections = Object.keys(FACT_FIND_FORMS);
+            
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const section = sections[i];
+                const storageKey = FACT_FIND_FORMS[section].storageKey;
+                const sectionData = localStorage.getItem(storageKey);
+                
+                if (sectionData) {
+                    const parsed = JSON.parse(sectionData);
+                    if (parsed.formData && Object.keys(parsed.formData).length > 0) {
+                        // If this section is not complete, return it
+                        if (!masterData[section]?.complete) {
+                            return { section, file: FACT_FIND_FORMS[section].file };
+                        }
+                        // If complete, check next section
+                        if (i < sections.length - 1) {
+                            const nextSection = sections[i + 1];
+                            if (!masterData[nextSection]?.complete) {
+                                return { section: nextSection, file: FACT_FIND_FORMS[nextSection].file };
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Check if any section has been started
+            for (const section of sections) {
+                const storageKey = FACT_FIND_FORMS[section].storageKey;
+                if (localStorage.getItem(storageKey)) {
+                    return { section, file: FACT_FIND_FORMS[section].file };
+                }
+            }
+            
+            return null;
+        }
+
+        function showSavedProgressAlert(lastForm) {
+            const alertEl = document.getElementById('savedProgressAlert');
+            const descEl = document.getElementById('savedProgressDesc');
+            
+            const sectionNames = {
+                personalInformation: 'Personal Information',
+                financialProfile: 'Financial Profile',
+                investmentSuitability: 'Investment Suitability',
+                amlCompliance: 'AML/Compliance',
+                personalCircumstances: 'Personal Circumstances',
+                riskAssessment: 'Risk Assessment'
+            };
+            
+            descEl.textContent = `Continue from: ${sectionNames[lastForm.section] || lastForm.section}`;
+            alertEl.classList.add('show');
+            
+            // Store for continue button
+            window.continueToForm = lastForm.file;
+            
+            // Update fact find status
+            document.getElementById('factFindStatus').textContent = 'In Progress';
+            document.getElementById('factFindStatus').className = 'status-badge in-progress';
+            document.getElementById('factFindBtn').textContent = 'Continue Fact Find →';
+        }
+
+        function continueProgress() {
+            if (window.continueToForm) {
+                window.location.href = window.continueToForm + '?type=' + factFindType;
+            }
+        }
+
+        // ============================================
+        // UI UPDATES
+        // ============================================
+        function updateUI() {
+            calculateOverallProgress();
+        }
+
+        function calculateOverallProgress() {
+            const masterData = JSON.parse(localStorage.getItem(STORAGE_KEYS.master) || '{}');
+            
+            let completedSections = 0;
+            const totalSections = Object.keys(FACT_FIND_FORMS).length;
+            
+            Object.keys(FACT_FIND_FORMS).forEach(section => {
+                if (masterData[section]?.complete) {
+                    completedSections++;
+                }
+            });
+
+            // Calculate percentage (Fact Find is 50% of total, account is other 50%)
+            let percentage = 0;
+            if (masterData.factFindComplete) {
+                percentage = 50;
+                if (masterData.completedApplications?.length > 0) {
+                    percentage = 100;
+                }
+            } else {
+                percentage = Math.round((completedSections / totalSections) * 50);
+            }
+
+            document.getElementById('overallProgress').textContent = percentage + '%';
+            document.getElementById('progressBarFill').style.width = percentage + '%';
+
+            // Update step indicators
+            updateStepIndicators(masterData);
+        }
+
+        function updateStepIndicators(masterData) {
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const step4 = document.getElementById('step4');
+
+            // Reset all
+            [step1, step2, step3, step4].forEach(s => s.classList.remove('complete', 'active'));
+
+            if (masterData.factFindComplete) {
+                step1.classList.add('complete');
+                step2.classList.add('active');
+                
+                if (masterData.completedApplications?.length > 0) {
+                    step2.classList.remove('active');
+                    step2.classList.add('complete');
+                    step3.classList.add('complete');
+                    step4.classList.add('complete');
+                }
+            } else {
+                step1.classList.add('active');
+            }
+        }
+
+        function setFactFindComplete() {
+            // Update status badge
+            document.getElementById('factFindStatus').textContent = 'Complete';
+            document.getElementById('factFindStatus').className = 'status-badge complete';
+            document.getElementById('factFindBtn').textContent = 'Review Fact Find';
+            
+            // Update card styling
+            document.getElementById('factFindCard').classList.add('complete');
+            document.getElementById('factFindCard').classList.remove('active');
+            
+            // Mark all sections complete
+            document.querySelectorAll('.ff-section').forEach(el => el.classList.add('complete'));
+            
+            // Unlock account cards
+            enableAccountCards();
+            
+            // Update section numbers
+            document.getElementById('sectionNum1').classList.remove('locked');
+            document.getElementById('sectionNum2').classList.remove('locked');
+            
+            // Hide saved progress alert
+            document.getElementById('savedProgressAlert').classList.remove('show');
+            
+            // Update progress
+            calculateOverallProgress();
+        }
+
+        function enableAccountCards() {
+            document.querySelectorAll('.account-card').forEach(card => {
+                card.classList.remove('disabled', 'locked');
+            });
+        }
+
+        function markAccountSubmitted(journey, reference, applicationType) {
+            const card = document.getElementById(journey + 'Card');
+            if (card) {
+                card.classList.add('submitted');
+                
+                // Check if this reference already exists (avoid duplicates)
+                const existingRefs = card.querySelectorAll('.submitted-ref');
+                for (let ref of existingRefs) {
+                    if (ref.textContent === reference) return;
+                }
+                
+                // Add submitted info for this application
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'submitted-info';
+                const typeLabel = applicationType === 'joint' ? 'Joint' : 'Individual';
+                infoDiv.innerHTML = `✓ <span class="submitted-type">${typeLabel}</span> - Ref: <span class="submitted-ref">${reference}</span>`;
+                card.appendChild(infoDiv);
+                
+                // Change button text
+                const btn = card.querySelector('.account-btn');
+                if (btn) {
+                    btn.textContent = 'Apply Again →';
+                }
+            }
+        }
+
+        // ============================================
+        // ACTIONS
+        // ============================================
+        function setFactFindType(type) {
+            factFindType = type;
+            document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.type-btn').classList.add('active');
+            
+            // Sync account types with fact find type
+            if (type === 'joint') {
+                accountTypes.isa = 'joint';
+                accountTypes.gia = 'joint';
+                accountTypes.aim = 'joint';
+            } else {
+                accountTypes.isa = 'individual';
+                accountTypes.gia = 'individual';
+                accountTypes.aim = 'individual';
+            }
+            updateAccountTypeButtons();
+        }
+
+        function setAccountType(account, type) {
+            accountTypes[account] = type;
+            const card = document.getElementById(account + 'Card');
+            card.querySelectorAll('.account-type-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function startFactFind() {
+            const masterData = JSON.parse(localStorage.getItem(STORAGE_KEYS.master) || '{}');
+            
+            // If complete, start from beginning to review
+            if (masterData.factFindComplete) {
+                window.location.href = 'factfind_01_personal_information.html?type=' + factFindType;
+                return;
+            }
+            
+            // Find first incomplete section or start from beginning
+            const lastForm = findLastIncompleteForm();
+            if (lastForm) {
+                window.location.href = lastForm.file + '?type=' + factFindType;
+            } else {
+                window.location.href = 'factfind_01_personal_information.html?type=' + factFindType;
+            }
+        }
+
+        function startAccountJourney(journey) {
+            const masterData = JSON.parse(localStorage.getItem(STORAGE_KEYS.master) || '{}');
+            
+            if (!masterData.factFindComplete) {
+                alert('Please complete the Fact Find before opening an account.');
+                return;
+            }
+
+            // Pre-populate account form with Fact Find data
+            prepopulateAccountForm(journey);
+
+            // Navigate to account application
+            const type = accountTypes[journey] || 'individual';
+            const journeyConfig = ACCOUNT_JOURNEYS[journey];
+            
+            // For now, route to a placeholder or actual account module
+            window.location.href = `account_${journey}_application.html?type=${type}&journey=${journey}`;
+        }
+
+        function prepopulateAccountForm(journey) {
+            // Gather data from all fact find storage
+            const personalData = JSON.parse(localStorage.getItem(STORAGE_KEYS.personal) || '{}').formData || {};
+            const financialData = JSON.parse(localStorage.getItem(STORAGE_KEYS.financial) || '{}').formData || {};
+            const suitabilityData = JSON.parse(localStorage.getItem(STORAGE_KEYS.suitability) || '{}').formData || {};
+            const amlData = JSON.parse(localStorage.getItem(STORAGE_KEYS.aml) || '{}').formData || {};
+            const circumstancesData = JSON.parse(localStorage.getItem(STORAGE_KEYS.circumstances) || '{}').formData || {};
+            const riskData = JSON.parse(localStorage.getItem(STORAGE_KEYS.riskReview) || '{}').formData || {};
+
+            // Combine into account form data
+            const accountFormData = {
+                // Personal details
+                title: personalData.title,
+                firstName: personalData.firstName,
+                surname: personalData.surname,
+                dateOfBirth: personalData.dateOfBirth,
+                email: personalData.email,
+                phone: personalData.phone,
+                address: personalData.addressLine1,
+                city: personalData.city,
+                postcode: personalData.postcode,
+                niNumber: personalData.niNumber,
+                
+                // Financial
+                employmentStatus: financialData.employmentStatus,
+                annualIncome: financialData.totalIncome,
+                taxPosition: financialData.taxPosition,
+                
+                // Suitability
+                investmentObjective: suitabilityData.primaryObjective,
+                riskAttitude: suitabilityData.riskAttitude,
+                investmentHorizon: suitabilityData.investmentHorizon,
+                
+                // Banking
+                bankName: riskData.bankName,
+                accountName: riskData.accountName,
+                sortCode: riskData.sortCode,
+                accountNumber: riskData.accountNumber,
+                
+                // Joint applicant data (if applicable)
+                ...extractJointApplicantData(personalData, financialData),
+                
+                // Journey info
+                journey: journey,
+                accountType: journey,
+                applicationType: accountTypes[journey] || 'individual',
+                factFindComplete: true,
+                prepopulatedAt: new Date().toISOString()
+            };
+
+            // Save to account form storage
+            localStorage.setItem(STORAGE_KEYS.accountForm, JSON.stringify(accountFormData));
+        }
+
+        function extractJointApplicantData(personalData, financialData) {
+            // Extract _customer2 fields for joint applications
+            const jointData = {};
+            
+            Object.keys(personalData).forEach(key => {
+                if (key.includes('_customer2')) {
+                    jointData[key] = personalData[key];
+                }
+            });
+            
+            Object.keys(financialData).forEach(key => {
+                if (key.includes('_customer2')) {
+                    jointData[key] = financialData[key];
+                }
+            });
+            
+            return jointData;
+        }
+
+        // ============================================
+        // UTILITY
+        // ============================================
+        function clearAllData() {
+            if (confirm('This will clear all saved progress. Are you sure?')) {
+                Object.values(STORAGE_KEYS).forEach(key => {
+                    localStorage.removeItem(key);
+                });
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Circumstances | Evelyn Partners Fact Find</title>
+    <style>
+        :root {
+            /* Primary Brand Colours - Evelyn Partners Rebrand */
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --primary-light: #6B3FA0;
+            
+            /* Secondary Accent Colours */
+            --accent-teal: #34675C;
+            --accent-coral: #E07065;
+            --accent-blue: #5299E0;
+            --accent-gold: #C4A35A;
+            
+            /* Semantic Colours */
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --warning-light: #fff3cd;
+            --danger: #dc3545;
+            
+            /* Neutral Grays */
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            
+            /* UI Properties */
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.2s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 20px; font-weight: 600; }
+        .type-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+        .header-main { padding: 20px 24px; }
+        .journey-title { font-size: 14px; opacity: 0.9; margin-bottom: 4px; }
+        .section-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+        .section-description { font-size: 14px; opacity: 0.85; }
+
+        .progress-container { background: rgba(0,0,0,0.2); padding: 16px 24px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; opacity: 0.9; }
+        .progress-bar { height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; background: white; border-radius: 3px; transition: width 0.3s ease; }
+        .progress-steps { display: flex; justify-content: space-between; margin-top: 12px; }
+        .progress-step { display: flex; flex-direction: column; align-items: center; font-size: 10px; opacity: 0.7; cursor: pointer; transition: var(--transition); flex: 1; }
+        .progress-step:hover, .progress-step.active, .progress-step.completed { opacity: 1; }
+        .step-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); margin-bottom: 4px; }
+        .progress-step.active .step-dot { background: white; box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
+        .progress-step.completed .step-dot { background: var(--success); }
+
+        .main-content { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        .save-status-bar { background: white; border-radius: var(--border-radius); padding: 12px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); }
+        .save-status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-600); }
+        .save-status-icon { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-400); }
+        .save-status-icon.saved { background: var(--success); }
+        .save-status-icon.saving { background: var(--warning); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .btn-save { background: var(--gray-100); color: var(--gray-700); border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; }
+        .btn-save:hover { background: var(--gray-200); }
+
+        .section-card { background: white; border-radius: var(--border-radius); margin-bottom: 16px; box-shadow: var(--shadow-sm); overflow: hidden; border: 1px solid var(--gray-200); }
+        .section-header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid transparent; }
+        .section-card.expanded .section-header { border-bottom-color: var(--gray-200); }
+        .section-header:hover { background: var(--gray-50); }
+        .section-header-left { display: flex; align-items: center; gap: 16px; }
+        .section-number { width: 32px; height: 32px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: var(--gray-600); }
+        .section-card.completed .section-number { background: var(--success-light); color: var(--success); }
+        .section-info h3 { font-size: 16px; font-weight: 600; color: var(--gray-800); margin-bottom: 2px; }
+        .section-info p { font-size: 13px; color: var(--gray-500); }
+        .status-badge { font-size: 12px; padding: 4px 10px; border-radius: 12px; font-weight: 500; }
+        .status-badge.pending { background: var(--gray-100); color: var(--gray-600); }
+        .status-badge.completed { background: var(--success-light); color: var(--success); }
+        .toggle-icon { font-size: 20px; color: var(--gray-400); transition: transform 0.2s ease; }
+        .section-card.expanded .toggle-icon { transform: rotate(180deg); }
+        .section-content { display: none; padding: 24px; background: var(--gray-50); }
+        .section-card.expanded .section-content { display: block; }
+
+        .applicant-toggle { display: flex; gap: 8px; margin-bottom: 24px; padding: 4px; background: var(--gray-100); border-radius: 8px; width: fit-content; }
+        .applicant-btn { padding: 10px 20px; border: none; background: transparent; border-radius: 6px; font-size: 14px; font-weight: 500; color: var(--gray-600); cursor: pointer; }
+        .applicant-btn.active { background: white; color: var(--primary); box-shadow: var(--shadow-sm); }
+        .applicant-form { display: none; }
+        .applicant-form.active { display: block; }
+
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--gray-700); margin-bottom: 6px; }
+        .form-label .required { color: var(--danger); }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 15px; color: var(--gray-800); background: white; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45, 32, 71, 0.15); }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        .form-hint { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+
+        .option-group { display: flex; flex-wrap: wrap; gap: 12px; }
+        .option-item { position: relative; }
+        .option-item input { position: absolute; opacity: 0; }
+        .option-item label { display: block; padding: 12px 20px; background: white; border: 1px solid var(--gray-300); border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .option-item input:checked + label { background: var(--primary); color: white; border-color: var(--primary); }
+        .option-item label:hover { border-color: var(--primary); }
+
+        .conditional-section { display: none; margin-top: 20px; padding: 20px; background: white; border-radius: 6px; border: 1px dashed var(--gray-300); }
+        .conditional-section.visible { display: block; }
+
+        .section-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--gray-200); }
+        .btn { padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
+        .btn-secondary { background: white; color: var(--gray-700); border: 1px solid var(--gray-300); }
+        .btn-secondary:hover { background: var(--gray-50); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #218838; }
+
+        .page-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding: 24px; background: white; border-radius: var(--border-radius); box-shadow: var(--shadow-sm); }
+        .nav-btn { display: flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; text-decoration: none; }
+        .nav-btn-prev { background: var(--gray-100); color: var(--gray-700); }
+        .nav-btn-prev:hover { background: var(--gray-200); }
+        .nav-btn-next { background: var(--primary); color: white; }
+        .nav-btn-next:hover { background: var(--primary-dark); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .info-box { background: #e7f3ff; border: 1px solid #b3d7ff; border-radius: 6px; padding: 16px; margin-bottom: 20px; }
+        .info-box p { font-size: 14px; color: #004085; }
+        .info-box.sensitive { background: #f8d7da; border-color: #f5c6cb; }
+        .info-box.sensitive p { color: #721c24; }
+
+        .dependant-card { background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+        .dependant-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .dependant-title { font-weight: 600; color: var(--gray-700); }
+        .btn-remove { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 14px; }
+        .btn-add { display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--gray-50); border: 2px dashed var(--gray-300); border-radius: 8px; color: var(--gray-600); cursor: pointer; width: 100%; justify-content: center; }
+        .btn-add:hover { border-color: var(--primary); color: var(--primary); }
+
+        .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+        .health-option { background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px; cursor: pointer; transition: var(--transition); }
+        .health-option:hover { border-color: var(--primary); }
+        .health-option.selected { border-color: var(--primary); background: rgba(45, 32, 71, 0.08); }
+        .health-option input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+        .health-option label { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .health-icon { font-size: 24px; }
+        .health-text { font-size: 14px; font-weight: 500; color: var(--gray-700); }
+
+        .vulnerability-section { background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px; margin-top: 16px; }
+        .vulnerability-section h4 { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 12px; }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 16px; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-navigation { flex-direction: column; gap: 12px; }
+            .nav-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">Evelyn Partners</div>
+            <span class="type-badge" id="applicationTypeBadge">Individual</span>
+        </div>
+        <div class="header-main">
+            <div class="journey-title">Fact Find A • Section 5 of 6</div>
+            <h1 class="section-title">Personal Circumstances</h1>
+            <p class="section-description">Family, health, and lifestyle information for comprehensive planning</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Section Progress</span>
+                <span id="progressPercent">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" data-section="1"><div class="step-dot"></div><span>Dependants</span></div>
+                <div class="progress-step" data-section="2"><div class="step-dot"></div><span>Lifestyle & Health</span></div>
+                <div class="progress-step" data-section="3"><div class="step-dot"></div><span>Vulnerability</span></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="save-status-bar">
+            <div class="save-status">
+                <div class="save-status-icon" id="saveStatusIcon"></div>
+                <span id="saveStatusText">All changes saved</span>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-save" onclick="saveProgress()">💾 Save Progress</button>
+                <button class="btn-save" onclick="clearForm()">🗑️ Clear Form</button>
+            </div>
+        </div>
+
+        <!-- Section 20: Dependants -->
+        <div class="section-card expanded" data-section="1" id="section1">
+            <div class="section-header" onclick="toggleSection(1)">
+                <div class="section-header-left">
+                    <div class="section-number">20</div>
+                    <div class="section-info">
+                        <h3>Dependants</h3>
+                        <p>Family members who depend on you financially</p>
+                    </div>
+                </div>
+                <div class="section-status">
+                    <span class="status-badge pending" id="status1">Not started</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <p>ℹ️ Understanding your family circumstances helps us provide appropriate financial planning advice, particularly for protection and estate planning.</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Do you have any financial dependants? <span class="required">*</span></label>
+                    <div class="option-group" style="margin-top: 12px;">
+                        <div class="option-item">
+                            <input type="radio" name="hasDependants" id="depNo" value="no" onchange="handleDependantsChange('no')">
+                            <label for="depNo">No</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" name="hasDependants" id="depYes" value="yes" onchange="handleDependantsChange('yes')">
+                            <label for="depYes">Yes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conditional-section" id="dependantsSection">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Number of children under 18</label>
+                            <input type="number" class="form-input" id="childrenUnder18" min="0" max="20" placeholder="0" onchange="handleFieldChange('childrenUnder18', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Number of children 18+</label>
+                            <input type="number" class="form-input" id="childrenOver18" min="0" max="20" placeholder="0" onchange="handleFieldChange('childrenOver18', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Other dependants (e.g., elderly parents, disabled relatives)</label>
+                        <input type="number" class="form-input" id="otherDependants" min="0" max="20" placeholder="0" onchange="handleFieldChange('otherDependants', this.value)">
+                    </div>
+
+                    <div id="dependantsList" style="margin-top: 20px;"></div>
+                    <button class="btn-add" onclick="addDependant()">+ Add Dependant Details</button>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label class="form-label">Estimated monthly cost of supporting dependants</label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span>£</span>
+                            <input type="number" class="form-input" id="dependantCost" placeholder="0" style="max-width: 200px;" onchange="handleFieldChange('dependantCost', this.value)">
+                            <span>per month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="completeSection(1)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 21: Lifestyle & Health -->
+        <div class="section-card" data-section="2" id="section2">
+            <div class="section-header" onclick="toggleSection(2)">
+                <div class="section-header-left">
+                    <div class="section-number">21</div>
+                    <div class="section-info">
+                        <h3>Lifestyle & Health</h3>
+                        <p>Health and lifestyle factors for insurance considerations</p>
+                    </div>
+                </div>
+                <div class="section-status">
+                    <span class="status-badge pending" id="status2">Not started</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="applicant-toggle" id="applicantToggle2" style="display: none;">
+                    <button class="applicant-btn active" onclick="switchApplicant(2, 1)">Primary Applicant</button>
+                    <button class="applicant-btn" onclick="switchApplicant(2, 2)">Joint Applicant</button>
+                </div>
+
+                <div class="applicant-form active" id="applicant1Form2">
+                    <div class="info-box sensitive">
+                        <p>🔒 This information is confidential and only used to assess protection needs. It does not affect your investment application.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">General Health Status</label>
+                        <div class="option-group" style="margin-top: 12px;">
+                            <div class="option-item">
+                                <input type="radio" name="healthStatus" id="healthExcellent" value="excellent" onchange="handleFieldChange('healthStatus', 'excellent')">
+                                <label for="healthExcellent">Excellent</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="healthStatus" id="healthGood" value="good" onchange="handleFieldChange('healthStatus', 'good')">
+                                <label for="healthGood">Good</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="healthStatus" id="healthFair" value="fair" onchange="handleFieldChange('healthStatus', 'fair')">
+                                <label for="healthFair">Fair</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="healthStatus" id="healthPoor" value="poor" onchange="handleFieldChange('healthStatus', 'poor')">
+                                <label for="healthPoor">Poor</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label class="form-label">Smoking Status</label>
+                        <div class="option-group">
+                            <div class="option-item">
+                                <input type="radio" name="smokingStatus" id="smokeNever" value="never" onchange="handleFieldChange('smokingStatus', 'never')">
+                                <label for="smokeNever">Never smoked</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="smokingStatus" id="smokeFormer" value="former" onchange="handleFieldChange('smokingStatus', 'former')">
+                                <label for="smokeFormer">Former smoker</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="smokingStatus" id="smokeCurrent" value="current" onchange="handleFieldChange('smokingStatus', 'current')">
+                                <label for="smokeCurrent">Current smoker</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label class="form-label">Do you have any existing protection policies?</label>
+                        <p class="form-hint" style="margin-bottom: 12px;">Select all that apply</p>
+                        <div class="health-grid">
+                            <label class="health-option">
+                                <input type="checkbox" id="protectionLife" onchange="handleProtectionChange('life', this.checked)">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span class="health-icon">🛡️</span>
+                                    <span class="health-text">Life Insurance</span>
+                                </div>
+                            </label>
+                            <label class="health-option">
+                                <input type="checkbox" id="protectionCritical" onchange="handleProtectionChange('critical', this.checked)">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span class="health-icon">❤️</span>
+                                    <span class="health-text">Critical Illness</span>
+                                </div>
+                            </label>
+                            <label class="health-option">
+                                <input type="checkbox" id="protectionIncome" onchange="handleProtectionChange('income', this.checked)">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span class="health-icon">💼</span>
+                                    <span class="health-text">Income Protection</span>
+                                </div>
+                            </label>
+                            <label class="health-option">
+                                <input type="checkbox" id="protectionPMI" onchange="handleProtectionChange('pmi', this.checked)">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span class="health-icon">🏥</span>
+                                    <span class="health-text">Private Medical</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label class="form-label">Do you have any significant health conditions we should be aware of?</label>
+                        <div class="option-group" style="margin-top: 12px;">
+                            <div class="option-item">
+                                <input type="radio" name="hasHealthConditions" id="healthCondNo" value="no" onchange="handleHealthConditionChange('no')">
+                                <label for="healthCondNo">No</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="hasHealthConditions" id="healthCondYes" value="yes" onchange="handleHealthConditionChange('yes')">
+                                <label for="healthCondYes">Yes</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="hasHealthConditions" id="healthCondPrefer" value="prefer-not" onchange="handleHealthConditionChange('prefer-not')">
+                                <label for="healthCondPrefer">Prefer not to say</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-section" id="healthConditionsSection">
+                        <div class="form-group">
+                            <label class="form-label">Please provide details (optional)</label>
+                            <textarea class="form-textarea" id="healthConditionsDetails" placeholder="This information helps us understand your full financial picture" onchange="handleFieldChange('healthConditionsDetails', this.value)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label class="form-label">Any anticipated life changes in the next 5 years?</label>
+                        <p class="form-hint" style="margin-bottom: 12px;">e.g., retirement, property purchase, inheritance</p>
+                        <textarea class="form-textarea" id="lifeChanges" placeholder="Describe any expected changes" onchange="handleFieldChange('lifeChanges', this.value)"></textarea>
+                    </div>
+                </div>
+
+                <div class="applicant-form" id="applicant2Form2">
+                    <div class="form-group">
+                        <label class="form-label">General Health Status</label>
+                        <select class="form-select" id="healthStatus_customer2" onchange="handleFieldChange('healthStatus_customer2', this.value)">
+                            <option value="">Select</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                            <option value="poor">Poor</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-top: 16px;">
+                        <label class="form-label">Smoking Status</label>
+                        <select class="form-select" id="smokingStatus_customer2" onchange="handleFieldChange('smokingStatus_customer2', this.value)">
+                            <option value="">Select</option>
+                            <option value="never">Never smoked</option>
+                            <option value="former">Former smoker</option>
+                            <option value="current">Current smoker</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="goToSection(1)">← Previous</button>
+                    <button class="btn btn-primary" onclick="completeSection(2)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 22: Vulnerable Clients -->
+        <div class="section-card" data-section="3" id="section3">
+            <div class="section-header" onclick="toggleSection(3)">
+                <div class="section-header-left">
+                    <div class="section-number">22</div>
+                    <div class="section-info">
+                        <h3>Vulnerability Assessment</h3>
+                        <p>FCA-required assessment for client support needs</p>
+                    </div>
+                </div>
+                <div class="section-status">
+                    <span class="status-badge pending" id="status3">Not started</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="applicant-toggle" id="applicantToggle3" style="display: none;">
+                    <button class="applicant-btn active" onclick="switchApplicant(3, 1)">Primary Applicant</button>
+                    <button class="applicant-btn" onclick="switchApplicant(3, 2)">Joint Applicant</button>
+                </div>
+
+                <div class="applicant-form active" id="applicant1Form3">
+                    <div class="info-box">
+                        <p>ℹ️ The FCA requires us to identify clients who may need additional support. This helps us ensure we communicate appropriately and provide suitable advice. Your answers do not affect your ability to invest.</p>
+                    </div>
+
+                    <div class="vulnerability-section">
+                        <h4>Health & Capability</h4>
+                        <div class="form-group">
+                            <label class="form-label">Do any of the following apply to you?</label>
+                            <p class="form-hint" style="margin-bottom: 12px;">Select all that apply</p>
+                            <div style="display: grid; gap: 8px;">
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="vulnHearing" onchange="handleVulnerabilityChange('hearing', this.checked)">
+                                    <span>Hearing impairment</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="vulnVision" onchange="handleVulnerabilityChange('vision', this.checked)">
+                                    <span>Visual impairment</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="vulnCognitive" onchange="handleVulnerabilityChange('cognitive', this.checked)">
+                                    <span>Memory or cognitive difficulties</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="vulnMental" onchange="handleVulnerabilityChange('mental', this.checked)">
+                                    <span>Mental health condition</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="vulnPhysical" onchange="handleVulnerabilityChange('physical', this.checked)">
+                                    <span>Physical disability or mobility issues</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="vulnNone" onchange="handleNoVulnerability(this.checked)">
+                                    <span>None of the above</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vulnerability-section">
+                        <h4>Life Events</h4>
+                        <div class="form-group">
+                            <label class="form-label">Have you recently experienced any of the following?</label>
+                            <div style="display: grid; gap: 8px; margin-top: 12px;">
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="eventBereavement" onchange="handleLifeEventChange('bereavement', this.checked)">
+                                    <span>Bereavement</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="eventDivorce" onchange="handleLifeEventChange('divorce', this.checked)">
+                                    <span>Divorce or relationship breakdown</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="eventJobLoss" onchange="handleLifeEventChange('jobloss', this.checked)">
+                                    <span>Job loss or redundancy</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="eventRetirement" onchange="handleLifeEventChange('retirement', this.checked)">
+                                    <span>Recent retirement</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="eventCarer" onchange="handleLifeEventChange('carer', this.checked)">
+                                    <span>Becoming a carer</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="eventNone" onchange="handleNoLifeEvent(this.checked)">
+                                    <span>None of the above</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vulnerability-section">
+                        <h4>Communication Preferences</h4>
+                        <div class="form-group">
+                            <label class="form-label">Do you require any communication adjustments?</label>
+                            <div style="display: grid; gap: 8px; margin-top: 12px;">
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="commLargeFont" onchange="handleCommPrefChange('largefont', this.checked)">
+                                    <span>Large font documents</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="commBraille" onchange="handleCommPrefChange('braille', this.checked)">
+                                    <span>Braille documents</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="commSimple" onchange="handleCommPrefChange('simple', this.checked)">
+                                    <span>Plain/simple language</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="commThirdParty" onchange="handleCommPrefChange('thirdparty', this.checked)">
+                                    <span>Copy correspondence to a third party</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="commExtra" onchange="handleCommPrefChange('extra', this.checked)">
+                                    <span>Extra time to make decisions</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label class="form-label">Is there a third party we should involve in discussions?</label>
+                        <div class="option-group" style="margin-top: 12px;">
+                            <div class="option-item">
+                                <input type="radio" name="hasThirdParty" id="thirdPartyNo" value="no" onchange="handleThirdPartyChange('no')">
+                                <label for="thirdPartyNo">No</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="hasThirdParty" id="thirdPartyYes" value="yes" onchange="handleThirdPartyChange('yes')">
+                                <label for="thirdPartyYes">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-section" id="thirdPartySection">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Third Party Name</label>
+                                <input type="text" class="form-input" id="thirdPartyName" placeholder="Full name" onchange="handleFieldChange('thirdPartyName', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Relationship</label>
+                                <input type="text" class="form-input" id="thirdPartyRelation" placeholder="e.g. Son, Financial Adviser" onchange="handleFieldChange('thirdPartyRelation', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Contact Number</label>
+                                <input type="tel" class="form-input" id="thirdPartyPhone" placeholder="Phone number" onchange="handleFieldChange('thirdPartyPhone', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" id="thirdPartyEmail" placeholder="Email" onchange="handleFieldChange('thirdPartyEmail', this.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="applicant-form" id="applicant2Form3">
+                    <div class="form-group">
+                        <label class="form-label">Any vulnerability factors?</label>
+                        <div class="option-group" style="margin-top: 12px;">
+                            <div class="option-item">
+                                <input type="radio" name="hasVulnerability_customer2" id="vulnNo2" value="no" onchange="handleFieldChange('hasVulnerability_customer2', 'no')">
+                                <label for="vulnNo2">No</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="hasVulnerability_customer2" id="vulnYes2" value="yes" onchange="handleFieldChange('hasVulnerability_customer2', 'yes')">
+                                <label for="vulnYes2">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="goToSection(2)">← Previous</button>
+                    <button class="btn btn-success" onclick="completeSection(3); completeForm()">Complete Section ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-navigation">
+            <a href="factfind_04_aml_compliance.html" class="nav-btn nav-btn-prev">← Back to AML/Compliance</a>
+            <button class="nav-btn nav-btn-next" onclick="proceedToNextForm()" id="nextFormBtn" disabled>
+                Continue to Risk Assessment →
+            </button>
+        </div>
+    </main>
+
+    <script>
+        const STORAGE_KEY = 'evelynFactFindCircumstances';
+        const TOTAL_SECTIONS = 3;
+        
+        let formData = {};
+        let sectionStatus = {};
+        let isJointApplication = false;
+        let saveTimeout = null;
+        let dependantCount = 0;
+        let selectedProtection = [];
+        let selectedVulnerabilities = [];
+        let selectedLifeEvents = [];
+        let selectedCommPrefs = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            isJointApplication = urlParams.get('type') === 'joint';
+            
+            if (isJointApplication) {
+                document.getElementById('applicationTypeBadge').textContent = 'Joint Application';
+                document.querySelectorAll('.applicant-toggle').forEach(el => el.style.display = 'flex');
+            }
+
+            loadSavedData();
+            for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+                if (!sectionStatus[i]) sectionStatus[i] = 'pending';
+                updateSectionUI(i);
+            }
+            updateProgress();
+        });
+
+        function loadSavedData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                formData = parsed.formData || {};
+                sectionStatus = parsed.sectionStatus || {};
+                Object.keys(formData).forEach(key => {
+                    const value = formData[key];
+                    
+                    const el = document.getElementById(key);
+                    if (el) {
+                        if (el.type === 'checkbox') {
+                            el.checked = value === true || value === 'true' || value === 'on';
+                        } else {
+                            el.value = value;
+                        }
+                    }
+                    
+                    // Also check for radio buttons by name
+                    const radios = document.querySelectorAll(`input[type="radio"][name="${key}"]`);
+                    if (radios.length > 0) {
+                        radios.forEach(radio => {
+                            if (radio.value === value) {
+                                radio.checked = true;
+                            }
+                        });
+                    }
+                });
+                
+                restoreConditionalSections();
+                updateSaveStatus('saved');
+            }
+        }
+        
+        function restoreConditionalSections() {
+            // Marital status conditionals
+            if (formData.maritalStatus === 'married' || formData.maritalStatus === 'civilPartnership') {
+                const spouseSection = document.getElementById('spouseDetails');
+                if (spouseSection) spouseSection.classList.add('visible');
+            }
+            
+            // Dependants
+            if (formData.hasDependants === 'yes') {
+                const depDetails = document.getElementById('dependantsDetails');
+                if (depDetails) depDetails.classList.add('visible');
+            }
+            
+            // Vulnerable client
+            if (formData.vulnerableClient === 'yes') {
+                const vulnDetails = document.getElementById('vulnerabilityDetails');
+                if (vulnDetails) vulnDetails.classList.add('visible');
+            }
+            
+            // Health conditions
+            if (formData.hasHealthConditions === 'yes') {
+                const healthSection = document.getElementById('healthConditionsSection');
+                if (healthSection) healthSection.classList.add('visible');
+            }
+            
+            // Restore protection checkboxes and their visual selected state
+            if (formData.existingProtection) {
+                const protections = formData.existingProtection.split(',');
+                const protectionMap = {
+                    'life': 'protectionLife',
+                    'critical': 'protectionCritical',
+                    'income': 'protectionIncome',
+                    'pmi': 'protectionPMI'
+                };
+                protections.forEach(prot => {
+                    const checkboxId = protectionMap[prot];
+                    if (checkboxId) {
+                        const checkbox = document.getElementById(checkboxId);
+                        if (checkbox) {
+                            checkbox.checked = true;
+                            // Also add selected class to parent health-option
+                            const parentOption = checkbox.closest('.health-option');
+                            if (parentOption) parentOption.classList.add('selected');
+                        }
+                    }
+                });
+                // Restore the selectedProtection array
+                if (typeof selectedProtection !== 'undefined') {
+                    selectedProtection.length = 0;
+                    selectedProtection.push(...protections);
+                }
+            }
+            
+            // Restore vulnerabilities checkboxes
+            if (formData.vulnerabilities) {
+                const vulns = formData.vulnerabilities.split(',');
+                if (typeof selectedVulnerabilities !== 'undefined') {
+                    selectedVulnerabilities.length = 0;
+                    selectedVulnerabilities.push(...vulns);
+                }
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ formData, sectionStatus, lastSaved: new Date().toISOString() }));
+            updateSaveStatus('saved');
+        }
+
+        function handleFieldChange(fieldName, value) {
+            formData[fieldName] = value;
+            updateSaveStatus('saving');
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => saveProgress(), 500);
+        }
+
+        function updateSaveStatus(status) {
+            const icon = document.getElementById('saveStatusIcon');
+            const text = document.getElementById('saveStatusText');
+            icon.className = 'save-status-icon';
+            if (status === 'saved') { icon.classList.add('saved'); text.textContent = 'All changes saved'; }
+            else if (status === 'saving') { icon.classList.add('saving'); text.textContent = 'Saving...'; }
+        }
+
+        function clearForm() { if (confirm('Clear all data?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
+
+        // Scroll to section with offset to account for sticky header
+        function scrollToSectionWithOffset(element) {
+            const header = document.querySelector('.header');
+            const headerHeight = header ? header.offsetHeight : 0;
+            const offset = headerHeight + 20;
+            const elementPosition = element.getBoundingClientRect().top;
+            const currentScrollPosition = window.pageYOffset;
+            const targetPosition = currentScrollPosition + elementPosition - offset;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        }
+
+        function toggleSection(sectionNum) {
+            const section = document.getElementById(`section${sectionNum}`);
+            const wasExpanded = section.classList.contains('expanded');
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('expanded'));
+            if (!wasExpanded) {
+                section.classList.add('expanded');
+                setTimeout(() => scrollToSectionWithOffset(section), 100);
+            }
+        }
+
+        function goToSection(sectionNum) { toggleSection(sectionNum); }
+
+        function completeSection(sectionNum) {
+            sectionStatus[sectionNum] = 'completed';
+            updateSectionUI(sectionNum);
+            saveProgress();
+            if (sectionNum < TOTAL_SECTIONS) toggleSection(sectionNum + 1);
+            updateProgress();
+        }
+
+        function updateSectionUI(sectionNum) {
+            const section = document.getElementById(`section${sectionNum}`);
+            const statusBadge = document.getElementById(`status${sectionNum}`);
+            const progressStep = document.querySelector(`.progress-step[data-section="${sectionNum}"]`);
+            section.classList.remove('completed');
+            progressStep.classList.remove('completed', 'active');
+            if (sectionStatus[sectionNum] === 'completed') {
+                section.classList.add('completed');
+                statusBadge.className = 'status-badge completed';
+                statusBadge.textContent = 'Completed';
+                progressStep.classList.add('completed');
+            } else {
+                statusBadge.className = 'status-badge pending';
+                statusBadge.textContent = 'Not started';
+            }
+        }
+
+        function updateProgress() {
+            const completed = Object.values(sectionStatus).filter(s => s === 'completed').length;
+            const percent = Math.round((completed / TOTAL_SECTIONS) * 100);
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressPercent').textContent = `${percent}% Complete`;
+            document.getElementById('nextFormBtn').disabled = completed !== TOTAL_SECTIONS;
+        }
+
+        function switchApplicant(sectionNum, applicantNum) {
+            const toggle = document.getElementById(`applicantToggle${sectionNum}`);
+            toggle.querySelectorAll('.applicant-btn').forEach((btn, i) => btn.classList.toggle('active', i + 1 === applicantNum));
+            document.getElementById(`applicant1Form${sectionNum}`).classList.toggle('active', applicantNum === 1);
+            document.getElementById(`applicant2Form${sectionNum}`).classList.toggle('active', applicantNum === 2);
+        }
+
+        function handleDependantsChange(value) {
+            handleFieldChange('hasDependants', value);
+            document.getElementById('dependantsSection').classList.toggle('visible', value === 'yes');
+        }
+
+        function addDependant() {
+            dependantCount++;
+            const container = document.getElementById('dependantsList');
+            const card = document.createElement('div');
+            card.className = 'dependant-card';
+            card.id = `dependant${dependantCount}`;
+            card.innerHTML = `
+                <div class="dependant-header">
+                    <span class="dependant-title">Dependant ${dependantCount}</span>
+                    <button class="btn-remove" onclick="removeDependant(${dependantCount})">✕ Remove</button>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" placeholder="Full name" onchange="handleFieldChange('dependant${dependantCount}Name', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Relationship</label>
+                        <select class="form-select" onchange="handleFieldChange('dependant${dependantCount}Relation', this.value)">
+                            <option value="">Select</option>
+                            <option value="child">Child</option>
+                            <option value="spouse">Spouse/Partner</option>
+                            <option value="parent">Parent</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-input" placeholder="Age" min="0" max="120" onchange="handleFieldChange('dependant${dependantCount}Age', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Financial Dependency</label>
+                        <select class="form-select" onchange="handleFieldChange('dependant${dependantCount}Dependency', this.value)">
+                            <option value="">Select</option>
+                            <option value="full">Fully dependent</option>
+                            <option value="partial">Partially dependent</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        }
+
+        function removeDependant(id) {
+            const card = document.getElementById(`dependant${id}`);
+            if (card) card.remove();
+        }
+
+        function handleProtectionChange(type, checked) {
+            if (checked) selectedProtection.push(type);
+            else selectedProtection = selectedProtection.filter(p => p !== type);
+            handleFieldChange('existingProtection', selectedProtection.join(','));
+            
+            // Update visual state
+            const checkboxMap = {
+                'life': 'protectionLife',
+                'critical': 'protectionCritical',
+                'income': 'protectionIncome',
+                'pmi': 'protectionPMI'
+            };
+            const checkbox = document.getElementById(checkboxMap[type]);
+            if (checkbox) {
+                const parentOption = checkbox.closest('.health-option');
+                if (parentOption) {
+                    parentOption.classList.toggle('selected', checked);
+                }
+            }
+        }
+
+        function handleHealthConditionChange(value) {
+            handleFieldChange('hasHealthConditions', value);
+            document.getElementById('healthConditionsSection').classList.toggle('visible', value === 'yes');
+        }
+
+        function handleVulnerabilityChange(type, checked) {
+            if (checked) selectedVulnerabilities.push(type);
+            else selectedVulnerabilities = selectedVulnerabilities.filter(v => v !== type);
+            handleFieldChange('vulnerabilities', selectedVulnerabilities.join(','));
+        }
+
+        function handleNoVulnerability(checked) {
+            if (checked) {
+                document.querySelectorAll('[id^="vuln"]:not(#vulnNone)').forEach(cb => cb.checked = false);
+                selectedVulnerabilities = [];
+                handleFieldChange('vulnerabilities', 'none');
+            }
+        }
+
+        function handleLifeEventChange(type, checked) {
+            if (checked) selectedLifeEvents.push(type);
+            else selectedLifeEvents = selectedLifeEvents.filter(e => e !== type);
+            handleFieldChange('lifeEvents', selectedLifeEvents.join(','));
+        }
+
+        function handleNoLifeEvent(checked) {
+            if (checked) {
+                document.querySelectorAll('[id^="event"]:not(#eventNone)').forEach(cb => cb.checked = false);
+                selectedLifeEvents = [];
+                handleFieldChange('lifeEvents', 'none');
+            }
+        }
+
+        function handleCommPrefChange(pref, checked) {
+            if (checked) selectedCommPrefs.push(pref);
+            else selectedCommPrefs = selectedCommPrefs.filter(p => p !== pref);
+            handleFieldChange('communicationPrefs', selectedCommPrefs.join(','));
+        }
+
+        function handleThirdPartyChange(value) {
+            handleFieldChange('hasThirdParty', value);
+            document.getElementById('thirdPartySection').classList.toggle('visible', value === 'yes');
+        }
+
+        function proceedToNextForm() {
+            saveProgress();
+            const type = isJointApplication ? 'joint' : 'individual';
+            window.location.href = `factfind_06_risk_assessment.html?type=${type}`;
+        }
+
+        function completeForm() {
+            const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
+            masterData.personalCircumstances = { complete: true, timestamp: new Date().toISOString() };
+            localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
+        }
+    </script>
+</body>
+</html>

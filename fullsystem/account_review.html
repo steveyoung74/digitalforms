@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Review | Evelyn Partners</title>
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --warning-light: #fff3cd;
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .header-content { max-width: 900px; margin: 0 auto; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .logo { font-size: 20px; font-weight: 600; }
+        .journey-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+        .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+
+        .main-content { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        .review-notice {
+            background: var(--warning-light);
+            border: 1px solid var(--warning);
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .review-notice p { font-size: 14px; color: #856404; }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-300);
+        }
+        .progress-dot.active { background: var(--primary); }
+        .progress-dot.complete { background: var(--success); }
+
+        .section-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title { font-size: 16px; font-weight: 600; color: var(--gray-800); }
+        .edit-link { font-size: 13px; color: var(--primary); text-decoration: none; }
+        .edit-link:hover { text-decoration: underline; }
+        .section-content { padding: 20px; }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .review-item { }
+        .review-label { font-size: 12px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .review-value { font-size: 15px; color: var(--gray-800); font-weight: 500; }
+        .review-value.empty { color: var(--gray-400); font-style: italic; font-weight: normal; }
+
+        .review-item.full-width { grid-column: 1 / -1; }
+
+        .summary-box {
+            background: var(--success-light);
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+        .summary-box h4 { color: var(--success); margin-bottom: 12px; }
+        .summary-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .summary-row:last-child { border-bottom: none; font-weight: 600; padding-top: 12px; }
+        .summary-row .label { color: var(--gray-700); }
+        .summary-row .value { color: var(--gray-800); font-weight: 500; }
+
+        .applicant-section { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed var(--gray-300); }
+        .applicant-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .applicant-title { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 12px; }
+
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding: 24px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .nav-btn-prev { background: var(--gray-100); color: var(--gray-700); }
+        .nav-btn-next { background: var(--success); color: white; }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 16px; }
+            .review-grid { grid-template-columns: 1fr; }
+            .page-navigation { flex-direction: column; gap: 12px; }
+            .nav-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="logo">Evelyn Partners</div>
+                <span class="journey-badge" id="journeyBadge">Application Review</span>
+            </div>
+            <h1>Review Your Application</h1>
+            <p id="pageSubtitle">Step 3 - Please check all details are correct before signing</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-dot complete"></div>
+            <div class="progress-dot complete"></div>
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+        </div>
+
+        <!-- Review Notice -->
+        <div class="review-notice">
+            <span style="font-size: 24px;">👀</span>
+            <p><strong>Please review all details carefully.</strong> Once submitted, changes may require additional documentation.</p>
+        </div>
+
+        <!-- Personal Details -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">👤 Personal Details</span>
+            </div>
+            <div class="section-content" id="personalDetails">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Account Details -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title" id="accountSectionTitle">📊 Account Details</span>
+            </div>
+            <div class="section-content" id="accountDetails">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Investment Details -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">💰 Investment Details</span>
+            </div>
+            <div class="section-content" id="investmentDetails">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Banking Details -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">🏦 Banking Details</span>
+            </div>
+            <div class="section-content" id="bankingDetails">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Child Details (JISA only) -->
+        <div class="section-card" id="childSection" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">👶 Child Details</span>
+            </div>
+            <div class="section-content" id="childDetails">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Beneficiaries (SIPP only) -->
+        <div class="section-card" id="beneficiarySection" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">👥 Beneficiary Nominations</span>
+            </div>
+            <div class="section-content" id="beneficiaryDetails">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Declarations Confirmation -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">✅ Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="review-grid">
+                    <div class="review-item full-width">
+                        <div class="review-value" style="color: var(--success);">
+                            ✓ All required declarations accepted on <span id="declarationDate">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+            <button class="nav-btn nav-btn-prev" onclick="goBack()">← Back to Declarations</button>
+            <button class="nav-btn nav-btn-next" onclick="proceedToSignature()">Proceed to Signature →</button>
+        </div>
+    </main>
+
+    <script>
+        let accountData = {};
+        let accountType = 'isa';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            populateReview();
+        });
+
+        function loadData() {
+            accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            accountType = accountData.accountType || 'isa';
+
+            // Update header
+            const badges = {
+                isa: '📈 ISA Application',
+                gia: '💼 GIA Application',
+                sipp: '🏦 SIPP Application',
+                jisa: '👶 JISA Application',
+                aim: '🚀 AIM Application'
+            };
+            document.getElementById('journeyBadge').textContent = badges[accountType] || 'Application Review';
+
+            const titles = {
+                isa: '📈 ISA Details',
+                gia: '💼 GIA Details',
+                sipp: '🏦 SIPP Details',
+                jisa: '👶 JISA Details',
+                aim: '🚀 AIM Portfolio Details'
+            };
+            document.getElementById('accountSectionTitle').textContent = titles[accountType] || '📊 Account Details';
+        }
+
+        function populateReview() {
+            populatePersonalDetails();
+            populateAccountDetails();
+            populateInvestmentDetails();
+            populateBankingDetails();
+
+            // Account-specific sections
+            if (accountType === 'jisa') {
+                document.getElementById('childSection').style.display = 'block';
+                populateChildDetails();
+            }
+
+            if (accountType === 'sipp') {
+                document.getElementById('beneficiarySection').style.display = 'block';
+                populateBeneficiaryDetails();
+            }
+
+            // Declaration date
+            if (accountData.declarationsTimestamp) {
+                const date = new Date(accountData.declarationsTimestamp);
+                document.getElementById('declarationDate').textContent = date.toLocaleDateString('en-GB', {
+                    day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+            }
+        }
+
+        function populatePersonalDetails() {
+            const isJoint = accountData.applicationType === 'joint';
+            let html = '';
+
+            // Primary applicant
+            if (isJoint) {
+                html += '<div class="applicant-section"><div class="applicant-title">Primary Applicant</div>';
+            }
+
+            html += `
+                <div class="review-grid">
+                    <div class="review-item">
+                        <div class="review-label">Full Name</div>
+                        <div class="review-value">${formatValue([accountData.title, accountData.firstName, accountData.surname].filter(Boolean).join(' '))}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Date of Birth</div>
+                        <div class="review-value">${formatDate(accountData.dateOfBirth)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Email</div>
+                        <div class="review-value">${formatValue(accountData.email)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Phone</div>
+                        <div class="review-value">${formatValue(accountData.phone)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Address</div>
+                        <div class="review-value">${formatValue([accountData.address, accountData.city, accountData.postcode].filter(Boolean).join(', '))}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">NI Number</div>
+                        <div class="review-value">${formatValue(accountData.niNumber)}</div>
+                    </div>
+                </div>
+            `;
+
+            if (isJoint) {
+                html += '</div>';
+                html += '<div class="applicant-section"><div class="applicant-title">Joint Applicant</div>';
+                html += `
+                    <div class="review-grid">
+                        <div class="review-item">
+                            <div class="review-label">Full Name</div>
+                            <div class="review-value">${formatValue([accountData.title_customer2, accountData.firstName_customer2, accountData.surname_customer2].filter(Boolean).join(' '))}</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Date of Birth</div>
+                            <div class="review-value">${formatDate(accountData.dateOfBirth_customer2)}</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Email</div>
+                            <div class="review-value">${formatValue(accountData.email_customer2)}</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Phone</div>
+                            <div class="review-value">${formatValue(accountData.phone_customer2)}</div>
+                        </div>
+                    </div>
+                `;
+                html += '</div>';
+            }
+
+            document.getElementById('personalDetails').innerHTML = html;
+        }
+
+        function populateAccountDetails() {
+            let html = '<div class="review-grid">';
+
+            html += `
+                <div class="review-item">
+                    <div class="review-label">Account Type</div>
+                    <div class="review-value">${formatAccountType(accountType)}</div>
+                </div>
+                <div class="review-item">
+                    <div class="review-label">Application Type</div>
+                    <div class="review-value">${accountData.applicationType === 'joint' ? 'Joint Application' : 'Individual'}</div>
+                </div>
+            `;
+
+            // Account-specific fields
+            if (accountType === 'isa') {
+                html += `
+                    <div class="review-item">
+                        <div class="review-label">Tax Year</div>
+                        <div class="review-value">${formatValue(accountData.isaYear)}</div>
+                    </div>
+                `;
+            }
+
+            if (accountType === 'sipp') {
+                html += `
+                    <div class="review-item">
+                        <div class="review-label">Target Retirement Age</div>
+                        <div class="review-value">${formatValue(accountData.retirementAge)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Contribution Type</div>
+                        <div class="review-value">${formatContributionType(accountData.contributionType)}</div>
+                    </div>
+                `;
+            }
+
+            if (accountType === 'gia' && accountData.applicationType === 'joint') {
+                html += `
+                    <div class="review-item">
+                        <div class="review-label">Ownership Structure</div>
+                        <div class="review-value">${formatOwnership(accountData.ownership)}</div>
+                    </div>
+                `;
+            }
+
+            if (accountType === 'aim') {
+                html += `
+                    <div class="review-item">
+                        <div class="review-label">Primary Objective</div>
+                        <div class="review-value">${formatAimObjective(accountData.aimObjective)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Wrapper Type</div>
+                        <div class="review-value">${accountData.aimAccountType === 'isa' ? 'ISA' : 'GIA'}</div>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            document.getElementById('accountDetails').innerHTML = html;
+        }
+
+        function populateInvestmentDetails() {
+            const initialAmount = accountData.initialAmount || accountData.investmentAmount || 0;
+            const monthlyAmount = accountData.monthlyAmount || 0;
+
+            let html = `
+                <div class="review-grid">
+                    <div class="review-item">
+                        <div class="review-label">Initial Investment</div>
+                        <div class="review-value">${formatCurrency(initialAmount)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Monthly Contribution</div>
+                        <div class="review-value">${monthlyAmount > 0 ? formatCurrency(monthlyAmount) : 'None'}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Funding Method</div>
+                        <div class="review-value">${formatFundingMethod(accountData.fundingMethod)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Investment Strategy</div>
+                        <div class="review-value">${formatStrategy(accountData.investmentStrategy)}</div>
+                    </div>
+                </div>
+            `;
+
+            // Summary box
+            let totalYear1 = parseFloat(initialAmount) + (parseFloat(monthlyAmount) * 12);
+            html += `
+                <div class="summary-box">
+                    <h4>💰 Investment Summary</h4>
+                    <div class="summary-row">
+                        <span class="label">Initial Investment</span>
+                        <span class="value">${formatCurrency(initialAmount)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="label">Monthly Contributions (Year 1)</span>
+                        <span class="value">${formatCurrency(monthlyAmount * 12)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="label">Estimated Total (Year 1)</span>
+                        <span class="value">${formatCurrency(totalYear1)}</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('investmentDetails').innerHTML = html;
+        }
+
+        function populateBankingDetails() {
+            const html = `
+                <div class="review-grid">
+                    <div class="review-item">
+                        <div class="review-label">Bank Name</div>
+                        <div class="review-value">${formatValue(accountData.bankName)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Account Holder</div>
+                        <div class="review-value">${formatValue(accountData.accountName)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Sort Code</div>
+                        <div class="review-value">${formatValue(accountData.sortCode)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Account Number</div>
+                        <div class="review-value">${maskAccountNumber(accountData.accountNumber)}</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('bankingDetails').innerHTML = html;
+        }
+
+        function populateChildDetails() {
+            const html = `
+                <div class="review-grid">
+                    <div class="review-item">
+                        <div class="review-label">Child's Name</div>
+                        <div class="review-value">${formatValue([accountData.childFirstName, accountData.childLastName].filter(Boolean).join(' '))}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Date of Birth</div>
+                        <div class="review-value">${formatDate(accountData.childDOB)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Your Relationship</div>
+                        <div class="review-value">${formatGuardianType(accountData.guardianType)}</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Address</div>
+                        <div class="review-value">${accountData.sameAddress ? 'Same as registered contact' : 'Different address provided'}</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('childDetails').innerHTML = html;
+        }
+
+        function populateBeneficiaryDetails() {
+            const html = `
+                <div class="review-grid">
+                    <div class="review-item full-width">
+                        <div class="review-value">Beneficiary nominations will be confirmed separately. These are expressions of wish and the scheme trustees will take them into consideration.</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('beneficiaryDetails').innerHTML = html;
+        }
+
+        // Formatting helpers
+        function formatValue(val) {
+            return val || '<span class="empty">Not provided</span>';
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '<span class="empty">Not provided</span>';
+            try {
+                const date = new Date(dateStr);
+                return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch { return dateStr; }
+        }
+
+        function formatCurrency(amount) {
+            if (!amount || amount === 0) return '£0';
+            return '£' + parseFloat(amount).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function formatAccountType(type) {
+            const types = {
+                isa: 'Stocks & Shares ISA',
+                gia: 'General Investment Account',
+                sipp: 'Self-Invested Personal Pension (SIPP)',
+                jisa: 'Junior Stocks & Shares ISA',
+                aim: 'AIM Portfolio Service'
+            };
+            return types[type] || type;
+        }
+
+        function formatFundingMethod(method) {
+            const methods = {
+                'bank-transfer': 'Bank Transfer',
+                'direct-debit': 'Direct Debit',
+                'cheque': 'Cheque',
+                'transfer-in': 'Transfer from Another Provider',
+                'bed-and-aim': 'Bed and AIM'
+            };
+            return methods[method] || method || '<span class="empty">Not specified</span>';
+        }
+
+        function formatStrategy(strategy) {
+            const strategies = {
+                'cautious': 'Cautious',
+                'balanced': 'Balanced',
+                'growth': 'Growth',
+                'adventurous': 'Adventurous',
+                'diversified': 'Diversified AIM Portfolio',
+                'concentrated': 'Concentrated AIM Portfolio'
+            };
+            return strategies[strategy] || strategy || '<span class="empty">Not specified</span>';
+        }
+
+        function formatContributionType(type) {
+            const types = {
+                'personal': 'Personal Contribution',
+                'employer': 'Employer Contribution',
+                'transfer': 'Pension Transfer'
+            };
+            return types[type] || type || '<span class="empty">Not specified</span>';
+        }
+
+        function formatOwnership(type) {
+            const types = {
+                'joint-tenants': 'Joint Tenants (equal ownership, automatic survivorship)',
+                'tenants-common': 'Tenants in Common (specified shares)'
+            };
+            return types[type] || type || 'Joint Tenants';
+        }
+
+        function formatAimObjective(obj) {
+            const objectives = {
+                'iht': 'Inheritance Tax Planning',
+                'growth': 'Capital Growth',
+                'both': 'IHT Planning & Growth'
+            };
+            return objectives[obj] || obj || '<span class="empty">Not specified</span>';
+        }
+
+        function formatGuardianType(type) {
+            const types = {
+                'parent': 'Parent',
+                'guardian': 'Legal Guardian',
+                'grandparent': 'Grandparent'
+            };
+            return types[type] || type || '<span class="empty">Not specified</span>';
+        }
+
+        function maskAccountNumber(num) {
+            if (!num) return '<span class="empty">Not provided</span>';
+            return '****' + num.slice(-4);
+        }
+
+        function goBack() {
+            window.location.href = 'account_declarations.html';
+        }
+
+        function proceedToSignature() {
+            window.location.href = 'account_signature.html';
+        }
+    </script>
+</body>
+</html>
