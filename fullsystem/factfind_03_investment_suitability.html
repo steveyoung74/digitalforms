@@ -206,14 +206,53 @@
         .timeline-label { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 4px; }
         .timeline-desc { font-size: 12px; color: var(--gray-500); }
 
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
-            .main-content { padding: 16px; }
+            .header { transition: transform 0.3s ease; }
+            .header.header-hidden { transform: translateY(-100%); }
+            .header-top { flex-direction: row; padding: 10px 16px; gap: 8px; }
+            .logo { font-size: 16px; }
+            .type-badge { padding: 4px 10px; font-size: 11px; }
+            .header-main { padding: 12px 16px; }
+            .journey-title { font-size: 12px; margin-bottom: 2px; }
+            .section-title { font-size: 18px; margin-bottom: 4px; }
+            .section-description { font-size: 12px; display: none; }
+            .progress-container { padding: 10px 16px; }
+            .progress-label { font-size: 11px; margin-bottom: 6px; }
+            .progress-bar { height: 4px; }
+            .progress-steps { margin-top: 8px; }
+            .progress-step { font-size: 0; }
+            .step-dot { width: 8px; height: 8px; margin-bottom: 0; }
+            .progress-step.active .step-dot { box-shadow: 0 0 0 2px rgba(255,255,255,0.3); }
+            .main-content { padding: 12px; }
             .form-row { grid-template-columns: 1fr; }
             .page-navigation { flex-direction: column; gap: 12px; }
             .nav-btn { width: 100%; justify-content: center; }
+            .section-card { margin-bottom: 12px; }
+            .form-input, .form-select { padding: 10px 12px; font-size: 16px; }
             .timeline-options { flex-direction: column; }
         }
     </style>
+    <script>
+        (function() {
+            let lastScrollTop = 0;
+            let header = null;
+            function initMobileHeader() {
+                header = document.querySelector('.header');
+                if (!header || window.innerWidth > 768) return;
+                window.addEventListener('scroll', function() {
+                    if (window.innerWidth > 768) { header.classList.remove('header-hidden'); return; }
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); }
+                    else if (scrollTop < lastScrollTop - 10) { header.classList.remove('header-hidden'); }
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+                }, { passive: true });
+                window.addEventListener('resize', function() { if (window.innerWidth > 768) header.classList.remove('header-hidden'); });
+            }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMobileHeader);
+            else initMobileHeader();
+        })();
+    </script>
 </head>
 <body>
     <header class="header">

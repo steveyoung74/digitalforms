@@ -675,14 +675,88 @@
         }
 
         /* Responsive */
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
+            /* Auto-hide header on scroll */
+            .header {
+                transition: transform 0.3s ease;
+            }
+            
+            .header.header-hidden {
+                transform: translateY(-100%);
+            }
+            
+            /* Compact header on mobile */
             .header-top {
-                flex-direction: column;
-                gap: 12px;
+                flex-direction: row;
+                padding: 10px 16px;
+                gap: 8px;
+            }
+            
+            .logo {
+                font-size: 16px;
+            }
+            
+            .type-badge {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+            
+            /* Compact section info */
+            .header-main {
+                padding: 12px 16px;
+            }
+            
+            .journey-title {
+                font-size: 12px;
+                margin-bottom: 2px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+                margin-bottom: 4px;
+            }
+            
+            .section-description {
+                font-size: 12px;
+                display: none; /* Hide description on mobile */
+            }
+            
+            /* Compact progress bar - thin bar only, hide step labels */
+            .progress-container {
+                padding: 10px 16px;
+            }
+            
+            .progress-label {
+                font-size: 11px;
+                margin-bottom: 6px;
+            }
+            
+            .progress-bar {
+                height: 4px;
+            }
+            
+            .progress-steps {
+                margin-top: 8px;
+            }
+            
+            .progress-step {
+                font-size: 0; /* Hide labels */
+            }
+            
+            .step-dot {
+                width: 8px;
+                height: 8px;
+                margin-bottom: 0;
+            }
+            
+            .progress-step.active .step-dot {
+                box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
             }
 
+            /* Main content adjustments */
             .main-content {
-                padding: 16px;
+                padding: 12px;
             }
 
             .form-row {
@@ -698,8 +772,83 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            /* Smaller section cards on mobile */
+            .section-card {
+                margin-bottom: 12px;
+            }
+            
+            .section-header-bar {
+                padding: 14px 16px;
+            }
+            
+            .section-content {
+                padding: 16px;
+            }
+            
+            .form-group {
+                margin-bottom: 14px;
+            }
+            
+            .form-input, .form-select {
+                padding: 10px 12px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
         }
     </style>
+    
+    <script>
+        // Mobile header auto-hide on scroll
+        (function() {
+            let lastScrollTop = 0;
+            let header = null;
+            const scrollThreshold = 10;
+            
+            function initMobileHeader() {
+                header = document.querySelector('.header');
+                if (!header) return;
+                
+                // Only apply on mobile
+                if (window.innerWidth > 768) return;
+                
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                window.addEventListener('resize', handleResize);
+            }
+            
+            function handleScroll() {
+                if (window.innerWidth > 768) {
+                    header.classList.remove('header-hidden');
+                    return;
+                }
+                
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Scrolling down - hide header
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('header-hidden');
+                } 
+                // Scrolling up - show header
+                else if (scrollTop < lastScrollTop - scrollThreshold) {
+                    header.classList.remove('header-hidden');
+                }
+                
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }
+            
+            function handleResize() {
+                if (window.innerWidth > 768) {
+                    header.classList.remove('header-hidden');
+                }
+            }
+            
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initMobileHeader);
+            } else {
+                initMobileHeader();
+            }
+        })();
+    </script>
 </head>
 <body>
     <!-- Header -->
