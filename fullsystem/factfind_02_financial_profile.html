@@ -1546,6 +1546,7 @@
         function addWealthSource() {
             wealthSourceCount++;
             const container = document.getElementById('wealthSources');
+            const currencySymbol = JURISDICTION_CONFIG[currentJurisdiction].currency;
             const newCard = document.createElement('div');
             newCard.className = 'wealth-source-card';
             newCard.id = `wealthSource${wealthSourceCount}`;
@@ -1570,7 +1571,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Approximate Value</label>
-                        <div class="currency-input" data-currency="£">
+                        <div class="currency-input" data-currency="${currencySymbol}">
                             <input type="number" class="form-input" id="wealthSourceValue${wealthSourceCount}" placeholder="0" style="padding-left: 28px;" onchange="handleFieldChange('wealthSourceValue${wealthSourceCount}', this.value)">
                         </div>
                     </div>
