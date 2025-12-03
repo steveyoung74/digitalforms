@@ -686,12 +686,39 @@
     </main>
 
     <script>
+        // =========================================
+        // JURISDICTION CONFIGURATION
+        // =========================================
+        const JURISDICTION_CONFIG = {
+            UK: {
+                code: 'UK',
+                taxRates: [
+                    { value: 'nil', label: 'Nil (0%)' },
+                    { value: 'basic', label: 'Basic (20%)' },
+                    { value: 'higher', label: 'Higher (40%)' },
+                    { value: 'additional', label: 'Additional (45%)' }
+                ],
+                cgtInfo: 'UK Capital Gains Tax rates: 10%/18% (basic rate), 20%/24% (higher rate)',
+                taxDisclaimer: 'The information displayed is for guidance only. Please consult HMRC or a tax adviser.'
+            },
+            IE: {
+                code: 'IE',
+                taxRates: [
+                    { value: 'standard', label: 'Standard (20%)' },
+                    { value: 'marginal', label: 'Marginal (40%)' }
+                ],
+                cgtInfo: 'Irish Capital Gains Tax: 33% flat rate. Annual exemption: €1,270',
+                taxDisclaimer: 'The information displayed is for guidance only. Please consult Revenue.ie or a qualified Irish tax adviser.'
+            }
+        };
+        
         const STORAGE_KEY = 'evelynFactFindCircumstances';
         const TOTAL_SECTIONS = 3;
         
         let formData = {};
         let sectionStatus = {};
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
         let saveTimeout = null;
         let dependantCount = 0;
         let selectedProtection = [];
@@ -702,6 +729,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Get jurisdiction from URL or localStorage
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const storedJurisdiction = localStorage.getItem('evelynJurisdiction');
+                if (storedJurisdiction && JURISDICTION_CONFIG[storedJurisdiction]) {
+                    currentJurisdiction = storedJurisdiction;
+                }
+            }
+            
+            // Apply jurisdiction-specific config
+            applyJurisdictionConfig();
             
             if (isJointApplication) {
                 document.getElementById('applicationTypeBadge').textContent = 'Joint Application';
@@ -715,6 +756,33 @@
             }
             updateProgress();
         });
+        
+        // =========================================
+        // JURISDICTION HANDLING
+        // =========================================
+        function applyJurisdictionConfig() {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            
+            // Update tax rate dropdowns
+            const taxRateSelects = ['taxBand', 'taxBand_customer2'];
+            taxRateSelects.forEach(id => {
+                const select = document.getElementById(id);
+                if (select) {
+                    const currentValue = select.value;
+                    select.innerHTML = '<option value="">Select tax band</option>';
+                    config.taxRates.forEach(rate => {
+                        const option = document.createElement('option');
+                        option.value = rate.value;
+                        option.textContent = rate.label;
+                        select.appendChild(option);
+                    });
+                    if (currentValue) select.value = currentValue;
+                }
+            });
+            
+            // Store jurisdiction in form data
+            formData.jurisdiction = currentJurisdiction;
+        }
 
         function loadSavedData() {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -1021,12 +1089,13 @@
         function proceedToNextForm() {
             saveProgress();
             const type = isJointApplication ? 'joint' : 'individual';
-            window.location.href = `factfind_06_risk_assessment.html?type=${type}`;
+            window.location.href = `factfind_06_risk_assessment.html?type=${type}&jurisdiction=${currentJurisdiction}`;
         }
 
         function completeForm() {
             const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
             masterData.personalCircumstances = { complete: true, timestamp: new Date().toISOString() };
+            masterData.jurisdiction = currentJurisdiction;
             localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
         }
     </script>

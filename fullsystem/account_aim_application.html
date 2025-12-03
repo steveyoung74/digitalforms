@@ -430,12 +430,53 @@
     </main>
 
     <script>
+        // Jurisdiction Configuration
+        const JURISDICTION_CONFIG = {
+            UK: { 
+                currency: '£', 
+                currencyCode: 'GBP', 
+                taxIdLabel: 'NI Number',
+                taxBenefit: 'Inheritance Tax (IHT)',
+                taxBenefitRate: '40%',
+                taxBenefitDesc: 'Potential IHT relief after 2 years'
+            },
+            IE: { 
+                currency: '€', 
+                currencyCode: 'EUR', 
+                taxIdLabel: 'PPS Number',
+                taxBenefit: 'Capital Acquisitions Tax (CAT)',
+                taxBenefitRate: '33%',
+                taxBenefitDesc: 'Potential CAT relief after 2 years'
+            }
+        };
+        
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
 
         document.addEventListener('DOMContentLoaded', function() {
+            initJurisdiction();
             checkApplicationType();
             loadFactFindData();
         });
+        
+        function initJurisdiction() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const stored = localStorage.getItem('evelynJurisdiction');
+                if (stored && JURISDICTION_CONFIG[stored]) {
+                    currentJurisdiction = stored;
+                }
+            }
+            
+            // Update currency symbols
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            document.querySelectorAll('.currency-symbol').forEach(el => {
+                el.textContent = config.currency;
+            });
+        }
 
         function checkApplicationType() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -454,7 +495,7 @@
             setDisplayValue('displayName1', formatName(accountData.title, accountData.firstName, accountData.surname));
             setDisplayValue('displayDOB1', formatDate(accountData.dateOfBirth));
             setDisplayValue('displayEmail1', accountData.email);
-            setDisplayValue('displayNI1', accountData.niNumber);
+            setDisplayValue('displayNI1', accountData.niNumber || accountData.ppsNumber);
             
             // Joint Applicant
             if (isJointApplication) {

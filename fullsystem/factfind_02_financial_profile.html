@@ -1174,12 +1174,59 @@
     </main>
 
     <script>
+        // =========================================
+        // JURISDICTION CONFIGURATION
+        // =========================================
+        const JURISDICTION_CONFIG = {
+            UK: {
+                code: 'UK',
+                currency: '£',
+                currencyCode: 'GBP',
+                netWorthBands: [
+                    { value: 'under-100k', label: 'Under £100,000' },
+                    { value: '100k-250k', label: '£100,000 - £250,000' },
+                    { value: '250k-500k', label: '£250,000 - £500,000' },
+                    { value: '500k-1m', label: '£500,000 - £1,000,000' },
+                    { value: '1m-5m', label: '£1,000,000 - £5,000,000' },
+                    { value: 'over-5m', label: 'Over £5,000,000' }
+                ],
+                incomeBands: [
+                    { value: 'under-25k', label: 'Under £25,000' },
+                    { value: '25k-50k', label: '£25,000 - £50,000' },
+                    { value: '50k-100k', label: '£50,000 - £100,000' },
+                    { value: '100k-200k', label: '£100,000 - £200,000' },
+                    { value: 'over-200k', label: 'Over £200,000' }
+                ]
+            },
+            IE: {
+                code: 'IE',
+                currency: '€',
+                currencyCode: 'EUR',
+                netWorthBands: [
+                    { value: 'under-100k', label: 'Under €100,000' },
+                    { value: '100k-300k', label: '€100,000 - €300,000' },
+                    { value: '300k-600k', label: '€300,000 - €600,000' },
+                    { value: '600k-1m', label: '€600,000 - €1,000,000' },
+                    { value: '1m-3m', label: '€1,000,000 - €3,000,000' },
+                    { value: 'over-3m', label: 'Over €3,000,000' }
+                ],
+                incomeBands: [
+                    { value: 'under-30k', label: 'Under €30,000' },
+                    { value: '30k-60k', label: '€30,000 - €60,000' },
+                    { value: '60k-120k', label: '€60,000 - €120,000' },
+                    { value: '120k-250k', label: '€120,000 - €250,000' },
+                    { value: 'over-250k', label: 'Over €250,000' }
+                ]
+            }
+        };
+        
         const STORAGE_KEY = 'evelynFactFindFinancial';
         const TOTAL_SECTIONS = 4;
         
         let formData = {};
         let sectionStatus = {};
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
         let saveTimeout = null;
         let wealthSourceCount = 1;
         let selectedFundSources = [];
@@ -1187,6 +1234,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Get jurisdiction from URL or localStorage
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const storedJurisdiction = localStorage.getItem('evelynJurisdiction');
+                if (storedJurisdiction && JURISDICTION_CONFIG[storedJurisdiction]) {
+                    currentJurisdiction = storedJurisdiction;
+                }
+            }
+            
+            // Apply jurisdiction-specific UI updates
+            applyJurisdictionConfig();
             
             if (isJointApplication) {
                 document.getElementById('applicationTypeBadge').textContent = 'Joint Application';
@@ -1201,6 +1262,42 @@
             }
             updateProgress();
         });
+        
+        // =========================================
+        // JURISDICTION HANDLING
+        // =========================================
+        function applyJurisdictionConfig() {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            
+            // Update all currency symbols
+            document.querySelectorAll('.currency-input::before, .currency-symbol').forEach(el => {
+                el.textContent = config.currency;
+            });
+            
+            // Update net worth dropdowns
+            updateSelectOptions('totalNetWealth', config.netWorthBands);
+            updateSelectOptions('totalNetWealth_customer2', config.netWorthBands);
+            
+            // Store jurisdiction in form data
+            formData.jurisdiction = currentJurisdiction;
+            formData.currencyCode = config.currencyCode;
+        }
+        
+        function updateSelectOptions(selectId, options) {
+            const select = document.getElementById(selectId);
+            if (select) {
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">Select range</option>';
+                options.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.label;
+                    select.appendChild(option);
+                });
+                // Restore previous selection if it exists
+                if (currentValue) select.value = currentValue;
+            }
+        }
 
         function loadSavedData() {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -1459,12 +1556,13 @@
         function proceedToNextForm() {
             saveProgress();
             const type = isJointApplication ? 'joint' : 'individual';
-            window.location.href = `factfind_03_investment_suitability.html?type=${type}`;
+            window.location.href = `factfind_03_investment_suitability.html?type=${type}&jurisdiction=${currentJurisdiction}`;
         }
 
         function completeForm() {
             const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
             masterData.financialProfile = { complete: true, timestamp: new Date().toISOString() };
+            masterData.jurisdiction = currentJurisdiction;
             localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
         }
     </script>

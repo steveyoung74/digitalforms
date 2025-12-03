@@ -654,18 +654,41 @@
     </main>
 
     <script>
+        // =========================================
+        // JURISDICTION CONFIGURATION
+        // =========================================
+        const JURISDICTION_CONFIG = {
+            UK: { code: 'UK', nonResidentLabel: 'Non-UK jurisdiction', taxAuthority: 'HMRC' },
+            IE: { code: 'IE', nonResidentLabel: 'Non-European jurisdiction', taxAuthority: 'Revenue' }
+        };
+        
         const STORAGE_KEY = 'evelynFactFindAML';
         const TOTAL_SECTIONS = 3;
         
         let formData = {};
         let sectionStatus = {};
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
         let saveTimeout = null;
         let selectedBusinessActivities = [];
 
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Get jurisdiction from URL or localStorage
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const storedJurisdiction = localStorage.getItem('evelynJurisdiction');
+                if (storedJurisdiction && JURISDICTION_CONFIG[storedJurisdiction]) {
+                    currentJurisdiction = storedJurisdiction;
+                }
+            }
+            
+            // Apply jurisdiction-specific config
+            formData.jurisdiction = currentJurisdiction;
             
             if (isJointApplication) {
                 document.getElementById('applicationTypeBadge').textContent = 'Joint Application';
@@ -863,12 +886,13 @@
         function proceedToNextForm() {
             saveProgress();
             const type = isJointApplication ? 'joint' : 'individual';
-            window.location.href = `factfind_05_personal_circumstances.html?type=${type}`;
+            window.location.href = `factfind_05_personal_circumstances.html?type=${type}&jurisdiction=${currentJurisdiction}`;
         }
 
         function completeForm() {
             const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
             masterData.amlCompliance = { complete: true, timestamp: new Date().toISOString() };
+            masterData.jurisdiction = currentJurisdiction;
             localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
         }
     </script>

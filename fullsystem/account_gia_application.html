@@ -421,13 +421,46 @@
     </main>
 
     <script>
+        // Jurisdiction Configuration
+        const JURISDICTION_CONFIG = {
+            UK: { currency: '£', currencyCode: 'GBP', taxIdLabel: 'NI Number', regulator: 'FCA' },
+            IE: { currency: '€', currencyCode: 'EUR', taxIdLabel: 'PPS Number', regulator: 'CBI' }
+        };
+        
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
 
         document.addEventListener('DOMContentLoaded', function() {
+            initJurisdiction();
             checkApplicationType();
             loadFactFindData();
             setupEventListeners();
         });
+        
+        function initJurisdiction() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const stored = localStorage.getItem('evelynJurisdiction');
+                if (stored && JURISDICTION_CONFIG[stored]) {
+                    currentJurisdiction = stored;
+                }
+            }
+            
+            // Update currency symbols
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            document.querySelectorAll('.currency-symbol').forEach(el => {
+                el.textContent = config.currency;
+            });
+            
+            // Update tax ID label
+            const taxIdLabel = document.querySelector('label[for="displayNI1"], .ni-label');
+            if (taxIdLabel) {
+                taxIdLabel.textContent = config.taxIdLabel;
+            }
+        }
 
         function checkApplicationType() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -449,8 +482,8 @@
             setDisplayValue('displayDOB1', formatDate(accountData.dateOfBirth));
             setDisplayValue('displayEmail1', accountData.email);
             setDisplayValue('displayPhone1', accountData.phone);
-            setDisplayValue('displayAddress1', formatAddress(accountData.address, accountData.city, accountData.postcode));
-            setDisplayValue('displayNI1', accountData.niNumber);
+            setDisplayValue('displayAddress1', formatAddress(accountData.address, accountData.city, accountData.postcode || accountData.eircode));
+            setDisplayValue('displayNI1', accountData.niNumber || accountData.ppsNumber);
             
             // Joint Applicant (if applicable)
             if (isJointApplication) {

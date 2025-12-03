@@ -1708,7 +1708,7 @@
 
         <!-- Page Navigation -->
         <div class="page-navigation">
-            <a href="evelyn_landing_page.html" class="nav-btn nav-btn-prev">← Back to Journey Selection</a>
+            <a href="evelyn_landing_page.html" class="nav-btn nav-btn-prev" id="backLink">← Back to Journey Selection</a>
             <button class="nav-btn nav-btn-next" onclick="proceedToNextForm()" id="nextFormBtn" disabled>
                 Continue to Financial Profile →
             </button>
@@ -1716,6 +1716,46 @@
     </main>
 
     <script>
+        // =========================================
+        // JURISDICTION CONFIGURATION
+        // =========================================
+        const JURISDICTION_CONFIG = {
+            UK: {
+                code: 'UK',
+                name: 'United Kingdom',
+                currency: '£',
+                postcodeLabel: 'Postcode',
+                postcodePlaceholder: 'SW1A 1AA',
+                postcodePattern: /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i,
+                postcodeHint: 'Format: SW1A 1AA',
+                taxIdLabel: 'National Insurance Number',
+                taxIdPlaceholder: 'e.g. QQ 12 34 56 C',
+                taxIdPattern: /^[A-Z]{2}\s?\d{2}\s?\d{2}\s?\d{2}\s?[A-Z]$/i,
+                taxIdHint: 'Format: XX XX XX XX X',
+                taxIdInfoText: 'Your National Insurance number helps us verify your identity and report tax information to HMRC.',
+                taxAuthority: 'HMRC',
+                nonResidentLabel: 'Non-UK jurisdiction',
+                counties: ['Avon', 'Bedfordshire', 'Berkshire', 'Buckinghamshire', 'Cambridgeshire', 'Cheshire', 'Cornwall', 'Cumbria', 'Derbyshire', 'Devon', 'Dorset', 'Durham', 'East Sussex', 'Essex', 'Gloucestershire', 'Greater London', 'Greater Manchester', 'Hampshire', 'Hertfordshire', 'Kent', 'Lancashire', 'Leicestershire', 'Lincolnshire', 'Merseyside', 'Norfolk', 'North Yorkshire', 'Northamptonshire', 'Nottinghamshire', 'Oxfordshire', 'Shropshire', 'Somerset', 'South Yorkshire', 'Staffordshire', 'Suffolk', 'Surrey', 'Tyne and Wear', 'Warwickshire', 'West Midlands', 'West Sussex', 'West Yorkshire', 'Wiltshire', 'Worcestershire']
+            },
+            IE: {
+                code: 'IE',
+                name: 'Ireland',
+                currency: '€',
+                postcodeLabel: 'Eircode',
+                postcodePlaceholder: 'D02 AF30',
+                postcodePattern: /^[A-Z]\d{2}\s?[A-Z0-9]{4}$/i,
+                postcodeHint: 'Format: D02 AF30 (optional - not all Irish addresses have Eircodes)',
+                taxIdLabel: 'PPS Number',
+                taxIdPlaceholder: 'e.g. 1234567AB',
+                taxIdPattern: /^\d{7}[A-Z]{1,2}$/i,
+                taxIdHint: 'Format: 7 digits + 1-2 letters',
+                taxIdInfoText: 'Your Personal Public Service (PPS) number is required for tax reporting to Revenue.',
+                taxAuthority: 'Revenue',
+                nonResidentLabel: 'Non-European jurisdiction',
+                counties: ['Carlow', 'Cavan', 'Clare', 'Cork', 'Donegal', 'Dublin', 'Galway', 'Kerry', 'Kildare', 'Kilkenny', 'Laois', 'Leitrim', 'Limerick', 'Longford', 'Louth', 'Mayo', 'Meath', 'Monaghan', 'Offaly', 'Roscommon', 'Sligo', 'Tipperary', 'Waterford', 'Westmeath', 'Wexford', 'Wicklow']
+            }
+        };
+
         // =========================================
         // CONFIGURATION & STATE
         // =========================================
@@ -1725,15 +1765,31 @@
         let formData = {};
         let sectionStatus = {};
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
         let saveTimeout = null;
 
         // =========================================
         // INITIALIZATION
         // =========================================
         document.addEventListener('DOMContentLoaded', function() {
-            // Check URL params for application type
+            // Check URL params for application type and jurisdiction
             const urlParams = new URLSearchParams(window.location.search);
             isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Get jurisdiction from URL or localStorage
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+                localStorage.setItem('evelynJurisdiction', currentJurisdiction);
+            } else {
+                const storedJurisdiction = localStorage.getItem('evelynJurisdiction');
+                if (storedJurisdiction && JURISDICTION_CONFIG[storedJurisdiction]) {
+                    currentJurisdiction = storedJurisdiction;
+                }
+            }
+            
+            // Apply jurisdiction-specific UI updates
+            applyJurisdictionConfig();
             
             // Update UI for joint applications
             if (isJointApplication) {
@@ -1768,6 +1824,156 @@
             // Update progress
             updateProgress();
         });
+        
+        // =========================================
+        // JURISDICTION HANDLING
+        // =========================================
+        function applyJurisdictionConfig() {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            
+            // Update postcode fields
+            updatePostcodeFields(config);
+            
+            // Update tax ID fields (NI/PPS)
+            updateTaxIdFields(config);
+            
+            // Update county dropdowns
+            updateCountyDropdowns(config);
+            
+            // Store jurisdiction in form data
+            formData.jurisdiction = currentJurisdiction;
+        }
+        
+        function updatePostcodeFields(config) {
+            // Primary applicant postcode
+            const postcodeLabel = document.querySelector('label[for="postcode"]');
+            if (postcodeLabel) {
+                postcodeLabel.innerHTML = `${config.postcodeLabel} <span class="required">*</span>`;
+            }
+            
+            const postcodeInput = document.getElementById('postcode');
+            if (postcodeInput) {
+                postcodeInput.placeholder = config.postcodePlaceholder;
+            }
+            
+            const postcodeSearch = document.getElementById('postcodeSearch');
+            if (postcodeSearch) {
+                postcodeSearch.placeholder = `Enter ${config.postcodeLabel.toLowerCase()} to search`;
+            }
+            
+            // Joint applicant postcode
+            const postcodeLabel2 = document.querySelector('label[for="postcode_customer2"]');
+            if (postcodeLabel2) {
+                postcodeLabel2.innerHTML = `${config.postcodeLabel} <span class="required">*</span>`;
+            }
+            
+            const postcodeInput2 = document.getElementById('postcode_customer2');
+            if (postcodeInput2) {
+                postcodeInput2.placeholder = config.postcodePlaceholder;
+            }
+        }
+        
+        function updateTaxIdFields(config) {
+            // Update section header
+            const section5Header = document.querySelector('#section5 .section-info h3');
+            if (section5Header) {
+                section5Header.textContent = currentJurisdiction === 'IE' ? 
+                    'PPS Number & Tax Reference' : 
+                    'National Insurance & Tax Reference';
+            }
+            
+            const section5Desc = document.querySelector('#section5 .section-info p');
+            if (section5Desc) {
+                section5Desc.textContent = currentJurisdiction === 'IE' ?
+                    'Your PPS number and tax identifiers' :
+                    'Your NI number and tax identifiers';
+            }
+            
+            // Update progress step label
+            const progressStep5 = document.querySelector('.progress-step[data-section="5"] span');
+            if (progressStep5) {
+                progressStep5.textContent = currentJurisdiction === 'IE' ? 'PPS' : 'NI/Tax';
+            }
+            
+            // Primary applicant NI/PPS field
+            const niLabel = document.querySelector('label[for="niNumber"]');
+            if (niLabel) {
+                niLabel.innerHTML = `${config.taxIdLabel} <span class="required">*</span>`;
+            }
+            
+            const niInput = document.getElementById('niNumber');
+            if (niInput) {
+                niInput.placeholder = config.taxIdPlaceholder;
+                // Update ID for Ireland
+                if (currentJurisdiction === 'IE') {
+                    niInput.id = 'ppsNumber';
+                    niInput.name = 'ppsNumber';
+                }
+            }
+            
+            const niHint = document.querySelector('#niNumber + .form-hint, #ppsNumber + .form-hint');
+            if (niHint) {
+                niHint.textContent = config.taxIdHint;
+            }
+            
+            // Update info box text
+            const infoBox = document.querySelector('#applicant1Form5 .info-box p');
+            if (infoBox) {
+                infoBox.innerHTML = `ℹ️ ${config.taxIdInfoText}`;
+            }
+            
+            // Joint applicant
+            const niLabel2 = document.querySelector('label[for="niNumber_customer2"]');
+            if (niLabel2) {
+                niLabel2.innerHTML = `${config.taxIdLabel} <span class="required">*</span>`;
+            }
+            
+            const niInput2 = document.getElementById('niNumber_customer2');
+            if (niInput2) {
+                niInput2.placeholder = config.taxIdPlaceholder;
+                if (currentJurisdiction === 'IE') {
+                    niInput2.id = 'ppsNumber_customer2';
+                    niInput2.name = 'ppsNumber_customer2';
+                }
+            }
+        }
+        
+        function updateCountyDropdowns(config) {
+            // Convert county input to dropdown for better UX
+            const countyInputs = ['county', 'county_customer2'];
+            
+            countyInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input && input.tagName === 'INPUT') {
+                    // Create a datalist for autocomplete
+                    const datalistId = inputId + '_list';
+                    let datalist = document.getElementById(datalistId);
+                    
+                    if (!datalist) {
+                        datalist = document.createElement('datalist');
+                        datalist.id = datalistId;
+                        input.parentNode.appendChild(datalist);
+                        input.setAttribute('list', datalistId);
+                    }
+                    
+                    // Populate with counties
+                    datalist.innerHTML = config.counties.map(c => `<option value="${c}">`).join('');
+                }
+            });
+        }
+        
+        function validatePostcode(value) {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            // For Ireland, postcode (Eircode) is optional
+            if (currentJurisdiction === 'IE' && !value) return true;
+            return config.postcodePattern.test(value.replace(/\s/g, ''));
+        }
+        
+        function validateTaxId(value) {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            const cleanValue = value.replace(/\s/g, '').toUpperCase();
+            return config.taxIdPattern.test(cleanValue);
+        }
 
         // =========================================
         // DATA PERSISTENCE
@@ -2068,17 +2274,25 @@
         // FIELD HELPERS
         // =========================================
         function formatNI(input) {
-            let value = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-            let formatted = '';
-            
-            for (let i = 0; i < value.length && i < 9; i++) {
-                if (i === 2 || i === 4 || i === 6 || i === 8) {
-                    formatted += ' ';
+            if (currentJurisdiction === 'IE') {
+                // PPS format: 7 digits + 1-2 letters (e.g., 1234567AB)
+                let value = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                // Limit to 9 characters max
+                input.value = value.substring(0, 9);
+            } else {
+                // UK NI format: XX XX XX XX X
+                let value = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                let formatted = '';
+                
+                for (let i = 0; i < value.length && i < 9; i++) {
+                    if (i === 2 || i === 4 || i === 6 || i === 8) {
+                        formatted += ' ';
+                    }
+                    formatted += value[i];
                 }
-                formatted += value[i];
+                
+                input.value = formatted;
             }
-            
-            input.value = formatted;
         }
 
         function validateAge(fieldId) {
@@ -2149,7 +2363,7 @@
         function proceedToNextForm() {
             saveProgress();
             const type = isJointApplication ? 'joint' : 'individual';
-            window.location.href = `factfind_02_financial_profile.html?type=${type}`;
+            window.location.href = `factfind_02_financial_profile.html?type=${type}&jurisdiction=${currentJurisdiction}`;
         }
 
         function completeForm() {
@@ -2159,6 +2373,7 @@
                 complete: true,
                 timestamp: new Date().toISOString()
             };
+            masterData.jurisdiction = currentJurisdiction;
             localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
         }
     </script>

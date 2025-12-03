@@ -592,17 +592,40 @@
     </main>
 
     <script>
+        // =========================================
+        // JURISDICTION CONFIGURATION
+        // =========================================
+        const JURISDICTION_CONFIG = {
+            UK: { code: 'UK', currency: '£' },
+            IE: { code: 'IE', currency: '€' }
+        };
+        
         const STORAGE_KEY = 'evelynFactFindRiskReview';
         const TOTAL_SECTIONS = 4;
         
         let formData = {};
         let sectionStatus = {};
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
         let saveTimeout = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Get jurisdiction from URL or localStorage
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const storedJurisdiction = localStorage.getItem('evelynJurisdiction');
+                if (storedJurisdiction && JURISDICTION_CONFIG[storedJurisdiction]) {
+                    currentJurisdiction = storedJurisdiction;
+                }
+            }
+            
+            // Store jurisdiction in form data
+            formData.jurisdiction = currentJurisdiction;
             
             if (isJointApplication) {
                 document.getElementById('applicationTypeBadge').textContent = 'Joint Application';
@@ -820,6 +843,7 @@
             const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
             masterData.riskAssessment = { complete: true, timestamp: new Date().toISOString() };
             masterData.factFindComplete = true;
+            masterData.jurisdiction = currentJurisdiction;
             masterData.submittedAt = new Date().toISOString();
             localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
 
@@ -835,7 +859,7 @@
         function proceedToAccountOpening() {
             const type = isJointApplication ? 'joint' : 'individual';
             // Return to landing page where account cards are now unlocked
-            window.location.href = `evelyn_landing_page.html?type=${type}`;
+            window.location.href = `evelyn_landing_page_localised.html?type=${type}&jurisdiction=${currentJurisdiction}`;
         }
     </script>
 </body>

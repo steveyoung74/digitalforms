@@ -793,13 +793,151 @@
 
                 <div class="section-actions">
                     <button class="btn btn-secondary" onclick="goToSection(3)">← Previous</button>
-                    <button class="btn btn-success" onclick="completeSection(4); completeForm()">Complete Section ✓</button>
+                    <button class="btn btn-success" id="section4CompleteBtn" onclick="completeSection(4); handleSection4Complete()">Complete Section ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 17: ESG Preferences (Ireland Only) -->
+        <div class="section-card" data-section="5" id="section5" style="display: none;">
+            <div class="section-header" onclick="toggleSection(5)">
+                <div class="section-header-left">
+                    <div class="section-number">17</div>
+                    <div class="section-info">
+                        <h3>Sustainability Preferences</h3>
+                        <p>Your environmental, social and governance (ESG) investment preferences</p>
+                    </div>
+                </div>
+                <div class="section-status">
+                    <span class="status-badge pending" id="status5">Not started</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="info-box" style="background: #e7f5ef; border-color: #28a745;">
+                    <p>ℹ️ <strong>MiFID II Sustainability Requirement:</strong> Under European regulations, we are required to collect your sustainability preferences to ensure our investment recommendations are suitable for you.</p>
+                </div>
+
+                <div class="applicant-toggle" id="applicantToggle5" style="display: none;">
+                    <button class="applicant-btn active" onclick="switchApplicant(5, 1)">Primary Applicant</button>
+                    <button class="applicant-btn" onclick="switchApplicant(5, 2)">Joint Applicant</button>
+                </div>
+
+                <div class="applicant-form active" id="applicant1Form5">
+                    <div class="form-group">
+                        <label class="form-label">Do you have sustainability preferences for your investments? <span class="required">*</span></label>
+                        <div class="option-group">
+                            <div class="option-item">
+                                <input type="radio" name="esgHasPreferences" id="esgPreferencesYes" value="yes" onchange="handleFieldChange('esgHasPreferences', 'yes'); toggleESGDetails(true)">
+                                <label for="esgPreferencesYes">Yes, I want to incorporate sustainability factors</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="esgHasPreferences" id="esgPreferencesNo" value="no" onchange="handleFieldChange('esgHasPreferences', 'no'); toggleESGDetails(false)">
+                                <label for="esgPreferencesNo">No, I have no specific sustainability preferences</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="conditional-section" id="esgDetailsSection">
+                        <div class="form-group" style="margin-top: 24px;">
+                            <label class="form-label">Which sustainability factors are most important to you?</label>
+                            <p class="form-hint" style="margin-bottom: 12px;">Select all that apply</p>
+                            <div class="option-group" style="flex-direction: column; gap: 12px;">
+                                <div class="option-item" style="width: 100%;">
+                                    <input type="checkbox" name="esgPriority" id="esgEnvironmental" value="environmental" onchange="handleESGPriorityChange('environmental', this.checked)">
+                                    <label for="esgEnvironmental" style="width: 100%;">
+                                        <strong>🌱 Environmental</strong><br>
+                                        <span style="font-size: 12px; color: #666;">Climate change, renewable energy, pollution reduction, biodiversity</span>
+                                    </label>
+                                </div>
+                                <div class="option-item" style="width: 100%;">
+                                    <input type="checkbox" name="esgPriority" id="esgSocial" value="social" onchange="handleESGPriorityChange('social', this.checked)">
+                                    <label for="esgSocial" style="width: 100%;">
+                                        <strong>👥 Social</strong><br>
+                                        <span style="font-size: 12px; color: #666;">Human rights, labour standards, community impact, diversity & inclusion</span>
+                                    </label>
+                                </div>
+                                <div class="option-item" style="width: 100%;">
+                                    <input type="checkbox" name="esgPriority" id="esgGovernance" value="governance" onchange="handleESGPriorityChange('governance', this.checked)">
+                                    <label for="esgGovernance" style="width: 100%;">
+                                        <strong>🏛️ Governance</strong><br>
+                                        <span style="font-size: 12px; color: #666;">Board diversity, executive pay, business ethics, transparency</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 24px;">
+                            <label class="form-label">Are there any sectors or activities you wish to exclude from your investments?</label>
+                            <p class="form-hint" style="margin-bottom: 12px;">Select all that apply</p>
+                            <div class="option-group" style="flex-wrap: wrap; gap: 12px;">
+                                <div class="option-item">
+                                    <input type="checkbox" name="esgExclusion" id="excludeTobacco" value="tobacco" onchange="handleESGExclusionChange('tobacco', this.checked)">
+                                    <label for="excludeTobacco">🚬 Tobacco</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" name="esgExclusion" id="excludeWeapons" value="weapons" onchange="handleESGExclusionChange('weapons', this.checked)">
+                                    <label for="excludeWeapons">⚔️ Weapons/Defence</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" name="esgExclusion" id="excludeGambling" value="gambling" onchange="handleESGExclusionChange('gambling', this.checked)">
+                                    <label for="excludeGambling">🎰 Gambling</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" name="esgExclusion" id="excludeFossil" value="fossil_fuels" onchange="handleESGExclusionChange('fossil_fuels', this.checked)">
+                                    <label for="excludeFossil">⛽ Fossil Fuels</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" name="esgExclusion" id="excludeAdult" value="adult" onchange="handleESGExclusionChange('adult', this.checked)">
+                                    <label for="excludeAdult">🔞 Adult Entertainment</label>
+                                </div>
+                                <div class="option-item">
+                                    <input type="checkbox" name="esgExclusion" id="excludeAlcohol" value="alcohol" onchange="handleESGExclusionChange('alcohol', this.checked)">
+                                    <label for="excludeAlcohol">🍺 Alcohol</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 24px;">
+                            <label class="form-label">What minimum proportion of your portfolio would you like invested in sustainable investments?</label>
+                            <select class="form-select" id="esgMinAllocation" onchange="handleFieldChange('esgMinAllocation', this.value)">
+                                <option value="">Select preference</option>
+                                <option value="none">No minimum requirement</option>
+                                <option value="25">At least 25%</option>
+                                <option value="50">At least 50%</option>
+                                <option value="75">At least 75%</option>
+                                <option value="100">100% sustainable investments only</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Joint Applicant ESG (simplified) -->
+                <div class="applicant-form" id="applicant2Form5">
+                    <div class="form-group">
+                        <label class="form-label">Do you have sustainability preferences for your investments? <span class="required">*</span></label>
+                        <div class="option-group">
+                            <div class="option-item">
+                                <input type="radio" name="esgHasPreferences_customer2" id="esgPreferencesYes2" value="yes" onchange="handleFieldChange('esgHasPreferences_customer2', 'yes')">
+                                <label for="esgPreferencesYes2">Yes</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="esgHasPreferences_customer2" id="esgPreferencesNo2" value="no" onchange="handleFieldChange('esgHasPreferences_customer2', 'no')">
+                                <label for="esgPreferencesNo2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="goToSection(4)">← Previous</button>
+                    <button class="btn btn-success" onclick="completeSection(5); completeForm()">Complete Section ✓</button>
                 </div>
             </div>
         </div>
 
         <div class="page-navigation">
-            <a href="factfind_02_financial_profile.html" class="nav-btn nav-btn-prev">← Back to Financial Profile</a>
+            <a href="factfind_02_financial_profile.html" class="nav-btn nav-btn-prev" id="backLink">← Back to Financial Profile</a>
             <button class="nav-btn nav-btn-next" onclick="proceedToNextForm()" id="nextFormBtn" disabled>
                 Continue to AML/Compliance →
             </button>
@@ -807,14 +945,119 @@
     </main>
 
     <script>
+        // =========================================
+        // JURISDICTION CONFIGURATION
+        // =========================================
+        const JURISDICTION_CONFIG = {
+            UK: { code: 'UK', showESG: false, esgRequired: false },
+            IE: { code: 'IE', showESG: true, esgRequired: true }
+        };
+        
         const STORAGE_KEY = 'evelynFactFindSuitability';
-        const TOTAL_SECTIONS = 4;
+        let TOTAL_SECTIONS = 4; // Dynamic: 4 for UK, 5 for Ireland
         
         let formData = {};
         let sectionStatus = {};
         let isJointApplication = false;
+        let currentJurisdiction = 'UK';
         let saveTimeout = null;
         let selectedPurposes = [];
+        let selectedESGPriorities = [];
+        let selectedESGExclusions = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Get jurisdiction from URL or localStorage
+            const urlJurisdiction = urlParams.get('jurisdiction');
+            if (urlJurisdiction && JURISDICTION_CONFIG[urlJurisdiction]) {
+                currentJurisdiction = urlJurisdiction;
+            } else {
+                const storedJurisdiction = localStorage.getItem('evelynJurisdiction');
+                if (storedJurisdiction && JURISDICTION_CONFIG[storedJurisdiction]) {
+                    currentJurisdiction = storedJurisdiction;
+                }
+            }
+            
+            // Apply jurisdiction-specific configuration
+            applyJurisdictionConfig();
+            
+            if (isJointApplication) {
+                document.getElementById('applicationTypeBadge').textContent = 'Joint Application';
+                document.querySelectorAll('.applicant-toggle').forEach(el => el.style.display = 'flex');
+            }
+
+            loadSavedData();
+            for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+                if (!sectionStatus[i]) sectionStatus[i] = 'pending';
+                updateSectionUI(i);
+            }
+            updateProgress();
+        });
+        
+        // =========================================
+        // JURISDICTION HANDLING
+        // =========================================
+        function applyJurisdictionConfig() {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            
+            // Show/hide ESG section based on jurisdiction
+            const esgSection = document.getElementById('section5');
+            if (config.showESG) {
+                esgSection.style.display = 'block';
+                TOTAL_SECTIONS = 5;
+                
+                // Update section 4 button to continue to ESG
+                const section4Btn = document.getElementById('section4CompleteBtn');
+                if (section4Btn) {
+                    section4Btn.textContent = 'Continue →';
+                    section4Btn.className = 'btn btn-primary';
+                }
+            } else {
+                esgSection.style.display = 'none';
+                TOTAL_SECTIONS = 4;
+            }
+            
+            // Store jurisdiction in form data
+            formData.jurisdiction = currentJurisdiction;
+        }
+        
+        function handleSection4Complete() {
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            if (config.showESG) {
+                // Continue to ESG section
+                toggleSection(5);
+            } else {
+                // Complete the form
+                completeForm();
+            }
+        }
+        
+        // =========================================
+        // ESG HANDLING
+        // =========================================
+        function toggleESGDetails(show) {
+            document.getElementById('esgDetailsSection').classList.toggle('visible', show);
+        }
+        
+        function handleESGPriorityChange(priority, checked) {
+            if (checked) {
+                if (!selectedESGPriorities.includes(priority)) selectedESGPriorities.push(priority);
+            } else {
+                selectedESGPriorities = selectedESGPriorities.filter(p => p !== priority);
+            }
+            handleFieldChange('esgPriorityAreas', selectedESGPriorities.join(','));
+        }
+        
+        function handleESGExclusionChange(exclusion, checked) {
+            if (checked) {
+                if (!selectedESGExclusions.includes(exclusion)) selectedESGExclusions.push(exclusion);
+            } else {
+                selectedESGExclusions = selectedESGExclusions.filter(e => e !== exclusion);
+            }
+            handleFieldChange('esgExclusions', selectedESGExclusions.join(','));
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1024,12 +1267,13 @@
         function proceedToNextForm() {
             saveProgress();
             const type = isJointApplication ? 'joint' : 'individual';
-            window.location.href = `factfind_04_aml_compliance.html?type=${type}`;
+            window.location.href = `factfind_04_aml_compliance.html?type=${type}&jurisdiction=${currentJurisdiction}`;
         }
 
         function completeForm() {
             const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
             masterData.investmentSuitability = { complete: true, timestamp: new Date().toISOString() };
+            masterData.jurisdiction = currentJurisdiction;
             localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
         }
     </script>

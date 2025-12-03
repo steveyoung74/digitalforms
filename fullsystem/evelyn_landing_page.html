@@ -175,12 +175,27 @@
         .ff-section.complete { background: var(--success-light); }
         .ff-section.complete h4 { color: var(--success); }
 
+        /* Jurisdiction Toggle */
+        .jurisdiction-section { margin-bottom: 24px; }
+        .jurisdiction-label { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .jurisdiction-toggle { display: flex; gap: 12px; }
+        .jurisdiction-btn { flex: 1; padding: 14px 16px; border: 2px solid var(--gray-200); border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .jurisdiction-btn:hover { border-color: var(--accent-teal); }
+        .jurisdiction-btn.active { border-color: var(--accent-teal); background: rgba(52, 103, 92, 0.08); }
+        .jurisdiction-btn .flag { font-size: 24px; }
+        .jurisdiction-btn .jurisdiction-name { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+        .jurisdiction-info { font-size: 12px; color: var(--gray-500); margin-top: 8px; padding: 10px 12px; background: var(--gray-50); border-radius: 6px; display: none; }
+        .jurisdiction-info.visible { display: block; }
+        
         .type-toggle { display: flex; gap: 12px; margin-bottom: 24px; }
         .type-btn { flex: 1; padding: 16px; border: 2px solid var(--gray-200); border-radius: 8px; background: white; cursor: pointer; text-align: center; transition: var(--transition); }
         .type-btn:hover { border-color: var(--primary-light); }
         .type-btn.active { border-color: var(--primary); background: rgba(45, 32, 71, 0.08); }
         .type-btn h4 { font-size: 15px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
         .type-btn p { font-size: 12px; color: var(--gray-500); }
+        
+        /* Ireland-specific hiding */
+        .hidden-for-ireland { display: none !important; }
 
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; transition: var(--transition); border: none; text-decoration: none; }
         .btn-primary { background: var(--primary); color: white; }
@@ -370,6 +385,22 @@
                 </div>
             </div>
 
+            <!-- Jurisdiction Selection -->
+            <div class="jurisdiction-section">
+                <div class="jurisdiction-label">🌍 Select Jurisdiction</div>
+                <div class="jurisdiction-toggle">
+                    <button class="jurisdiction-btn active" onclick="setJurisdiction('UK')" id="jurisdictionBtnUK">
+                        <span class="flag">🇬🇧</span>
+                        <span class="jurisdiction-name">United Kingdom</span>
+                    </button>
+                    <button class="jurisdiction-btn" onclick="setJurisdiction('IE')" id="jurisdictionBtnIE">
+                        <span class="flag">🇮🇪</span>
+                        <span class="jurisdiction-name">Ireland</span>
+                    </button>
+                </div>
+                <div class="jurisdiction-info" id="jurisdictionInfo"></div>
+            </div>
+
             <div class="type-toggle">
                 <button class="type-btn active" onclick="setFactFindType('individual')">
                     <h4>👤 Individual</h4>
@@ -498,7 +529,34 @@
             aml: 'evelynFactFindAML',
             circumstances: 'evelynFactFindCircumstances',
             riskReview: 'evelynFactFindRiskReview',
-            accountForm: 'evelynAccountFormData'
+            accountForm: 'evelynAccountFormData',
+            jurisdiction: 'evelynJurisdiction'
+        };
+
+        // Jurisdiction Configuration
+        const JURISDICTION_CONFIG = {
+            UK: {
+                code: 'UK',
+                name: 'United Kingdom',
+                currency: '£',
+                currencyCode: 'GBP',
+                regulator: 'Financial Conduct Authority',
+                regulatorShort: 'FCA',
+                availableProducts: ['isa', 'jisa', 'sipp', 'gia', 'aim'],
+                footer: '© 2025 Evelyn Partners. Authorised and regulated by the Financial Conduct Authority.',
+                infoText: ''
+            },
+            IE: {
+                code: 'IE',
+                name: 'Ireland',
+                currency: '€',
+                currencyCode: 'EUR',
+                regulator: 'Central Bank of Ireland',
+                regulatorShort: 'CBI',
+                availableProducts: ['gia', 'aim'],
+                footer: '© 2025 Evelyn Partners. Authorised and regulated by the Central Bank of Ireland.',
+                infoText: 'Note: ISA, Junior ISA and SIPP products are not available in Ireland. ESG sustainability preferences will be collected as part of your Fact Find.'
+            }
         };
 
         const FACT_FIND_FORMS = {
@@ -521,6 +579,7 @@
         // ============================================
         // STATE
         // ============================================
+        let currentJurisdiction = 'UK';
         let factFindType = 'individual';
         let accountTypes = { isa: 'individual', gia: 'individual', aim: 'individual' };
 
@@ -528,10 +587,62 @@
         // INITIALIZATION
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
+            restoreJurisdiction();
             restoreSavedApplicationType();
             checkProgress();
             updateUI();
         });
+
+        function restoreJurisdiction() {
+            // Check localStorage for saved jurisdiction
+            const savedJurisdiction = localStorage.getItem(STORAGE_KEYS.jurisdiction);
+            if (savedJurisdiction && JURISDICTION_CONFIG[savedJurisdiction]) {
+                setJurisdiction(savedJurisdiction, false);
+            }
+        }
+
+        function setJurisdiction(jurisdictionCode, save = true) {
+            currentJurisdiction = jurisdictionCode;
+            const config = JURISDICTION_CONFIG[jurisdictionCode];
+            
+            // Save to localStorage
+            if (save) {
+                localStorage.setItem(STORAGE_KEYS.jurisdiction, jurisdictionCode);
+            }
+            
+            // Update button states
+            document.querySelectorAll('.jurisdiction-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`jurisdictionBtn${jurisdictionCode}`).classList.add('active');
+            
+            // Show/hide info text
+            const infoEl = document.getElementById('jurisdictionInfo');
+            if (config.infoText) {
+                infoEl.textContent = config.infoText;
+                infoEl.classList.add('visible');
+            } else {
+                infoEl.classList.remove('visible');
+            }
+            
+            // Show/hide account cards based on available products
+            const allProducts = ['isa', 'jisa', 'sipp', 'gia', 'aim'];
+            allProducts.forEach(product => {
+                const card = document.getElementById(product + 'Card');
+                if (card) {
+                    if (config.availableProducts.includes(product)) {
+                        card.classList.remove('hidden-for-ireland');
+                        card.style.display = '';
+                    } else {
+                        card.classList.add('hidden-for-ireland');
+                        card.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Update footer
+            document.querySelector('.footer p').textContent = config.footer;
+        }
 
         function restoreSavedApplicationType() {
             // Check the master data for saved application type
@@ -864,16 +975,16 @@
             
             // If complete, start from beginning to review
             if (masterData.factFindComplete) {
-                window.location.href = 'factfind_01_personal_information.html?type=' + factFindType;
+                window.location.href = `factfind_01_personal_information.html?type=${factFindType}&jurisdiction=${currentJurisdiction}`;
                 return;
             }
             
             // Find first incomplete section or start from beginning
             const lastForm = findLastIncompleteForm();
             if (lastForm) {
-                window.location.href = lastForm.file + '?type=' + factFindType;
+                window.location.href = `${lastForm.file}?type=${factFindType}&jurisdiction=${currentJurisdiction}`;
             } else {
-                window.location.href = 'factfind_01_personal_information.html?type=' + factFindType;
+                window.location.href = `factfind_01_personal_information.html?type=${factFindType}&jurisdiction=${currentJurisdiction}`;
             }
         }
 
@@ -885,6 +996,13 @@
                 return;
             }
 
+            // Check if product is available in current jurisdiction
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+            if (!config.availableProducts.includes(journey)) {
+                alert(`${journey.toUpperCase()} is not available in ${config.name}. Please select a different product.`);
+                return;
+            }
+
             // Pre-populate account form with Fact Find data
             prepopulateAccountForm(journey);
 
@@ -893,7 +1011,7 @@
             const journeyConfig = ACCOUNT_JOURNEYS[journey];
             
             // For now, route to a placeholder or actual account module
-            window.location.href = `account_${journey}_application.html?type=${type}&journey=${journey}`;
+            window.location.href = `account_${journey}_application.html?type=${type}&journey=${journey}&jurisdiction=${currentJurisdiction}`;
         }
 
         function prepopulateAccountForm(journey) {
@@ -905,8 +1023,15 @@
             const circumstancesData = JSON.parse(localStorage.getItem(STORAGE_KEYS.circumstances) || '{}').formData || {};
             const riskData = JSON.parse(localStorage.getItem(STORAGE_KEYS.riskReview) || '{}').formData || {};
 
+            const config = JURISDICTION_CONFIG[currentJurisdiction];
+
             // Combine into account form data
             const accountFormData = {
+                // Jurisdiction info
+                jurisdiction: currentJurisdiction,
+                currency: config.currency,
+                currencyCode: config.currencyCode,
+                
                 // Personal details
                 title: personalData.title,
                 firstName: personalData.firstName,
@@ -917,7 +1042,9 @@
                 address: personalData.addressLine1,
                 city: personalData.city,
                 postcode: personalData.postcode,
+                eircode: personalData.eircode,
                 niNumber: personalData.niNumber,
+                ppsNumber: personalData.ppsNumber,
                 
                 // Financial
                 employmentStatus: financialData.employmentStatus,
@@ -929,11 +1056,19 @@
                 riskAttitude: suitabilityData.riskAttitude,
                 investmentHorizon: suitabilityData.investmentHorizon,
                 
+                // ESG Preferences (Ireland)
+                esgHasPreferences: suitabilityData.esgHasPreferences,
+                esgPriorityAreas: suitabilityData.esgPriorityAreas,
+                esgExclusions: suitabilityData.esgExclusions,
+                esgMinSustainable: suitabilityData.esgMinSustainable,
+                
                 // Banking
                 bankName: riskData.bankName,
                 accountName: riskData.accountName,
                 sortCode: riskData.sortCode,
                 accountNumber: riskData.accountNumber,
+                iban: riskData.iban,
+                bic: riskData.bic,
                 
                 // Joint applicant data (if applicable)
                 ...extractJointApplicantData(personalData, financialData),
