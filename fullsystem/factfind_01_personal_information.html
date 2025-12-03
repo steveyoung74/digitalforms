@@ -1837,6 +1837,9 @@
             // Update tax ID fields (NI/PPS)
             updateTaxIdFields(config);
             
+            // Update tax residency section
+            updateTaxResidencySection(config);
+            
             // Update county dropdowns
             updateCountyDropdowns(config);
             
@@ -1902,6 +1905,28 @@
         }
         
         function updateTaxIdFields(config) {
+            // Helper to update field and its label (same as postcode)
+            function updateFieldLabel(inputId, labelText, placeholder, isRequired = true) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.placeholder = placeholder;
+                    const formGroup = input.closest('.form-group');
+                    if (formGroup) {
+                        const label = formGroup.querySelector('.form-label');
+                        if (label) {
+                            label.innerHTML = isRequired ? 
+                                `${labelText} <span class="required">*</span>` : 
+                                labelText;
+                        }
+                        // Also update hint if present
+                        const hint = formGroup.querySelector('.form-hint');
+                        if (hint) {
+                            hint.textContent = config.taxIdHint;
+                        }
+                    }
+                }
+            }
+            
             // Update section header
             const section5Header = document.querySelector('#section5 .section-info h3');
             if (section5Header) {
@@ -1924,45 +1949,48 @@
             }
             
             // Primary applicant NI/PPS field
-            const niLabel = document.querySelector('label[for="niNumber"]');
-            if (niLabel) {
-                niLabel.innerHTML = `${config.taxIdLabel} <span class="required">*</span>`;
-            }
+            updateFieldLabel('niNumber', config.taxIdLabel, config.taxIdPlaceholder);
             
-            const niInput = document.getElementById('niNumber');
-            if (niInput) {
-                niInput.placeholder = config.taxIdPlaceholder;
-                // Update ID for Ireland
-                if (currentJurisdiction === 'IE') {
-                    niInput.id = 'ppsNumber';
-                    niInput.name = 'ppsNumber';
-                }
-            }
-            
-            const niHint = document.querySelector('#niNumber + .form-hint, #ppsNumber + .form-hint');
-            if (niHint) {
-                niHint.textContent = config.taxIdHint;
-            }
+            // Joint applicant NI/PPS field
+            updateFieldLabel('niNumber_customer2', config.taxIdLabel, config.taxIdPlaceholder);
             
             // Update info box text
             const infoBox = document.querySelector('#applicant1Form5 .info-box p');
             if (infoBox) {
                 infoBox.innerHTML = `ℹ️ ${config.taxIdInfoText}`;
             }
+        }
+        
+        function updateTaxResidencySection(config) {
+            // Update Tax Residency section (Section 7) for jurisdiction
+            const taxResLabel = currentJurisdiction === 'IE' ? 
+                'Are you solely Irish tax resident?' : 
+                'Are you solely UK tax resident?';
             
-            // Joint applicant
-            const niLabel2 = document.querySelector('label[for="niNumber_customer2"]');
-            if (niLabel2) {
-                niLabel2.innerHTML = `${config.taxIdLabel} <span class="required">*</span>`;
+            const taxResYesLabel = currentJurisdiction === 'IE' ? 
+                'Yes, Ireland only' : 
+                'Yes, UK only';
+            
+            // Primary applicant - get the first form-group's form-label (the question)
+            const taxResQuestion = document.querySelector('#applicant1Form7 > .form-group > .form-label');
+            if (taxResQuestion) {
+                taxResQuestion.innerHTML = `${taxResLabel} <span class="required">*</span>`;
             }
             
-            const niInput2 = document.getElementById('niNumber_customer2');
-            if (niInput2) {
-                niInput2.placeholder = config.taxIdPlaceholder;
-                if (currentJurisdiction === 'IE') {
-                    niInput2.id = 'ppsNumber_customer2';
-                    niInput2.name = 'ppsNumber_customer2';
-                }
+            const ukTaxYesLabel = document.querySelector('label[for="ukTaxYes"]');
+            if (ukTaxYesLabel) {
+                ukTaxYesLabel.textContent = taxResYesLabel;
+            }
+            
+            // Joint applicant
+            const taxResQuestion2 = document.querySelector('#applicant2Form7 > .form-group > .form-label');
+            if (taxResQuestion2) {
+                taxResQuestion2.innerHTML = `${taxResLabel} <span class="required">*</span>`;
+            }
+            
+            const ukTaxYesLabel2 = document.querySelector('label[for="ukTaxYes2"]');
+            if (ukTaxYesLabel2) {
+                ukTaxYesLabel2.textContent = taxResYesLabel;
             }
         }
         
