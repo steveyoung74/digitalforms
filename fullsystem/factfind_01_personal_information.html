@@ -1741,8 +1741,8 @@
                 code: 'IE',
                 name: 'Ireland',
                 currency: '€',
-                postcodeLabel: 'Eircode',
-                postcodePlaceholder: 'D02 AF30',
+                postcodeLabel: 'Eircode/Postcode',
+                postcodePlaceholder: 'e.g. D02 AF30',
                 postcodePattern: /^[A-Z]\d{2}\s?[A-Z0-9]{4}$/i,
                 postcodeHint: 'Format: D02 AF30 (optional - not all Irish addresses have Eircodes)',
                 taxIdLabel: 'PPS Number',
@@ -1845,32 +1845,60 @@
         }
         
         function updatePostcodeFields(config) {
+            // Helper to update a field and its label
+            function updateFieldLabel(inputId, labelText, placeholder, isRequired = true) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.placeholder = placeholder;
+                    // Find the label in the same form-group
+                    const formGroup = input.closest('.form-group');
+                    if (formGroup) {
+                        const label = formGroup.querySelector('.form-label');
+                        if (label) {
+                            label.innerHTML = isRequired ? 
+                                `${labelText} <span class="required">*</span>` : 
+                                labelText;
+                        }
+                    }
+                }
+            }
+            
             // Primary applicant postcode
-            const postcodeLabel = document.querySelector('label[for="postcode"]');
-            if (postcodeLabel) {
-                postcodeLabel.innerHTML = `${config.postcodeLabel} <span class="required">*</span>`;
-            }
+            updateFieldLabel('postcode', config.postcodeLabel, config.postcodePlaceholder);
             
-            const postcodeInput = document.getElementById('postcode');
-            if (postcodeInput) {
-                postcodeInput.placeholder = config.postcodePlaceholder;
-            }
+            // Previous address postcode
+            updateFieldLabel('prevPostcode', config.postcodeLabel, config.postcodePlaceholder);
             
+            // Joint applicant postcode
+            updateFieldLabel('postcode_customer2', config.postcodeLabel, config.postcodePlaceholder);
+            
+            // Postcode search box
             const postcodeSearch = document.getElementById('postcodeSearch');
             if (postcodeSearch) {
                 postcodeSearch.placeholder = `Enter ${config.postcodeLabel.toLowerCase()} to search`;
             }
             
-            // Joint applicant postcode
-            const postcodeLabel2 = document.querySelector('label[for="postcode_customer2"]');
-            if (postcodeLabel2) {
-                postcodeLabel2.innerHTML = `${config.postcodeLabel} <span class="required">*</span>`;
-            }
-            
-            const postcodeInput2 = document.getElementById('postcode_customer2');
-            if (postcodeInput2) {
-                postcodeInput2.placeholder = config.postcodePlaceholder;
-            }
+            // Set country default based on jurisdiction
+            const countrySelects = ['country', 'country_customer2'];
+            countrySelects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    // Remove existing selected attribute
+                    Array.from(select.options).forEach(opt => opt.removeAttribute('selected'));
+                    
+                    // Set default based on jurisdiction
+                    const defaultCountry = currentJurisdiction === 'IE' ? 'Ireland' : 'United Kingdom';
+                    const option = Array.from(select.options).find(opt => opt.value === defaultCountry);
+                    if (option) {
+                        option.selected = true;
+                        option.setAttribute('selected', 'selected');
+                        // Trigger the change handler to store the value
+                        if (!formData[selectId]) {
+                            handleFieldChange(selectId, defaultCountry);
+                        }
+                    }
+                }
+            });
         }
         
         function updateTaxIdFields(config) {
