@@ -535,6 +535,121 @@
             .section-card { margin-bottom: 12px; }
             .form-input, .form-select { padding: 10px 12px; font-size: 16px; }
         }
+
+        /* Enhanced Source of Wealth Styles */
+        .sow-category-card {
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            background: #fff;
+        }
+        .sow-category-card.has-risk {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fff 100%);
+        }
+        .sow-category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .sow-category-title {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 15px;
+        }
+        .sow-risk-badge {
+            background: #f59e0b;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .sow-questions-container {
+            display: grid;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .sow-question-group {
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .risk-trigger-section {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .risk-trigger-section h4 {
+            color: #92400e;
+            font-size: 13px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .risk-trigger-section h4::before {
+            content: '⚠️';
+        }
+        .multiselect-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .multiselect-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            background: #fff;
+        }
+        .multiselect-item:hover {
+            border-color: var(--primary);
+        }
+        .multiselect-item.selected {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .multiselect-item input {
+            display: none;
+        }
+        .always-high-risk-notice {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            color: #991b1b;
+            font-size: 13px;
+        }
+        .always-high-risk-notice::before {
+            content: '🔴 ';
+        }
+        .always-low-risk-notice {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            color: #166534;
+            font-size: 13px;
+        }
+        .always-low-risk-notice::before {
+            content: '✅ ';
+        }
     </style>
     <script>
         (function() {
@@ -929,7 +1044,7 @@
             </div>
         </div>
 
-        <!-- Section 11: Source of Wealth -->
+        <!-- Section 11: Source of Wealth (Enhanced) -->
         <div class="section-card" data-section="3" id="section3">
             <div class="section-header" onclick="toggleSection(3)">
                 <div class="section-header-left">
@@ -952,63 +1067,24 @@
 
                 <div class="applicant-form active" id="applicant1Form3">
                     <div class="info-box">
-                        <p>ℹ️ Source of Wealth refers to how you have accumulated your total wealth over time. This is a regulatory requirement for AML compliance.</p>
+                        <p>ℹ️ Source of Wealth refers to how you have accumulated your total wealth over time. This is a regulatory requirement for AML compliance. Additional questions may appear based on your answers.</p>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Total Net Wealth (estimate) <span class="required">*</span></label>
                         <select class="form-select" id="totalNetWealth" onchange="handleFieldChange('totalNetWealth', this.value)">
                             <option value="">Select range</option>
-                            <option value="under-100k">Under £100,000</option>
-                            <option value="100k-250k">£100,000 - £250,000</option>
-                            <option value="250k-500k">£250,000 - £500,000</option>
-                            <option value="500k-1m">£500,000 - £1,000,000</option>
-                            <option value="1m-5m">£1,000,000 - £5,000,000</option>
-                            <option value="over-5m">Over £5,000,000</option>
                         </select>
                     </div>
 
                     <div class="form-group" style="margin-top: 24px;">
                         <label class="form-label">How was your wealth acquired? <span class="required">*</span></label>
-                        <p class="form-hint" style="margin-bottom: 12px;">Select all that apply</p>
+                        <p class="form-hint" style="margin-bottom: 12px;">Add each source of wealth below. Higher risk sources will require additional information.</p>
                     </div>
 
-                    <div id="wealthSources">
-                        <div class="wealth-source-card" id="wealthSource1">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">Source Type <span class="required">*</span></label>
-                                    <select class="form-select" id="wealthSourceType1" onchange="handleWealthSourceChange(1)">
-                                        <option value="">Select source</option>
-                                        <option value="salary">Salary/Employment Income</option>
-                                        <option value="self-employment">Self-Employment/Business</option>
-                                        <option value="inheritance">Inheritance</option>
-                                        <option value="property-sale">Sale of Property</option>
-                                        <option value="business-sale">Sale of Business</option>
-                                        <option value="investments">Investment Returns</option>
-                                        <option value="pension">Pension Transfers</option>
-                                        <option value="divorce">Divorce Settlement</option>
-                                        <option value="gift">Gift</option>
-                                        <option value="lottery">Lottery/Gambling Winnings</option>
-                                        <option value="compensation">Compensation/Legal Award</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Approximate Value</label>
-                                    <div class="currency-input" data-currency="£">
-                                        <input type="number" class="form-input" id="wealthSourceValue1" placeholder="0" style="padding-left: 28px;" onchange="handleFieldChange('wealthSourceValue1', this.value)">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Please provide details</label>
-                                <textarea class="form-textarea" id="wealthSourceDetails1" placeholder="e.g. Employment at XYZ Company from 2010-2023 as Senior Manager" onchange="handleFieldChange('wealthSourceDetails1', this.value)"></textarea>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="sowSourcesContainer"></div>
 
-                    <button class="btn-add-source" onclick="addWealthSource()">+ Add Another Source of Wealth</button>
+                    <button class="btn-add-source" onclick="addSOWSource()">+ Add Another Source of Wealth</button>
                 </div>
 
                 <div class="applicant-form" id="applicant2Form3">
@@ -1016,26 +1092,10 @@
                         <label class="form-label">Total Net Wealth (estimate)</label>
                         <select class="form-select" id="totalNetWealth_customer2" onchange="handleFieldChange('totalNetWealth_customer2', this.value)">
                             <option value="">Select range</option>
-                            <option value="under-100k">Under £100,000</option>
-                            <option value="100k-250k">£100,000 - £250,000</option>
-                            <option value="250k-500k">£250,000 - £500,000</option>
-                            <option value="500k-1m">£500,000 - £1,000,000</option>
-                            <option value="1m-5m">£1,000,000 - £5,000,000</option>
-                            <option value="over-5m">Over £5,000,000</option>
                         </select>
                     </div>
-                    <div class="form-group" style="margin-top: 16px;">
-                        <label class="form-label">Primary Source of Wealth</label>
-                        <select class="form-select" id="wealthSourceType_customer2" onchange="handleFieldChange('wealthSourceType_customer2', this.value)">
-                            <option value="">Select source</option>
-                            <option value="salary">Salary/Employment Income</option>
-                            <option value="self-employment">Self-Employment/Business</option>
-                            <option value="inheritance">Inheritance</option>
-                            <option value="property-sale">Sale of Property</option>
-                            <option value="investments">Investment Returns</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
+                    <div id="sowSourcesContainer_customer2" style="margin-top: 16px;"></div>
+                    <button class="btn-add-source" onclick="addSOWSource('_customer2')" style="margin-top: 12px;">+ Add Source of Wealth</button>
                 </div>
 
                 <div class="section-actions">
@@ -1274,6 +1334,9 @@
                 updateSectionUI(i);
             }
             updateProgress();
+            
+            // Initialize Source of Wealth section
+            initSOWSources();
         });
         
         // =========================================
@@ -1538,59 +1601,633 @@
             handleFieldChange('totalIncome', total);
         }
 
-        function handleWealthSourceChange(index) {
-            const type = document.getElementById(`wealthSourceType${index}`).value;
-            handleFieldChange(`wealthSourceType${index}`, type);
+        // =========================================
+        // ENHANCED SOURCE OF WEALTH CONFIGURATION
+        // =========================================
+        const HIGHER_RISK_JURISDICTIONS = [
+            'Afghanistan', 'Albania', 'Belarus', 'Burkina Faso', 'Cameroon', 'Cayman Islands',
+            'Croatia', 'Democratic Republic of Congo', 'Gibraltar', 'Haiti', 'Iran', 'Jamaica',
+            'Jordan', 'Mali', 'Monaco', 'Mozambique', 'Myanmar', 'Nigeria', 'North Korea',
+            'Pakistan', 'Panama', 'Philippines', 'Russia', 'Senegal', 'South Africa', 'South Sudan',
+            'Syria', 'Tanzania', 'Turkey', 'Uganda', 'UAE', 'Venezuela', 'Vietnam', 'Yemen'
+        ];
+
+        const HIGHER_RISK_INDUSTRIES = [
+            'arms-defense', 'gambling', 'crypto', 'cash-intensive', 'precious-metals',
+            'art-antiques', 'adult', 'construction', 'money-services', 'private-security',
+            'oil-gas', 'shipping', 'tobacco', 'pharmaceuticals-unlicensed'
+        ];
+
+        const ALL_INDUSTRIES = [
+            { value: 'accounting', label: 'Accounting / Finance' },
+            { value: 'agriculture', label: 'Agriculture / Farming' },
+            { value: 'arms-defense', label: 'Arms / Defence / Military ⚠️', highRisk: true },
+            { value: 'art-antiques', label: 'Art / Antiques dealing ⚠️', highRisk: true },
+            { value: 'banking', label: 'Banking / Financial Services (Regulated)' },
+            { value: 'cash-intensive', label: 'Cash-intensive (retail, hospitality) ⚠️', highRisk: true },
+            { value: 'charity', label: 'Charity / Non-profit' },
+            { value: 'construction', label: 'Construction ⚠️', highRisk: true },
+            { value: 'consulting', label: 'Consulting / Professional Services' },
+            { value: 'crypto', label: 'Cryptocurrency / Digital Assets ⚠️', highRisk: true },
+            { value: 'education', label: 'Education' },
+            { value: 'engineering', label: 'Engineering' },
+            { value: 'gambling', label: 'Gambling / Betting / Casinos ⚠️', highRisk: true },
+            { value: 'government', label: 'Government / Public Sector' },
+            { value: 'healthcare', label: 'Healthcare / Medical' },
+            { value: 'hospitality', label: 'Hospitality / Hotels' },
+            { value: 'insurance', label: 'Insurance' },
+            { value: 'it-tech', label: 'IT / Technology' },
+            { value: 'legal', label: 'Legal Services' },
+            { value: 'manufacturing', label: 'Manufacturing' },
+            { value: 'media', label: 'Media / Entertainment' },
+            { value: 'money-services', label: 'Money Services / FX ⚠️', highRisk: true },
+            { value: 'oil-gas', label: 'Oil & Gas / Mining ⚠️', highRisk: true },
+            { value: 'pharmaceuticals', label: 'Pharmaceuticals (Regulated)' },
+            { value: 'precious-metals', label: 'Precious Metals / Gems ⚠️', highRisk: true },
+            { value: 'real-estate', label: 'Real Estate / Property' },
+            { value: 'retail', label: 'Retail' },
+            { value: 'shipping', label: 'Shipping / Maritime ⚠️', highRisk: true },
+            { value: 'telecoms', label: 'Telecommunications' },
+            { value: 'transport', label: 'Transport / Logistics' },
+            { value: 'other', label: 'Other' }
+        ];
+
+        const COUNTRIES_LIST = [
+            'Ireland', 'United Kingdom', '──────────',
+            'Afghanistan', 'Albania', 'Australia', 'Austria', 'Belgium', 'Brazil', 'Canada', 
+            'Cayman Islands', 'China', 'Cyprus', 'Denmark', 'Finland', 'France', 'Germany', 
+            'Gibraltar', 'Greece', 'Hong Kong', 'India', 'Iran', 'Israel', 'Italy', 'Japan', 
+            'Luxembourg', 'Malta', 'Monaco', 'Netherlands', 'New Zealand', 'Nigeria', 'North Korea',
+            'Norway', 'Pakistan', 'Panama', 'Philippines', 'Poland', 'Portugal', 'Russia', 
+            'Saudi Arabia', 'Singapore', 'South Africa', 'Spain', 'Sweden', 'Switzerland', 
+            'Turkey', 'UAE', 'United States', 'Venezuela', 'Other'
+        ];
+
+        const SOW_CATEGORIES = {
+            'salary': {
+                label: 'Salary / Employment Income',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'employmentStatus', label: 'Employment Status', type: 'select', required: true, 
+                      options: ['Employed', 'Self-Employed', 'Director', 'Partner', 'Contractor', 'Shareholder/Owner'] },
+                    { id: 'jobTitle', label: 'Job Title', type: 'text', required: true },
+                    { id: 'salary', label: 'Annual Salary/Income', type: 'currency', required: true },
+                    { id: 'bonus', label: 'Annual Bonus/Dividend (if any)', type: 'currency', required: false },
+                    { id: 'employerName', label: "Employer's Name", type: 'text', required: true },
+                    { id: 'industry', label: 'Nature of Business/Industry', type: 'industry', required: true },
+                    { id: 'employmentLength', label: 'Length of Employment', type: 'text', required: true, placeholder: 'e.g. 5 years' },
+                    { id: 'employmentCountry', label: 'Country of Employment', type: 'country', required: true },
+                    { id: 'payingCountry', label: 'Country of Paying Entity', type: 'country', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'shareholdingPct', label: 'What % shareholding do you hold?', type: 'select',
+                      options: ['None', 'Under 10%', '10-25%', '25-50%', '50-75%', 'Over 75%'] },
+                    { id: 'roleDescription', label: 'Description of role within the business', type: 'textarea' }
+                ]
+            },
+            'pension': {
+                label: 'Retirement Income (Pensions)',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'pensionCompany', label: 'Company where pension was generated', type: 'text', required: true },
+                    { id: 'industry', label: 'Nature of that company/industry', type: 'industry', required: true },
+                    { id: 'pensionAmount', label: 'Annual pension income', type: 'currency', required: true },
+                    { id: 'datesWorked', label: 'Dates worked', type: 'text', required: true, placeholder: 'e.g. 1985-2020' },
+                    { id: 'retirementDate', label: 'Date of retirement', type: 'date', required: true },
+                    { id: 'lastJobTitle', label: 'Most recent job title', type: 'text', required: true },
+                    { id: 'employmentCountry', label: 'Country of employment', type: 'country', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'roleDescription', label: 'Description of role within the business', type: 'textarea' }
+                ]
+            },
+            'business-profits': {
+                label: 'Business Profits',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'annualProfits', label: 'Amount of annual profits', type: 'currency', required: true },
+                    { id: 'companyName', label: 'Name of company', type: 'text', required: true },
+                    { id: 'companyNumber', label: 'Company registration number', type: 'text', required: true },
+                    { id: 'dateEstablished', label: 'Date company established', type: 'date', required: true },
+                    { id: 'registrationCountry', label: 'Country of registration', type: 'country', required: true },
+                    { id: 'industry', label: 'Nature of industry', type: 'industry', required: true },
+                    { id: 'linkedCountries', label: 'Other countries company has links to', type: 'text', placeholder: 'List countries' },
+                    { id: 'shareholding', label: 'Your shareholding %', type: 'select', required: true,
+                      options: ['Under 10%', '10-25%', '25-50%', '50-75%', 'Over 75%', '100%'] },
+                    { id: 'companiesHouseMatch', label: 'Do Companies House statements evidence the wealth?', type: 'select', required: true,
+                      options: ['Yes', 'No', 'Not applicable (non-UK/Irish)'] }
+                ],
+                riskQuestions: [
+                    { id: 'nonUKIncome', label: 'Breakdown of income from non-UK/Irish jurisdictions (%)', type: 'textarea' },
+                    { id: 'companiesHouseExplain', label: 'Explain why statements do not evidence wealth', type: 'textarea' }
+                ]
+            },
+            'business-sale': {
+                label: 'Sale of Business',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'companyName', label: 'Name of company sold', type: 'text', required: true },
+                    { id: 'industry', label: 'Nature of business', type: 'industry', required: true },
+                    { id: 'saleCountry', label: 'Country where sale took place', type: 'country', required: true },
+                    { id: 'yearOfSale', label: 'Year of sale', type: 'number', required: true, placeholder: 'e.g. 2022' },
+                    { id: 'soldTo', label: 'Who was it sold to?', type: 'text', required: true },
+                    { id: 'totalSaleAmount', label: 'Total sale amount', type: 'currency', required: true },
+                    { id: 'amountReceived', label: 'Amount you received', type: 'currency', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'retainedPosition', label: 'Retained any position/shareholding?', type: 'select',
+                      options: ['No', 'Yes - shareholding only', 'Yes - position only', 'Yes - both'] },
+                    { id: 'retainedPct', label: 'If yes, provide %', type: 'text' }
+                ]
+            },
+            'property-investment': {
+                label: 'Property Investment / Rental Income',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'propertyType', label: 'Type of properties', type: 'multiselect', required: true,
+                      options: ['Residential - Houses', 'Residential - Flats', 'Commercial - Retail', 'Commercial - Office', 'Commercial - Industrial', 'Land', 'HMO'] },
+                    { id: 'propertyLocations', label: 'Location of properties', type: 'textarea', required: true, placeholder: 'City/region for each property' },
+                    { id: 'numberOfProperties', label: 'Number of properties', type: 'number', required: true },
+                    { id: 'purchaseYears', label: 'Year(s) of purchase', type: 'text', required: true },
+                    { id: 'purchaseValue', label: 'Total purchase value', type: 'currency', required: true },
+                    { id: 'currentValue', label: 'Current value', type: 'currency', required: true },
+                    { id: 'ownership', label: 'Owned personally or through company?', type: 'select', required: true,
+                      options: ['Personally', 'Through a company', 'Mixed'] },
+                    { id: 'originalFunding', label: 'How was the purchase originally funded?', type: 'select', required: true,
+                      options: ['Salary/Savings', 'Inheritance', 'Gift', 'Business Profits', 'Other Property Sale', 'Mortgage', 'Other'] },
+                    { id: 'annualRentalIncome', label: 'Annual rental income', type: 'currency', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'fullAddresses', label: 'Full addresses of properties', type: 'textarea' },
+                    { id: 'incomePerProperty', label: 'Rental income per property', type: 'textarea' },
+                    { id: 'mortgageDetails', label: 'Outstanding mortgage details', type: 'textarea' }
+                ]
+            },
+            'property-sale': {
+                label: 'Sale of Property',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'propertyAddress', label: 'Full address of property sold', type: 'textarea', required: true },
+                    { id: 'propertyCountry', label: 'Country', type: 'country', required: true },
+                    { id: 'saleDate', label: 'Date of sale', type: 'date', required: true },
+                    { id: 'saleAmount', label: 'Sale amount', type: 'currency', required: true },
+                    { id: 'purchaseAmount', label: 'Original purchase amount', type: 'currency', required: true },
+                    { id: 'originalFunding', label: 'How was purchase originally funded?', type: 'select', required: true,
+                      options: ['Salary/Savings', 'Inheritance', 'Gift', 'Business Profits', 'Other Property Sale', 'Mortgage', 'Other'] },
+                    { id: 'netProceeds', label: 'Net proceeds after fees/mortgage', type: 'currency', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'purchaseDate', label: 'Date property was purchased', type: 'date' }
+                ]
+            },
+            'inheritance': {
+                label: 'Inheritance',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'amount', label: 'Total amount received', type: 'currency', required: true },
+                    { id: 'dateReceived', label: 'Date received', type: 'date', required: true },
+                    { id: 'deceasedName', label: 'Name of deceased', type: 'text', required: true },
+                    { id: 'relationship', label: 'Relationship to deceased', type: 'select', required: true,
+                      options: ['Parent', 'Grandparent', 'Spouse/Partner', 'Sibling', 'Aunt/Uncle', 'Other relative', 'Non-relative'] },
+                    { id: 'yearOfDeath', label: 'Year of death', type: 'number', required: true },
+                    { id: 'deceasedSOW', label: 'How did deceased acquire their wealth?', type: 'select', required: true,
+                      options: ['Employment', 'Business', 'Property', 'Investments', 'Inheritance', 'Unknown', 'Other'] },
+                    { id: 'deceasedPEP', label: 'Was deceased a Politically Exposed Person?', type: 'select', required: true,
+                      options: ['No', 'Yes - domestic', 'Yes - foreign', 'Unknown'] },
+                    { id: 'deceasedCountry', label: 'Country where deceased generated wealth', type: 'country', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'deceasedSOWDetail', label: 'Provide more detail on deceased\'s source of wealth', type: 'textarea' }
+                ]
+            },
+            'gift': {
+                label: 'Gift',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'amount', label: 'Total amount received', type: 'currency', required: true },
+                    { id: 'dateReceived', label: 'Date received', type: 'date', required: true },
+                    { id: 'donorName', label: 'Name of donor', type: 'text', required: true },
+                    { id: 'relationship', label: 'Relationship to donor', type: 'select', required: true,
+                      options: ['Parent', 'Grandparent', 'Spouse/Partner', 'Sibling', 'Other relative', 'Friend', 'Business associate', 'Other'] },
+                    { id: 'donorSOW', label: 'How did donor acquire their wealth?', type: 'select', required: true,
+                      options: ['Employment', 'Business', 'Property', 'Investments', 'Inheritance', 'Unknown', 'Other'] },
+                    { id: 'donorPEP', label: 'Is/was donor a Politically Exposed Person?', type: 'select', required: true,
+                      options: ['No', 'Yes - domestic', 'Yes - foreign', 'Unknown'] },
+                    { id: 'donorCountry', label: 'Country where donor generated wealth', type: 'country', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'donorSOWDetail', label: 'Provide more detail on donor\'s source of wealth', type: 'textarea' }
+                ]
+            },
+            'divorce': {
+                label: 'Divorce Settlement',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'amount', label: 'Total amount received', type: 'currency', required: true },
+                    { id: 'dateReceived', label: 'Date received', type: 'date', required: true },
+                    { id: 'exSpouseName', label: 'Name of ex-spouse', type: 'text', required: true },
+                    { id: 'exSpouseSOW', label: 'How did ex-spouse acquire their wealth?', type: 'select', required: true,
+                      options: ['Employment', 'Business', 'Property', 'Investments', 'Inheritance', 'Unknown', 'Other'] },
+                    { id: 'exSpousePEP', label: 'Is/was ex-spouse a PEP?', type: 'select', required: true,
+                      options: ['No', 'Yes - domestic', 'Yes - foreign', 'Unknown'] },
+                    { id: 'exSpouseCountry', label: 'Country where ex-spouse generated wealth', type: 'country', required: true }
+                ],
+                riskQuestions: [
+                    { id: 'exSpouseSOWDetail', label: 'Provide more detail on ex-spouse\'s source of wealth', type: 'textarea' }
+                ]
+            },
+            'compensation': {
+                label: 'Personal Injury / Clinical Negligence',
+                alwaysHighRisk: false,
+                alwaysLowRisk: true,
+                questions: [
+                    { id: 'awardAmount', label: 'Total amount of award', type: 'currency', required: true },
+                    { id: 'awardDate', label: 'Date of award', type: 'date', required: true }
+                ],
+                riskQuestions: []
+            },
+            'lottery': {
+                label: 'Lottery / Betting / Casino Winnings',
+                alwaysHighRisk: true,
+                highRiskReason: 'Gambling-related wealth always requires enhanced due diligence.',
+                questions: [
+                    { id: 'winAmount', label: 'Total amount won', type: 'currency', required: true },
+                    { id: 'winDate', label: 'Date of win', type: 'date', required: true },
+                    { id: 'organisation', label: 'Organisation making payment', type: 'textarea', required: true, placeholder: 'Name and address' },
+                    { id: 'winCountry', label: 'Country where winnings paid from', type: 'country', required: true },
+                    { id: 'gamblingType', label: 'Type of gambling', type: 'select', required: true,
+                      options: ['National Lottery', 'EuroMillions', 'Licensed Casino (UK/IE)', 'Offshore Casino', 'Sports Betting (Licensed)', 'Sports Betting (Offshore)', 'Online Gambling', 'Private Games', 'Other'] }
+                ],
+                riskQuestions: []
+            },
+            'insurance': {
+                label: 'Insurance / Policy Payout',
+                alwaysHighRisk: false,
+                questions: [
+                    { id: 'amount', label: 'Total amount received', type: 'currency', required: true },
+                    { id: 'dateReceived', label: 'Date received', type: 'date', required: true },
+                    { id: 'provider', label: 'Policy provider', type: 'text', required: true },
+                    { id: 'policyNumber', label: 'Policy number', type: 'text', required: true },
+                    { id: 'insuranceType', label: 'Type of payout', type: 'select', required: true,
+                      options: ['Life Insurance', 'Annuity', 'Critical Illness', 'Income Protection', 'Property Insurance', 'High Value Asset', 'Other'] }
+                ],
+                riskQuestions: [
+                    { id: 'livesAssured', label: 'Name of lives assured', type: 'text' },
+                    { id: 'assetDetails', label: 'Details of high value asset', type: 'textarea' },
+                    { id: 'fundingSource', label: 'How was policy/annuity originally funded?', type: 'textarea' }
+                ]
+            },
+            'cryptocurrency': {
+                label: 'Cryptocurrency',
+                alwaysHighRisk: true,
+                highRiskReason: 'Cryptocurrency wealth always requires enhanced due diligence due to anonymity risks.',
+                questions: [
+                    { id: 'originalFunding', label: 'Original source of funds for investment', type: 'select', required: true,
+                      options: ['Salary/Savings', 'Business Profits', 'Inheritance', 'Gift', 'Other Investment Returns', 'Other'] },
+                    { id: 'originalAmount', label: 'Original amount invested', type: 'currency', required: true },
+                    { id: 'investmentDate', label: 'Date of original investment', type: 'date', required: true },
+                    { id: 'currentValue', label: 'Current value', type: 'currency', required: true },
+                    { id: 'whereHeld', label: 'Where is it currently held?', type: 'select', required: true,
+                      options: ['Regulated Exchange (UK/EU)', 'Regulated Exchange (US)', 'Unregulated Exchange', 'Hardware Wallet', 'Software Wallet', 'Multiple locations'] },
+                    { id: 'conversionDetails', label: 'When and how were assets converted to fiat currency?', type: 'textarea', required: true }
+                ],
+                riskQuestions: []
+            }
+        };
+
+        let sowSources = { '': {}, '_customer2': {} };
+
+        function getSOWSourceCount(suffix = '') {
+            const containerId = suffix ? 'sowSourcesContainer_customer2' : 'sowSourcesContainer';
+            const container = document.getElementById(containerId);
+            return container ? container.querySelectorAll('.sow-category-card').length : 0;
         }
 
-        function addWealthSource() {
-            wealthSourceCount++;
-            const container = document.getElementById('wealthSources');
+        function addSOWSource(suffix = '') {
+            const containerId = suffix ? 'sowSourcesContainer_customer2' : 'sowSourcesContainer';
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const currentCount = getSOWSourceCount(suffix);
+            const newIndex = currentCount + 1;
             const currencySymbol = JURISDICTION_CONFIG[currentJurisdiction].currency;
-            const newCard = document.createElement('div');
-            newCard.className = 'wealth-source-card';
-            newCard.id = `wealthSource${wealthSourceCount}`;
-            newCard.innerHTML = `
-                <div class="wealth-source-header">
-                    <span class="wealth-source-title">Source ${wealthSourceCount}</span>
-                    <button class="btn-remove" onclick="removeWealthSource(${wealthSourceCount})">✕ Remove</button>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Source Type</label>
-                        <select class="form-select" id="wealthSourceType${wealthSourceCount}" onchange="handleWealthSourceChange(${wealthSourceCount})">
-                            <option value="">Select source</option>
-                            <option value="salary">Salary/Employment Income</option>
-                            <option value="self-employment">Self-Employment/Business</option>
-                            <option value="inheritance">Inheritance</option>
-                            <option value="property-sale">Sale of Property</option>
-                            <option value="business-sale">Sale of Business</option>
-                            <option value="investments">Investment Returns</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Approximate Value</label>
-                        <div class="currency-input" data-currency="${currencySymbol}">
-                            <input type="number" class="form-input" id="wealthSourceValue${wealthSourceCount}" placeholder="0" style="padding-left: 28px;" onchange="handleFieldChange('wealthSourceValue${wealthSourceCount}', this.value)">
-                        </div>
-                    </div>
+            
+            const sourceCard = document.createElement('div');
+            sourceCard.className = 'sow-category-card';
+            sourceCard.id = `sowSource${suffix}${newIndex}`;
+            sourceCard.setAttribute('data-sow-index', newIndex);
+            sourceCard.innerHTML = `
+                <div class="sow-category-header">
+                    <span class="sow-category-title">Source ${newIndex}</span>
+                    ${newIndex > 1 ? `<button class="btn-remove" onclick="removeSOWSource(this, '${suffix}')">✕ Remove</button>` : ''}
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Details</label>
-                    <textarea class="form-textarea" id="wealthSourceDetails${wealthSourceCount}" placeholder="Please provide details" onchange="handleFieldChange('wealthSourceDetails${wealthSourceCount}', this.value)"></textarea>
+                    <label class="form-label">Source Type <span class="required">*</span></label>
+                    <select class="form-select sow-type-select" onchange="handleSOWTypeChange(this, '${suffix}')">
+                        <option value="">Select source of wealth</option>
+                        <option value="salary">Salary / Employment Income</option>
+                        <option value="pension">Retirement Income (Pensions)</option>
+                        <option value="business-profits">Business Profits</option>
+                        <option value="business-sale">Sale of Business</option>
+                        <option value="property-investment">Property Investment / Rental Income</option>
+                        <option value="property-sale">Sale of Property</option>
+                        <option value="inheritance">Inheritance</option>
+                        <option value="gift">Gift</option>
+                        <option value="divorce">Divorce Settlement</option>
+                        <option value="compensation">Personal Injury / Clinical Negligence</option>
+                        <option value="lottery">Lottery / Betting / Casino Winnings</option>
+                        <option value="insurance">Insurance / Policy Payout</option>
+                        <option value="cryptocurrency">Cryptocurrency</option>
+                    </select>
                 </div>
+                <div class="sow-questions-container"></div>
+                <div class="sow-risk-section risk-trigger-section" style="display: none;"></div>
             `;
-            container.appendChild(newCard);
+            container.appendChild(sourceCard);
+            
+            sowSources[suffix][newIndex] = { type: null, data: {}, hasRisk: false };
         }
 
-        function removeWealthSource(index) {
-            const card = document.getElementById(`wealthSource${index}`);
-            if (card && wealthSourceCount > 1) {
+        function removeSOWSource(buttonElement, suffix = '') {
+            const card = buttonElement.closest('.sow-category-card');
+            if (card) {
                 card.remove();
-                handleFieldChange(`wealthSourceType${index}`, '');
-                handleFieldChange(`wealthSourceValue${index}`, '');
-                handleFieldChange(`wealthSourceDetails${index}`, '');
+                renumberSOWSources(suffix);
+            }
+        }
+
+        function renumberSOWSources(suffix = '') {
+            const containerId = suffix ? 'sowSourcesContainer_customer2' : 'sowSourcesContainer';
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const cards = container.querySelectorAll('.sow-category-card');
+            const newSources = {};
+            
+            cards.forEach((card, idx) => {
+                const newIndex = idx + 1;
+                const oldIndex = parseInt(card.getAttribute('data-sow-index'));
+                
+                // Update card ID and data attribute
+                card.id = `sowSource${suffix}${newIndex}`;
+                card.setAttribute('data-sow-index', newIndex);
+                
+                // Update title
+                const title = card.querySelector('.sow-category-title');
+                if (title) title.textContent = `Source ${newIndex}`;
+                
+                // Update remove button (hide for first source, show for others)
+                const header = card.querySelector('.sow-category-header');
+                const existingRemoveBtn = header.querySelector('.btn-remove');
+                if (newIndex === 1 && existingRemoveBtn) {
+                    existingRemoveBtn.remove();
+                } else if (newIndex > 1 && !existingRemoveBtn) {
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'btn-remove';
+                    removeBtn.textContent = '✕ Remove';
+                    removeBtn.onclick = function() { removeSOWSource(this, suffix); };
+                    header.appendChild(removeBtn);
+                }
+                
+                // Transfer data to new index
+                if (sowSources[suffix][oldIndex]) {
+                    newSources[newIndex] = sowSources[suffix][oldIndex];
+                }
+            });
+            
+            // Replace sources object
+            sowSources[suffix] = newSources;
+        }
+
+        function handleSOWTypeChange(selectElement, suffix = '') {
+            const card = selectElement.closest('.sow-category-card');
+            const index = parseInt(card.getAttribute('data-sow-index'));
+            const type = selectElement.value;
+            const questionsContainer = card.querySelector('.sow-questions-container');
+            const riskSection = card.querySelector('.sow-risk-section');
+            
+            sowSources[suffix][index] = { type: type, data: {}, hasRisk: false };
+            handleFieldChange(`sow${suffix}${index}_type`, type);
+            
+            if (!type) {
+                questionsContainer.innerHTML = '';
+                riskSection.style.display = 'none';
+                card.classList.remove('has-risk');
+                return;
+            }
+            
+            const category = SOW_CATEGORIES[type];
+            const currencySymbol = JURISDICTION_CONFIG[currentJurisdiction].currency;
+            
+            let html = '';
+            
+            // Show risk notices
+            if (category.alwaysHighRisk) {
+                html += `<div class="always-high-risk-notice">${category.highRiskReason}</div>`;
+                card.classList.add('has-risk');
+            } else if (category.alwaysLowRisk) {
+                html += `<div class="always-low-risk-notice">This source is generally considered low risk.</div>`;
+                card.classList.remove('has-risk');
+            }
+            
+            // Generate question fields
+            category.questions.forEach(q => {
+                html += generateSOWField(q, index, suffix, currencySymbol);
+            });
+            
+            questionsContainer.innerHTML = html;
+            riskSection.style.display = 'none';
+        }
+
+        function generateSOWField(q, index, suffix, currencySymbol) {
+            const fieldId = `sow${suffix}${index}_${q.id}`;
+            const required = q.required ? '<span class="required">*</span>' : '';
+            
+            let html = `<div class="sow-question-group"><label class="form-label">${q.label} ${required}</label>`;
+            
+            switch(q.type) {
+                case 'text':
+                    html += `<input type="text" class="form-input" data-field-id="${q.id}" placeholder="${q.placeholder || ''}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')">`;
+                    break;
+                case 'number':
+                    html += `<input type="number" class="form-input" data-field-id="${q.id}" placeholder="${q.placeholder || ''}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')">`;
+                    break;
+                case 'currency':
+                    html += `<div class="currency-input" data-currency="${currencySymbol}">
+                        <input type="number" class="form-input" data-field-id="${q.id}" placeholder="0" style="padding-left: 28px;" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')">
+                    </div>`;
+                    break;
+                case 'date':
+                    html += `<input type="date" class="form-input" data-field-id="${q.id}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')">`;
+                    break;
+                case 'select':
+                    html += `<select class="form-select" data-field-id="${q.id}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')"><option value="">Select...</option>`;
+                    q.options.forEach(opt => html += `<option value="${opt}">${opt}</option>`);
+                    html += `</select>`;
+                    break;
+                case 'industry':
+                    html += `<select class="form-select" data-field-id="${q.id}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')"><option value="">Select industry...</option>`;
+                    ALL_INDUSTRIES.forEach(ind => html += `<option value="${ind.value}">${ind.label}</option>`);
+                    html += `</select><div class="industry-risk-indicator" style="display:none; color:#f59e0b; font-size:12px; margin-top:4px;">⚠️ Higher risk industry</div>`;
+                    break;
+                case 'country':
+                    html += `<select class="form-select" data-field-id="${q.id}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')"><option value="">Select country...</option>`;
+                    COUNTRIES_LIST.forEach(c => {
+                        if (c === '──────────') html += `<option disabled>──────────</option>`;
+                        else {
+                            const isHR = HIGHER_RISK_JURISDICTIONS.includes(c);
+                            html += `<option value="${c}">${c}${isHR ? ' ⚠️' : ''}</option>`;
+                        }
+                    });
+                    html += `</select><div class="country-risk-indicator" style="display:none; color:#f59e0b; font-size:12px; margin-top:4px;">⚠️ Higher risk jurisdiction</div>`;
+                    break;
+                case 'textarea':
+                    html += `<textarea class="form-textarea" data-field-id="${q.id}" placeholder="${q.placeholder || ''}" onchange="handleSOWFieldChangeFromElement(this, '${suffix}')"></textarea>`;
+                    break;
+                case 'multiselect':
+                    html += `<div class="multiselect-group" data-field-id="${q.id}">`;
+                    q.options.forEach(opt => html += `<label class="multiselect-item" onclick="toggleSOWMultiselectFromElement(this, '${suffix}')"><input type="checkbox" value="${opt}">${opt}</label>`);
+                    html += `</div>`;
+                    break;
+            }
+            
+            html += `</div>`;
+            return html;
+        }
+
+        function handleSOWFieldChangeFromElement(element, suffix = '') {
+            const card = element.closest('.sow-category-card');
+            const index = parseInt(card.getAttribute('data-sow-index'));
+            const fieldId = element.getAttribute('data-field-id');
+            const value = element.value;
+            
+            if (!sowSources[suffix][index]) {
+                sowSources[suffix][index] = { type: null, data: {}, hasRisk: false };
+            }
+            sowSources[suffix][index].data[fieldId] = value;
+            handleFieldChange(`sow${suffix}${index}_${fieldId}`, value);
+            
+            // Check for industry risk indicator
+            if (fieldId === 'industry') {
+                const isHR = HIGHER_RISK_INDUSTRIES.includes(value);
+                const indicator = element.parentElement.querySelector('.industry-risk-indicator');
+                if (indicator) indicator.style.display = isHR ? 'block' : 'none';
+            }
+            
+            // Check for country risk indicator
+            if (element.classList.contains('form-select') && COUNTRIES_LIST.includes(value)) {
+                const isHR = HIGHER_RISK_JURISDICTIONS.includes(value);
+                const indicator = element.parentElement.querySelector('.country-risk-indicator');
+                if (indicator) indicator.style.display = isHR ? 'block' : 'none';
+            }
+            
+            checkRiskTriggersForCard(card, suffix);
+        }
+
+        function toggleSOWMultiselectFromElement(element, suffix) {
+            element.classList.toggle('selected');
+            const checkbox = element.querySelector('input');
+            checkbox.checked = !checkbox.checked;
+            const container = element.parentElement;
+            const selected = Array.from(container.querySelectorAll('input:checked')).map(cb => cb.value);
+            
+            const card = element.closest('.sow-category-card');
+            const index = parseInt(card.getAttribute('data-sow-index'));
+            const fieldId = container.getAttribute('data-field-id');
+            
+            if (!sowSources[suffix][index]) {
+                sowSources[suffix][index] = { type: null, data: {}, hasRisk: false };
+            }
+            sowSources[suffix][index].data[fieldId] = selected.join(', ');
+            handleFieldChange(`sow${suffix}${index}_${fieldId}`, selected.join(', '));
+            
+            checkRiskTriggersForCard(card, suffix);
+        }
+
+        function checkRiskTriggersForCard(card, suffix = '') {
+            const index = parseInt(card.getAttribute('data-sow-index'));
+            const source = sowSources[suffix][index];
+            if (!source || !source.type) return;
+            
+            const category = SOW_CATEGORIES[source.type];
+            if (!category || category.alwaysHighRisk || category.alwaysLowRisk || !category.riskQuestions.length) return;
+            
+            const data = source.data;
+            let hasRisk = false;
+            let reasons = [];
+            
+            // Check jurisdictions
+            Object.values(data).forEach(val => {
+                if (HIGHER_RISK_JURISDICTIONS.includes(val)) {
+                    hasRisk = true;
+                    reasons.push(`Higher risk jurisdiction: ${val}`);
+                }
+            });
+            
+            // Check industry
+            if (HIGHER_RISK_INDUSTRIES.includes(data.industry)) {
+                hasRisk = true;
+                reasons.push('Higher risk industry');
+            }
+            
+            // Check PEP
+            ['deceasedPEP', 'donorPEP', 'exSpousePEP'].forEach(field => {
+                if (data[field] && data[field].startsWith('Yes')) {
+                    hasRisk = true;
+                    reasons.push('PEP connection');
+                }
+            });
+            
+            // Check senior positions
+            const status = data.employmentStatus || '';
+            if (['Director', 'Partner', 'Shareholder/Owner'].includes(status)) {
+                hasRisk = true;
+                reasons.push('Senior/influential position');
+            }
+            
+            // Check Companies House
+            if (data.companiesHouseMatch === 'No') {
+                hasRisk = true;
+                reasons.push('Companies House mismatch');
+            }
+            
+            // Check commercial property
+            const propType = data.propertyType || '';
+            if (propType.toLowerCase().includes('commercial')) {
+                hasRisk = true;
+                reasons.push('Commercial property');
+            }
+            
+            // Check insurance types
+            if (['Life Insurance', 'Annuity', 'High Value Asset'].includes(data.insuranceType)) {
+                hasRisk = true;
+                reasons.push(`${data.insuranceType} payout`);
+            }
+            
+            // Update UI
+            const riskSection = card.querySelector('.sow-risk-section');
+            source.hasRisk = hasRisk;
+            
+            if (hasRisk && category.riskQuestions.length) {
+                card.classList.add('has-risk');
+                const currencySymbol = JURISDICTION_CONFIG[currentJurisdiction].currency;
+                let riskHtml = `<h4>Additional Information Required</h4>
+                    <p style="font-size:12px; margin-bottom:12px; color:#78350f;">Due to: ${[...new Set(reasons)].join(', ')}</p>`;
+                category.riskQuestions.forEach(q => {
+                    riskHtml += generateSOWField(q, index, suffix, currencySymbol);
+                });
+                riskSection.innerHTML = riskHtml;
+                riskSection.style.display = 'block';
+            } else {
+                card.classList.remove('has-risk');
+                riskSection.style.display = 'none';
+            }
+        }
+
+        // Initialize first SOW source on section open
+        function initSOWSources() {
+            if (document.getElementById('sowSourcesContainer') && getSOWSourceCount('') === 0) {
+                addSOWSource('');
             }
         }
 
