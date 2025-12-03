@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Suitability Review | Evelyn Partners</title>
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --primary-light: #6B3FA0;
+            --accent-teal: #34675C;
+            --accent-coral: #E07065;
+            --accent-blue: #5299E0;
+            --accent-gold: #C4A35A;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #d32f2f;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 20px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo svg {
+            height: 48px;
+            width: auto;
+        }
+
+        .header-title {
+            text-align: right;
+        }
+
+        .header-title h1 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .header-title p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Save Status */
+        .save-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--gray-600);
+            padding: 8px 15px;
+            background: white;
+            border-radius: 20px;
+            margin-left: 15px;
+        }
+
+        .save-status-icon {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-400);
+        }
+
+        .save-status-icon.saved { background: var(--success); }
+        .save-status-icon.saving { 
+            background: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 88px; /* Height of header */
+            z-index: 99;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .progress-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-teal);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .section-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(45, 32, 71, 0.12);
+        }
+
+        .section-card.completed {
+            border-left: 4px solid var(--success);
+        }
+
+        .section-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--gray-100);
+            transition: background 0.2s;
+        }
+
+        .section-card.active .section-header {
+            background: rgba(45, 32, 71, 0.05);
+        }
+
+        .section-header:hover {
+            background: rgba(45, 32, 71, 0.08);
+        }
+
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .section-card.active .section-number {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-card.completed .section-number {
+            background: var(--success);
+            color: white;
+        }
+
+        .section-card.completed .section-number::after {
+            content: '✓';
+        }
+
+        .section-card.completed .section-number span {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 2px;
+        }
+
+        .section-toggle {
+            font-size: 20px;
+            color: var(--gray-500);
+            transition: transform 0.3s;
+        }
+
+        .section-card.active .section-toggle {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 25px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .section-card.active .section-content {
+            display: block;
+        }
+
+        /* Form Elements */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row.thirds {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+
+        .form-group label.required::after {
+            content: ' *';
+            color: var(--error);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"],
+        select,
+        textarea {
+            padding: 12px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 32, 71, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Yes/No Toggle */
+        .yes-no-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .yes-no-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .yes-no-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .yes-no-option label {
+            display: block;
+            padding: 12px 20px;
+            text-align: center;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .yes-no-option input:checked + label {
+            border-color: var(--primary);
+            background: rgba(45, 32, 71, 0.05);
+            color: var(--primary);
+        }
+
+        .yes-no-option input:checked + label.yes-label {
+            border-color: var(--success);
+            background: rgba(76, 175, 80, 0.08);
+            color: var(--success);
+        }
+
+        .yes-no-option input:checked + label.no-label {
+            border-color: var(--error);
+            background: rgba(211, 47, 47, 0.08);
+            color: var(--error);
+        }
+
+        /* Rating Scale */
+        .rating-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .rating-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .rating-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .rating-option label {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .rating-option input:checked + label {
+            border-color: var(--accent-teal);
+            background: rgba(52, 103, 92, 0.08);
+            color: var(--accent-teal);
+        }
+
+        /* Checkbox Groups */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .checkbox-option label {
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--gray-700);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(52, 103, 92, 0.08);
+            border-left: 4px solid var(--accent-teal);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+
+        .info-box h4 {
+            font-size: 14px;
+            color: var(--accent-teal);
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+
+        .warning-box h4 {
+            font-size: 14px;
+            color: #e65100;
+            margin-bottom: 8px;
+        }
+
+        /* Section Navigation */
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+
+        .btn-teal {
+            background: var(--accent-teal);
+            color: white;
+            border: none;
+        }
+
+        .btn-teal:hover {
+            background: #2a5449;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 25px 0;
+        }
+
+        /* Sub-section Title */
+        .subsection-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(45, 32, 71, 0.1);
+        }
+
+        /* Footer Actions */
+        .footer-actions {
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 20px 30px;
+            position: sticky;
+            bottom: 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .footer-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .header-title {
+                text-align: center;
+            }
+
+            .progress-container {
+                top: 125px; /* Taller header on mobile due to stacking */
+                padding: 12px 20px;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .form-row,
+            .form-row.thirds {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                padding: 15px;
+            }
+
+            .section-content {
+                padding: 20px 15px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-inner .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .progress-container, .footer-actions {
+                position: static;
+            }
+            .section-content {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg width="184" height="72" viewBox="0 0 173.61 65.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_psr)">
+                        <path d="M69.2642 56.0118V54.4309H61.6699V65.723H69.4058V64.1421H63.4496V60.6973H68.4753V59.2007H63.4496V56.0118H69.2642Z" fill="#C69D64"/>
+                        <path d="M49.6732 57.7613L56.054 65.723H57.5475V54.4309H55.7408V62.5612L49.2787 54.4309H47.8936V65.723H49.6732V57.7613Z" fill="#C69D64"/>
+                        <path d="M40.9768 65.723V56.0118H44.7318V54.4309H35.415V56.0118H39.2001V65.723H40.9768Z" fill="#C69D64"/>
+                        <path d="M32.8192 58.1016C32.8192 56.072 31.3347 54.4309 29.3171 54.4309H24.4028V65.723H26.1855V61.8084H28.8083L31.2383 65.723H33.2408L30.5879 61.432C31.9158 60.9773 32.8192 59.541 32.8192 58.1016ZM29.29 60.2094H26.1855V55.9937H29.1967C30.2235 55.9937 30.9733 56.9543 30.9733 58.0835C30.9733 59.2127 30.3681 60.2185 29.29 60.2185V60.2094Z" fill="#C69D64"/>
+                        <path d="M81.3783 58.1016C81.3783 56.072 79.8938 54.4309 77.8762 54.4309H72.9619V65.723H74.7325V61.8084H77.3553L79.7854 65.723H81.7878L79.1349 61.432C80.4749 60.9773 81.3783 59.541 81.3783 58.1016ZM77.8491 60.2094H74.7325V55.9937H77.7437C78.7706 55.9937 79.5204 56.9543 79.5204 58.0835C79.5204 59.2127 78.9272 60.2185 77.8491 60.2185V60.2094Z" fill="#C69D64"/>
+                        <path d="M10.9971 65.723H12.8881L14.0745 62.6485H18.4228L19.6272 65.723H21.4882L17.0286 54.4309H15.4748L10.9971 65.723ZM18.0825 61.3206H14.3847L16.2757 56.4605L18.0825 61.3206Z" fill="#C69D64"/>
+                        <path d="M1.48438 54.4309V65.723H3.261V61.8084H6.31137C8.38309 61.8084 9.7261 60.0017 9.7261 58.1106C9.7261 56.1624 8.24156 54.4399 6.22705 54.4399L1.48438 54.4309ZM7.91936 58.1016C7.91936 59.2037 7.31712 60.2094 6.19694 60.2094H3.261V55.9937H6.11263C7.22076 56.0118 7.91936 56.9724 7.91936 58.1016Z" fill="#C69D64"/>
+                        <path d="M84.6697 57.7914C84.6697 59.8149 86.4764 60.369 88.1537 60.8357C89.6774 61.2543 91.1348 61.5674 91.1348 62.787C91.1348 63.8319 90.1471 64.2294 88.9306 64.2294C87.5484 64.2294 85.8561 63.5217 85.1214 62.787L84.2451 64.3137C85.5919 65.3126 87.2267 65.8474 88.9035 65.8374C91.6979 65.8374 93.0258 64.4462 93.0258 62.5912C93.0258 60.4834 91.469 59.9173 89.6894 59.4174C88.1025 58.9687 86.5336 58.7369 86.5336 57.5083C86.5336 56.3791 87.437 55.9274 88.7349 55.9274C89.8068 55.9274 91.1619 56.4634 91.7822 57.0867L92.5742 55.6173C91.473 54.8023 90.1409 54.3593 88.771 54.3525C86.4554 54.3525 84.6697 55.5902 84.6697 57.7914Z" fill="#C69D64"/>
+                        <path d="M94.0043 6.88667V37.0622C94.0043 40.9767 93.7032 42.2926 90.978 43.7712V44.274H105.57V43.7712C102.842 42.2926 102.544 40.9647 102.544 37.0622V0H90.7251V0.502874C93.5135 1.80372 94.0043 3.16179 94.0043 6.88667Z" fill="white"/>
+                        <path d="M14.9447 44.8643C21.5875 44.8643 26.3091 41.2267 28.1128 34.9935L27.372 34.8158C25.5924 38.9533 22.3945 40.8383 18.6214 40.8383C12.5719 40.8383 8.65727 35.9932 8.65727 28.5706H28.2302C28.2302 20.5667 24.0145 14.5955 14.8875 14.5955C6.82042 14.5955 0 20.6179 0 29.7871C0 39.3688 6.7602 44.8643 14.9447 44.8643ZM14.8273 15.7247C19.0972 15.7247 19.8078 20.8678 19.8078 27.1673H8.71749C8.95538 20.2746 11.3282 15.7247 14.8273 15.7247Z" fill="white"/>
+                        <path d="M74.9677 44.8643C81.6104 44.8643 86.332 41.2267 88.1358 34.9935L87.395 34.8158C85.6154 38.9533 82.4204 40.8383 78.6474 40.8383C72.5948 40.8383 68.6802 35.9932 68.6802 28.5706H88.2532C88.2532 20.5667 84.0375 14.5955 74.9104 14.5955C66.8434 14.5955 60.0229 20.6179 60.0229 29.7871C60.0229 39.3688 66.7832 44.8643 74.9677 44.8643ZM74.8502 15.7247C79.1201 15.7247 79.8338 20.8678 79.8338 27.1673H68.7404C68.9783 20.2746 71.3512 15.7247 74.8502 15.7247Z" fill="white"/>
+                        <path d="M61.0735 15.2068H52.2506V15.7097C55.2257 16.8208 55.6713 18.9738 54.1507 22.0061L48.1011 34.7135L38.8687 15.2068H28.4077V15.7097C30.6752 16.9413 30.9582 17.8175 32.8583 21.5906L44.4094 44.8794H44.9213L56.12 21.7682C57.9599 17.9861 59.1613 16.7817 61.0855 15.7097L61.0735 15.2068Z" fill="white"/>
+                        <path d="M170.544 37.062V24.8877C170.544 18.7387 167.283 14.6013 161.233 14.6013C156.192 14.6013 152.395 17.3506 150.853 22.7316V15.2066H139.627V15.8088C141.799 16.4924 142.313 18.1576 142.313 21.7409V37.05C142.313 40.9646 142.012 42.2805 139.302 43.759V44.2619H153.892V43.759C151.163 42.2805 150.88 40.9525 150.88 37.05V28.3174C150.88 22.4636 153.491 18.8291 157.168 18.8291C160.667 18.8291 162.031 21.5392 162.031 24.8515V32.6988V44.2378H173.597V43.7349C170.842 42.3076 170.544 40.9646 170.544 37.062Z" fill="white"/>
+                        <path d="M129.772 15.2068V15.7097C132.744 16.8208 132.97 18.7871 131.669 22.0061L126.035 35.659L116.429 15.2068H105.929V15.7097C108.193 16.9413 108.479 17.8175 110.377 21.5906L122.075 45.0781C118.501 53.1181 115.396 59.9446 112.49 61.8266C111.96 59.0653 110.383 57.3097 108.127 57.3097C107.598 57.3101 107.074 57.4153 106.586 57.6191C106.098 57.823 105.655 58.1215 105.282 58.4974C104.91 58.8734 104.616 59.3194 104.417 59.8096C104.218 60.2999 104.117 60.8247 104.122 61.3538C104.122 64.0368 106.125 65.8255 108.976 65.8255C113.894 65.8255 117.489 59.3544 123.731 44.8342L133.635 21.7411C133.711 21.5635 133.861 21.2774 133.861 21.2774C135.514 17.8928 136.237 16.6221 138.107 15.791V15.1887L129.772 15.2068Z" fill="white"/>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_psr">
+                            <rect width="173.57" height="65.8374" fill="white"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <div class="header-title">
+                    <h1>Periodic Suitability Review</h1>
+                    <p>KYC Review & ESG Assessment</p>
+                </div>
+                <div class="save-status">
+                    <div class="save-status-icon" id="saveStatusIcon"></div>
+                    <span id="saveStatusText">Ready</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progressText">0 of 11 sections complete</span>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- Section 1: Client Details -->
+        <div class="section-card active" data-section="1">
+            <div class="section-header" onclick="toggleSection(1)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>1</span></div>
+                    <div>
+                        <div class="section-title">Client Details</div>
+                        <div class="section-subtitle">Meeting information and participants</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="required">Client Name</label>
+                        <input type="text" id="clientName" onchange="handleFieldChange(this)">
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Client Code</label>
+                        <input type="text" id="clientCode" onchange="handleFieldChange(this)">
+                    </div>
+                </div>
+                <div class="form-row thirds">
+                    <div class="form-group">
+                        <label class="required">Date</label>
+                        <input type="date" id="meetingDate" onchange="handleFieldChange(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Start Time</label>
+                        <input type="time" id="startTime" onchange="handleFieldChange(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>End Time</label>
+                        <input type="time" id="endTime" onchange="handleFieldChange(this)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="meetingLocation" placeholder="e.g., Dublin Office, Video Call" onchange="handleFieldChange(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Attendees</label>
+                        <input type="text" id="attendees" placeholder="List all attendees" onchange="handleFieldChange(this)">
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Initiator of the meeting</label>
+                        <select id="meetingInitiator" onchange="handleFieldChange(this)">
+                            <option value="">Select...</option>
+                            <option value="client">Client</option>
+                            <option value="investment_manager">Investment Manager</option>
+                            <option value="scheduled_review">Scheduled Annual Review</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="section-nav">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="completeSection(1)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Personal Circumstances -->
+        <div class="section-card" data-section="2">
+            <div class="section-header" onclick="toggleSection(2)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>2</span></div>
+                    <div>
+                        <div class="section-title">Personal Circumstances</div>
+                        <div class="section-subtitle">Health, vulnerability, employment & authority details</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <!-- Health Concerns -->
+                <h4 class="subsection-title">Health Considerations</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Does the client have any health concerns that should be considered in the context of their investments?</label>
+                        <textarea id="healthConcerns" placeholder="Document any relevant health considerations..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Vulnerability Assessment -->
+                <h4 class="subsection-title">Vulnerability Assessment</h4>
+                <div class="warning-box">
+                    <h4>⚠️ Annual Assessment Required</h4>
+                    <p>An assessment of client vulnerability must be carried out at least annually and in the event of any material change in circumstances. The assessment must record: whether they are or are not vulnerable, the rationale for the assessment, and actions to be taken where applicable.</p>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Is the client Vulnerable?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="isVulnerable" id="vulnerableYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="vulnerableYes" class="yes-label">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="isVulnerable" id="vulnerableNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="vulnerableNo" class="no-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Vulnerability indicators (if any) and rationale for assessment</label>
+                        <textarea id="vulnerabilityRationale" placeholder="e.g., over 80, illness, recently bereaved, or rationale if assessed as not vulnerable..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Marital Status & Dependents -->
+                <h4 class="subsection-title">Marital Status & Dependents</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Does the client have any financial dependents? If so, provide details of relationship and ages.</label>
+                        <textarea id="dependentsDetails" placeholder="Nature of relationship and age of dependents..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Employment -->
+                <h4 class="subsection-title">Employment Status</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Employment status and retirement plans</label>
+                        <textarea id="employmentStatus" placeholder="Current employment status, planned retirement date, etc." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Authority Details -->
+                <h4 class="subsection-title">Authority Details</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Is there a Third Party Authority (TPA) on the account?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasTPA" id="tpaYes" value="yes" onchange="handleFieldChange(this); toggleConditional('tpaDetails', true)">
+                                <label for="tpaYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasTPA" id="tpaNo" value="no" onchange="handleFieldChange(this); toggleConditional('tpaDetails', false)">
+                                <label for="tpaNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full" id="tpaDetails" style="display: none;">
+                    <div class="form-group">
+                        <label>TPA Details</label>
+                        <textarea id="tpaDetailsText" placeholder="Provide TPA details..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Is there a Power of Attorney (POA) on the account?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasPOA" id="poaYes" value="yes" onchange="handleFieldChange(this); toggleConditional('poaDetails', true)">
+                                <label for="poaYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasPOA" id="poaNo" value="no" onchange="handleFieldChange(this); toggleConditional('poaDetails', false)">
+                                <label for="poaNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full" id="poaDetails" style="display: none;">
+                    <div class="form-group">
+                        <label>POA Details</label>
+                        <textarea id="poaDetailsText" placeholder="Provide POA details..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Is there a Specific Power of Attorney (SPOA) on the account?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasSPOA" id="spoaYes" value="yes" onchange="handleFieldChange(this); toggleConditional('spoaDetails', true)">
+                                <label for="spoaYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasSPOA" id="spoaNo" value="no" onchange="handleFieldChange(this); toggleConditional('spoaDetails', false)">
+                                <label for="spoaNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full" id="spoaDetails" style="display: none;">
+                    <div class="form-group">
+                        <label>SPOA Details</label>
+                        <textarea id="spoaDetailsText" placeholder="Provide SPOA details..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>If this is a Bare Trust, has the beneficiary reached the age of 18?</label>
+                        <select id="bareTrustStatus" onchange="handleFieldChange(this)">
+                            <option value="">Select...</option>
+                            <option value="not_applicable">Not Applicable</option>
+                            <option value="yes_convert">Yes - should be changed to individual account</option>
+                            <option value="yes_retain">Yes - retain as Bare Trust</option>
+                            <option value="no">No - beneficiary under 18</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(1)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(2)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: AML -->
+        <div class="section-card" data-section="3">
+            <div class="section-header" onclick="toggleSection(3)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>3</span></div>
+                    <div>
+                        <div class="section-title">AML Verification</div>
+                        <div class="section-subtitle">Identity, address verification and compliance checks</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <h4 class="subsection-title">Documentation Status</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Is the AML currently on file in date?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="amlInDate" id="amlYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="amlYes" class="yes-label">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="amlInDate" id="amlNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="amlNo" class="no-label">No - Update Required</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>AML Documentation Notes</label>
+                        <textarea id="amlNotes" placeholder="ID status, address verification updates, TIN changes, UBO/Director updates for corporate accounts..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h4 class="subsection-title">Suspicious Activity Review</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Has the IM identified any activity which causes concern or could give rise to an amended risk rating?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="suspiciousActivity" id="suspiciousYes" value="yes" onchange="handleFieldChange(this); toggleConditional('suspiciousDetails', true)">
+                                <label for="suspiciousYes" class="yes-label">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="suspiciousActivity" id="suspiciousNo" value="no" onchange="handleFieldChange(this); toggleConditional('suspiciousDetails', false)">
+                                <label for="suspiciousNo" class="no-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full" id="suspiciousDetails" style="display: none;">
+                    <div class="form-group">
+                        <label>Details of concerns</label>
+                        <textarea id="suspiciousDetailsText" placeholder="Unusual transactions, new SOW/SOF, client comments, unexplained bank accounts, residency changes, occupation changes..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(2)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(3)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Financial Circumstances -->
+        <div class="section-card" data-section="4">
+            <div class="section-header" onclick="toggleSection(4)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>4</span></div>
+                    <div>
+                        <div class="section-title">Financial Circumstances</div>
+                        <div class="section-subtitle">Income, expenditure, assets and liabilities</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <h4 class="subsection-title">Income</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Estimated annual income breakdown</label>
+                        <textarea id="annualIncome" placeholder="Employment: €&#10;Pension: €&#10;Rental income: €&#10;Investment income: €&#10;Other: €" onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Is the client's employment at risk of sudden sectoral-related change?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="employmentRisk" id="empRiskYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="empRiskYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="employmentRisk" id="empRiskNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="empRiskNo">No</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="employmentRisk" id="empRiskNA" value="na" onchange="handleFieldChange(this)">
+                                <label for="empRiskNA">N/A</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h4 class="subsection-title">Expenditure</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Estimated total annual expenditure</label>
+                        <textarea id="annualExpenditure" placeholder="Breakdown of expenditure and whether inflation will impact it..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h4 class="subsection-title">Emergency Fund</h4>
+                <div class="info-box">
+                    <h4>Guidance</h4>
+                    <p>Our guidance is 6 to 12 months of expenditure plus any known capital expenditure. If the client wishes to hold less and the IM believes this is suitable, this needs to be recorded in a file note.</p>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Is there clear confirmation that the client retains an emergency fund outside of the portfolio?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasEmergencyFund" id="emergencyYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="emergencyYes" class="yes-label">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasEmergencyFund" id="emergencyNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="emergencyNo" class="no-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Emergency fund details and inflation impact</label>
+                        <textarea id="emergencyFundDetails" placeholder="Amount held, location, adequacy assessment..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h4 class="subsection-title">Assets & Liabilities</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Current value of main residential property</label>
+                        <input type="text" id="propertyValue" placeholder="€" onchange="handleFieldChange(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Other significant assets</label>
+                        <input type="text" id="otherAssets" placeholder="€" onchange="handleFieldChange(this)">
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Is the client using investment income to cover expenditure?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="usingInvestmentIncome" id="investIncomeYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="investIncomeYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="usingInvestmentIncome" id="investIncomeNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="investIncomeNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Significant liabilities (Mortgage, Loans, Debts)</label>
+                        <textarea id="liabilities" placeholder="Type and amount of each liability..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Expected future commitments</label>
+                        <textarea id="futureCommitments" placeholder="House purchase, school fees, nursing home fees, etc." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(3)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(4)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Investment Time Horizon -->
+        <div class="section-card" data-section="5">
+            <div class="section-header" onclick="toggleSection(5)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>5</span></div>
+                    <div>
+                        <div class="section-title">Investment Time Horizon</div>
+                        <div class="section-subtitle">Review and confirmation of investment timeframe</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">What is the client's investment time horizon?</label>
+                        <select id="timeHorizon" onchange="handleFieldChange(this)">
+                            <option value="">Select...</option>
+                            <option value="less_than_3">Less than 3 years</option>
+                            <option value="3_to_5">3 to 5 years</option>
+                            <option value="5_plus">5 years or more</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h4>Note</h4>
+                    <p>The client's time horizon should typically be five years for higher risk portfolios. Where applicable, document the rationale where a recommendation is made where the time horizon and attitude to risk do not match.</p>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Please assess why this time horizon is still suitable</label>
+                        <textarea id="timeHorizonRationale" placeholder="Assessment of time horizon suitability..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>When might the client require access to their investment capital?</label>
+                        <textarea id="capitalAccessTiming" placeholder="Known or anticipated dates/events..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(4)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(5)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Core Objectives -->
+        <div class="section-card" data-section="6">
+            <div class="section-header" onclick="toggleSection(6)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>6</span></div>
+                    <div>
+                        <div class="section-title">Core Objectives</div>
+                        <div class="section-subtitle">Income, balanced or capital growth focus</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">What is the client's core objective?</label>
+                        <select id="coreObjective" onchange="handleFieldChange(this)">
+                            <option value="">Select...</option>
+                            <option value="income">Income</option>
+                            <option value="balanced">Balanced</option>
+                            <option value="capital_growth">Capital Growth</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Please assess why this objective is still suitable</label>
+                        <textarea id="objectiveRationale" placeholder="Assessment of objective suitability..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Target level of income/growth (if any)</label>
+                        <textarea id="targetLevel" placeholder="Does the client want capital growth to save for a house? Do they want a certain income each month? Has this been confirmed during annual reviews?" onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(5)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(6)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Service Type -->
+        <div class="section-card" data-section="7">
+            <div class="section-header" onclick="toggleSection(7)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>7</span></div>
+                    <div>
+                        <div class="section-title">Service Type</div>
+                        <div class="section-subtitle">Review of current service arrangement</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">What is the client's service type? Has this changed in the last 12 months?</label>
+                        <textarea id="serviceType" placeholder="Current service type and any changes..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Please assess how the client's service type is still suitable</label>
+                        <textarea id="serviceTypeRationale" placeholder="Assessment of service type suitability..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(6)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(7)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Attitude to Risk -->
+        <div class="section-card" data-section="8">
+            <div class="section-header" onclick="toggleSection(8)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>8</span></div>
+                    <div>
+                        <div class="section-title">Attitude to Risk</div>
+                        <div class="section-subtitle">Risk profile, capacity for loss and strategy assessment</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">What is the client's attitude to risk? Has this changed in the last 12 months?</label>
+                        <textarea id="attitudeToRisk" placeholder="Current attitude and any changes..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">What strategy/risk profile is the client on?</label>
+                        <input type="text" id="riskProfile" placeholder="e.g., Cautious, Balanced, Growth, Adventurous" onchange="handleFieldChange(this)">
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Does the client's attitude to risk and strategy/risk profile match?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="riskMatch" id="riskMatchYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="riskMatchYes" class="yes-label">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="riskMatch" id="riskMatchNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="riskMatchNo" class="no-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Please assess why this strategy/risk profile is suitable for the client</label>
+                        <textarea id="riskSuitabilityAssessment" placeholder="Include:&#10;• Potential advantages and disadvantages of the risk profile (volatility, maximum drawdown)&#10;• Client's understanding and willingness to accept the risks&#10;• Whether client has sufficient capacity for loss without affecting standard of living&#10;• For low-risk portfolios: have you considered the impact of inflation?" onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(7)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(8)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Knowledge & Experience -->
+        <div class="section-card" data-section="9">
+            <div class="section-header" onclick="toggleSection(9)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>9</span></div>
+                    <div>
+                        <div class="section-title">Knowledge & Experience</div>
+                        <div class="section-subtitle">Client's understanding of financial products</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Has the client got the relevant Knowledge and Experience in relation to the financial products or services being offered?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasKnowledgeExp" id="keYes" value="yes" onchange="handleFieldChange(this)">
+                                <label for="keYes" class="yes-label">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasKnowledgeExp" id="keNo" value="no" onchange="handleFieldChange(this)">
+                                <label for="keNo" class="no-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>If No, please explain how the concept of risk was explained to the client</label>
+                        <textarea id="riskExplanation" placeholder="How was risk explained in a way the client is likely to understand?" onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">Knowledge and Experience Review Notes</label>
+                        <textarea id="keReviewNotes" placeholder="Document what has changed in the client's knowledge and experience, how and when..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(8)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(9)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Other -->
+        <div class="section-card" data-section="10">
+            <div class="section-header" onclick="toggleSection(10)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>10</span></div>
+                    <div>
+                        <div class="section-title">Other Considerations</div>
+                        <div class="section-subtitle">Holdings, restrictions and special instructions</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Overweight holdings</label>
+                        <textarea id="overweightHoldings" placeholder="List any overweight positions..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Execution only holdings</label>
+                        <textarea id="executionOnlyHoldings" placeholder="List any execution only holdings..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Are there any restrictions noted on the account?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasRestrictions" id="restrictionsYes" value="yes" onchange="handleFieldChange(this); toggleConditional('restrictionsDetails', true)">
+                                <label for="restrictionsYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasRestrictions" id="restrictionsNo" value="no" onchange="handleFieldChange(this); toggleConditional('restrictionsDetails', false)">
+                                <label for="restrictionsNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full" id="restrictionsDetails" style="display: none;">
+                    <div class="form-group">
+                        <label>Has the client confirmed these restrictions accurately reflect their wishes?</label>
+                        <textarea id="restrictionsText" placeholder="Details of restrictions and confirmation..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(9)">← Back</button>
+                    <button class="btn btn-primary" onclick="completeSection(10)">Continue →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 11: ESG & Sustainability -->
+        <div class="section-card" data-section="11">
+            <div class="section-header" onclick="toggleSection(11)">
+                <div class="section-header-left">
+                    <div class="section-number"><span>11</span></div>
+                    <div>
+                        <div class="section-title">ESG & Sustainability Preferences</div>
+                        <div class="section-subtitle">Responsible investment and sustainability assessment</div>
+                    </div>
+                </div>
+                <div class="section-toggle">▼</div>
+            </div>
+            <div class="section-content">
+                <!-- Ethical Exclusions -->
+                <h4 class="subsection-title">Ethical Exclusions</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>Does the client wish to exclude specific investments which do not meet their ethical beliefs?</label>
+                        <div class="yes-no-group">
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasEthicalExclusions" id="ethicalYes" value="yes" onchange="handleFieldChange(this); toggleConditional('ethicalDetails', true)">
+                                <label for="ethicalYes">Yes</label>
+                            </div>
+                            <div class="yes-no-option">
+                                <input type="radio" name="hasEthicalExclusions" id="ethicalNo" value="no" onchange="handleFieldChange(this); toggleConditional('ethicalDetails', false)">
+                                <label for="ethicalNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row full" id="ethicalDetails" style="display: none;">
+                    <div class="form-group">
+                        <label>Please provide details of exclusions</label>
+                        <textarea id="ethicalExclusionsText" placeholder="e.g., armaments, gambling, alcohol, tobacco, fossil fuels..." onchange="handleFieldChange(this)"></textarea>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Sustainability Importance -->
+                <h4 class="subsection-title">Sustainability Preferences</h4>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="required">1. How important is sustainable investing to the client?</label>
+                        <select id="sustainabilityImportance" onchange="handleFieldChange(this); handleSustainabilityChange()">
+                            <option value="">Select...</option>
+                            <option value="not_important">Not important - proceed to confirmations</option>
+                            <option value="interested">Interested in sustainable investing</option>
+                            <option value="somewhat_satisfied_epe">Somewhat important but satisfied with EPE's Responsible Investing</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="sustainabilityQuestions" style="display: none;">
+                    <div class="info-box">
+                        <h4>Sustainability Factors</h4>
+                        <p>Please indicate the level of importance (High/Medium/Low) for each of the following sustainability considerations:</p>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>2. The extent to which financial instruments with good sustainable characteristics should be included in the Portfolio</label>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="sustainableInclusion" id="sustainIncHigh" value="high" onchange="handleFieldChange(this)">
+                                    <label for="sustainIncHigh">High</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="sustainableInclusion" id="sustainIncMed" value="medium" onchange="handleFieldChange(this)">
+                                    <label for="sustainIncMed">Medium</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="sustainableInclusion" id="sustainIncLow" value="low" onchange="handleFieldChange(this)">
+                                    <label for="sustainIncLow">Low</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>3. The extent to which financial instruments which make an impact by positively contributing to the planet and/or society should be included</label>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="positiveImpact" id="posImpactHigh" value="high" onchange="handleFieldChange(this)">
+                                    <label for="posImpactHigh">High</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="positiveImpact" id="posImpactMed" value="medium" onchange="handleFieldChange(this)">
+                                    <label for="posImpactMed">Medium</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="positiveImpact" id="posImpactLow" value="low" onchange="handleFieldChange(this)">
+                                    <label for="posImpactLow">Low</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>4. Whether financial instruments which could have an adverse impact on the planet or society should be excluded</label>
+                            <div class="rating-group">
+                                <div class="rating-option">
+                                    <input type="radio" name="adverseExclusion" id="advExclHigh" value="high" onchange="handleFieldChange(this)">
+                                    <label for="advExclHigh">High</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="adverseExclusion" id="advExclMed" value="medium" onchange="handleFieldChange(this)">
+                                    <label for="advExclMed">Medium</label>
+                                </div>
+                                <div class="rating-option">
+                                    <input type="radio" name="adverseExclusion" id="advExclLow" value="low" onchange="handleFieldChange(this)">
+                                    <label for="advExclLow">Low</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Confirmations -->
+                <h4 class="subsection-title">Confirmations</h4>
+                
+                <div id="confirmation5" style="display: none;">
+                    <div class="checkbox-group" style="margin-bottom: 20px;">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="confirm5a" onchange="handleFieldChange(this)">
+                            <label for="confirm5a"><strong>5(a)</strong> I confirm that the client understands that DFM Clients: All portfolio holdings (excluding Cash and Government securities) will exhibit sustainable characteristics as defined by MSCI. Advisory/Advice Clients: All recommendations (excluding Cash and Government securities) will exhibit sustainable characteristics as defined by MSCI.</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-group" style="margin-bottom: 20px;">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="confirm5b" onchange="handleFieldChange(this)">
+                            <label for="confirm5b"><strong>5(b)</strong> I confirm that the client is prepared to modify the sustainability preferences expressed in questions 2 to 4 above to those embedded within EPE's investment process as explained in Responsible Investment.</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="confirm6" onchange="handleFieldChange(this)">
+                        <label for="confirm6"><strong>6.</strong> I confirm that the client understands that EPE currently integrates ESG factors into its investment process (as described in the Responsible Investment section).</label>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Responsible Investment Info -->
+                <div class="info-box">
+                    <h4>Responsible Investment</h4>
+                    <p>Responsible investment incorporates Environmental, Social and Governance (ESG) factors into investment decisions alongside purely financial considerations. Evelyn Partners Investment Management (Europe) Ltd is part of the Evelyn Partners group which is committed to the UN Principles for Responsible Investment, UK Stewardship Code 2020, and TCFD. The Group exercises fiduciary duties for all clients as a responsible investor with an integrated approach to ESG and stewardship of capital.</p>
+                    <p style="margin-top: 10px;"><a href="https://www.evelyn.com/corporate-responsibility/responsible-investing/" target="_blank" style="color: var(--accent-teal);">View Responsible Investing Information →</a></p>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-secondary" onclick="goToSection(10)">← Back</button>
+                    <button class="btn btn-teal" onclick="completeSection(11)">Complete Review ✓</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="footer-actions">
+        <div class="footer-inner">
+            <button class="btn btn-secondary" onclick="clearForm()">🗑️ Clear All Data</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-secondary" onclick="exportData()">📥 Export JSON</button>
+                <button class="btn btn-primary" onclick="submitReview()">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const STORAGE_KEY = 'evelynPSRData';
+        const TOTAL_SECTIONS = 11;
+
+        // State
+        let formData = {};
+        let completedSections = new Set();
+        let saveTimeout = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            updateProgress();
+            
+            // Set default date to today
+            if (!document.getElementById('meetingDate').value) {
+                document.getElementById('meetingDate').value = new Date().toISOString().split('T')[0];
+            }
+        });
+
+        // Section Navigation
+        function scrollToSection(card) {
+            // Account for sticky header + progress bar
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const progressHeight = document.querySelector('.progress-container').offsetHeight;
+            const offset = headerHeight + progressHeight + 15; // 15px extra padding
+            
+            const cardTop = card.getBoundingClientRect().top + window.pageYOffset - offset;
+            
+            window.scrollTo({
+                top: cardTop,
+                behavior: 'smooth'
+            });
+        }
+
+        function toggleSection(sectionNum) {
+            const cards = document.querySelectorAll('.section-card');
+            let targetCard = null;
+            
+            cards.forEach(card => {
+                const cardSection = parseInt(card.dataset.section);
+                if (cardSection === sectionNum) {
+                    const wasActive = card.classList.contains('active');
+                    card.classList.toggle('active');
+                    if (!wasActive) {
+                        targetCard = card;
+                    }
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+            
+            // Scroll to the opened section after a brief delay for DOM update
+            if (targetCard) {
+                setTimeout(() => scrollToSection(targetCard), 50);
+            }
+        }
+
+        function goToSection(sectionNum) {
+            const cards = document.querySelectorAll('.section-card');
+            cards.forEach(card => {
+                card.classList.remove('active');
+                if (parseInt(card.dataset.section) === sectionNum) {
+                    card.classList.add('active');
+                    setTimeout(() => scrollToSection(card), 50);
+                }
+            });
+        }
+
+        function completeSection(sectionNum) {
+            completedSections.add(sectionNum);
+            
+            // Mark section as completed
+            const card = document.querySelector(`[data-section="${sectionNum}"]`);
+            card.classList.add('completed');
+            
+            // Move to next section
+            if (sectionNum < TOTAL_SECTIONS) {
+                goToSection(sectionNum + 1);
+            }
+            
+            updateProgress();
+            saveProgress();
+        }
+
+        // Conditional Fields
+        function toggleConditional(elementId, show) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.style.display = show ? 'block' : 'none';
+            }
+        }
+
+        function handleSustainabilityChange() {
+            const value = document.getElementById('sustainabilityImportance').value;
+            const questionsDiv = document.getElementById('sustainabilityQuestions');
+            const confirmation5 = document.getElementById('confirmation5');
+            
+            if (value === 'interested') {
+                questionsDiv.style.display = 'block';
+                confirmation5.style.display = 'block';
+            } else {
+                questionsDiv.style.display = 'none';
+                confirmation5.style.display = 'none';
+            }
+        }
+
+        // Data Management
+        function handleFieldChange(element) {
+            const fieldName = element.id || element.name;
+            let value;
+            
+            if (element.type === 'checkbox') {
+                value = element.checked;
+            } else if (element.type === 'radio') {
+                value = element.value;
+            } else {
+                value = element.value;
+            }
+            
+            formData[fieldName] = value;
+            updateSaveStatus('saving');
+            
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => saveProgress(), 500);
+        }
+
+        function saveProgress() {
+            const dataToSave = {
+                formData,
+                completedSections: Array.from(completedSections),
+                lastSaved: new Date().toISOString()
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+            updateSaveStatus('saved');
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                formData = parsed.formData || {};
+                completedSections = new Set(parsed.completedSections || []);
+                
+                // Restore form field values
+                Object.keys(formData).forEach(key => {
+                    const element = document.getElementById(key) || document.querySelector(`[name="${key}"][value="${formData[key]}"]`);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = formData[key];
+                        } else if (element.type === 'radio') {
+                            element.checked = true;
+                        } else {
+                            element.value = formData[key];
+                        }
+                    }
+                });
+                
+                // Restore completed sections styling
+                completedSections.forEach(sectionNum => {
+                    const card = document.querySelector(`[data-section="${sectionNum}"]`);
+                    if (card) card.classList.add('completed');
+                });
+                
+                // Restore conditional field visibility
+                if (formData.hasTPA === 'yes') toggleConditional('tpaDetails', true);
+                if (formData.hasPOA === 'yes') toggleConditional('poaDetails', true);
+                if (formData.hasSPOA === 'yes') toggleConditional('spoaDetails', true);
+                if (formData.suspiciousActivity === 'yes') toggleConditional('suspiciousDetails', true);
+                if (formData.hasRestrictions === 'yes') toggleConditional('restrictionsDetails', true);
+                if (formData.hasEthicalExclusions === 'yes') toggleConditional('ethicalDetails', true);
+                if (formData.sustainabilityImportance) handleSustainabilityChange();
+                
+                updateSaveStatus('saved');
+            }
+        }
+
+        function updateSaveStatus(status) {
+            const icon = document.getElementById('saveStatusIcon');
+            const text = document.getElementById('saveStatusText');
+            
+            icon.className = 'save-status-icon';
+            if (status === 'saved') {
+                icon.classList.add('saved');
+                text.textContent = 'All changes saved';
+            } else if (status === 'saving') {
+                icon.classList.add('saving');
+                text.textContent = 'Saving...';
+            }
+        }
+
+        function updateProgress() {
+            const percent = Math.round((completedSections.size / TOTAL_SECTIONS) * 100);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `${completedSections.size} of ${TOTAL_SECTIONS} sections complete`;
+            document.getElementById('progressPercent').textContent = percent + '%';
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        function exportData() {
+            const exportObj = {
+                reviewDate: new Date().toISOString(),
+                formData,
+                completedSections: Array.from(completedSections)
+            };
+            
+            const dataStr = JSON.stringify(exportObj, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `PSR_${formData.clientCode || 'export'}_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function submitReview() {
+            // Check if all sections are complete
+            if (completedSections.size < TOTAL_SECTIONS) {
+                const remaining = TOTAL_SECTIONS - completedSections.size;
+                if (!confirm(`You have ${remaining} incomplete section(s). Do you still want to submit?`)) {
+                    return;
+                }
+            }
+            
+            // Prepare submission data
+            const submissionData = {
+                submittedAt: new Date().toISOString(),
+                clientCode: formData.clientCode,
+                clientName: formData.clientName,
+                reviewDate: formData.meetingDate,
+                completedSections: completedSections.size,
+                totalSections: TOTAL_SECTIONS,
+                formData
+            };
+            
+            console.log('Submission Data:', submissionData);
+            
+            // Here you would typically send to your n8n webhook
+            // fetch('YOUR_WEBHOOK_URL', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(submissionData)
+            // });
+            
+            alert('Review submitted successfully!\n\nClient: ' + (formData.clientName || 'Not specified') + '\nCode: ' + (formData.clientCode || 'Not specified') + '\nSections Completed: ' + completedSections.size + '/' + TOTAL_SECTIONS);
+        }
+    </script>
+</body>
+</html>
