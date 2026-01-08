@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declarations | Evelyn Partners</title>
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --warning-light: #fff3cd;
+            --danger: #dc3545;
+            --danger-light: #f8d7da;
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .header-content { max-width: 900px; margin: 0 auto; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .logo { font-size: 20px; font-weight: 600; }
+        .journey-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+        .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+
+        .main-content { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        .section-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-title { font-size: 16px; font-weight: 600; color: var(--gray-800); }
+        .section-content { padding: 20px; }
+
+        .declaration-group { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gray-200); }
+        .declaration-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .declaration-group h3 { font-size: 15px; font-weight: 600; color: var(--gray-700); margin-bottom: 12px; }
+
+        .declaration-item {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .declaration-item:last-child { margin-bottom: 0; }
+        .declaration-item.checked { background: var(--success-light); border-color: var(--success); }
+
+        .declaration-item label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .declaration-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .declaration-item .text { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
+        .declaration-item.checked .text { color: #155724; }
+
+        .warning-box {
+            background: var(--warning-light);
+            border: 1px solid var(--warning);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .warning-box p { font-size: 14px; color: #856404; }
+
+        .danger-box {
+            background: var(--danger-light);
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .danger-box p { font-size: 14px; color: #721c24; }
+
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d7ff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .info-box p { font-size: 14px; color: #004085; }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-300);
+        }
+        .progress-dot.active { background: var(--primary); }
+        .progress-dot.complete { background: var(--success); }
+
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding: 24px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .nav-btn-prev { background: var(--gray-100); color: var(--gray-700); }
+        .nav-btn-next { background: var(--primary); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Account-specific colors */
+        .account-isa .journey-badge { background: rgba(40, 167, 69, 0.3); }
+        .account-gia .journey-badge { background: rgba(44, 123, 229, 0.3); }
+        .account-sipp .journey-badge { background: rgba(45, 32, 71, 0.35); }
+        .account-jisa .journey-badge { background: rgba(233, 30, 99, 0.3); }
+        .account-aim .journey-badge { background: rgba(255, 107, 53, 0.3); }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 16px; }
+            .page-navigation { flex-direction: column; gap: 12px; }
+            .nav-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="pageHeader">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="logo">Evelyn Partners</div>
+                <span class="journey-badge" id="journeyBadge">Application</span>
+            </div>
+            <h1 id="pageTitle">Declarations</h1>
+            <p id="pageSubtitle">Step 2 - Review and accept the terms and conditions</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-dot complete"></div>
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+
+        <!-- General Declarations (All accounts) -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">📋 General Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="declaration-group">
+                    <div class="declaration-item" id="decl1">
+                        <label>
+                            <input type="checkbox" onchange="updateDeclaration(this)">
+                            <span class="text">I confirm that the information provided in this application is true, complete and accurate to the best of my knowledge. I understand that providing false or misleading information may result in the rejection of my application or termination of my account.</span>
+                        </label>
+                    </div>
+
+                    <div class="declaration-item" id="decl2">
+                        <label>
+                            <input type="checkbox" onchange="updateDeclaration(this)">
+                            <span class="text">I confirm I have read and understood the Key Information Document(s), Terms and Conditions, and any other relevant documentation provided, and I agree to be bound by these terms.</span>
+                        </label>
+                    </div>
+
+                    <div class="declaration-item" id="decl3">
+                        <label>
+                            <input type="checkbox" onchange="updateDeclaration(this)">
+                            <span class="text">I understand that the value of investments can fall as well as rise and I may get back less than I invest. Past performance is not a reliable indicator of future results.</span>
+                        </label>
+                    </div>
+
+                    <div class="declaration-item" id="decl4">
+                        <label>
+                            <input type="checkbox" onchange="updateDeclaration(this)">
+                            <span class="text">I agree to notify Evelyn Partners promptly of any changes to my personal circumstances, contact details, tax residency status, or any other information that may affect my account.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ISA Specific Declarations -->
+        <div class="section-card account-specific" id="isaDeclarations" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">📈 ISA Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <p><strong>ISA Eligibility:</strong> To subscribe to an ISA you must be 18 or over and resident in the UK for tax purposes.</p>
+                </div>
+
+                <div class="declaration-item" id="isaDecl1">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I declare that I am 18 years of age or over and that all subscriptions made, and to be made, belong to me.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="isaDecl2">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I declare that I am resident in the United Kingdom for tax purposes or, if not so resident, either perform duties which, by virtue of Section 28 of Income Tax (Earnings & Pensions) Act 2003 (Crown employees serving overseas), are treated as being performed in the United Kingdom, or I am married to, or in a civil partnership with, a person who performs such duties.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="isaDecl3">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I declare that I have not subscribed and will not subscribe to more than the overall subscription limit in total to a Cash ISA, a Stocks and Shares ISA, an Innovative Finance ISA and a Lifetime ISA in the same tax year.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="isaDecl4">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I authorise Evelyn Partners to hold my cash subscription, ISA investments, interest, dividends and any other rights or proceeds in respect of those investments and any other cash, and to make on my behalf any claims to relief from tax in respect of ISA investments.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIPP Specific Declarations -->
+        <div class="section-card account-specific" id="sippDeclarations" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">🏦 Pension Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="warning-box">
+                    <p><strong>⚠️ Important:</strong> Pension funds are usually only accessible from age 55 (rising to 57 from April 2028). Early access is generally not possible except in specific circumstances.</p>
+                </div>
+
+                <div class="declaration-item" id="sippDecl1">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that pension benefits are not normally accessible until I reach the minimum pension age (currently 55, rising to 57 from April 2028) and that accessing benefits early may result in significant tax charges.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="sippDecl2">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I declare that I am a UK resident or have relevant UK earnings for the purpose of receiving tax relief on pension contributions.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="sippDecl3">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that tax treatment depends on individual circumstances and may change in the future. Tax relief on contributions is limited to the higher of £3,600 or 100% of relevant UK earnings, subject to the Annual Allowance.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="sippDecl4">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I confirm that I have not exceeded, and do not expect to exceed, my Annual Allowance for pension contributions. I understand that contributions above the Annual Allowance may result in a tax charge.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="sippDecl5">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that if I have already accessed pension benefits flexibly, I may be subject to the Money Purchase Annual Allowance (currently £10,000) and I have declared this in my application if applicable.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- JISA Specific Declarations -->
+        <div class="section-card account-specific" id="jisaDeclarations" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">👶 Junior ISA Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <p><strong>Important:</strong> The Junior ISA belongs to the child. The funds cannot be accessed until the child turns 18, at which point they will have full control of the account.</p>
+                </div>
+
+                <div class="declaration-item" id="jisaDecl1">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I declare that the child named in this application is under 18, is resident in the United Kingdom, and does not have a Child Trust Fund account.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="jisaDecl2">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I confirm that I have parental responsibility for the child named in this application, or I am the child themselves (if aged 16 or over).</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="jisaDecl3">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that the child cannot have both a Cash Junior ISA and a Stocks and Shares Junior ISA with different providers, but can have both types with the same provider.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="jisaDecl4">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that subscriptions made will belong to the child and cannot be withdrawn until they reach age 18, except in cases of terminal illness or death.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- GIA Specific Declarations -->
+        <div class="section-card account-specific" id="giaDeclarations" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">💼 General Investment Account Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <p><strong>Tax Information:</strong> Income and gains from a GIA may be subject to Income Tax and Capital Gains Tax. You are responsible for reporting these on your tax return.</p>
+                </div>
+
+                <div class="declaration-item" id="giaDecl1">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that investments held in a General Investment Account do not benefit from ISA tax advantages and may be subject to Income Tax on dividends and interest, and Capital Gains Tax on profits.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="giaDecl2">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I confirm that I am responsible for reporting any taxable income or gains to HMRC and paying any tax due. Evelyn Partners will provide consolidated tax vouchers to assist with this.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="giaDecl3" style="display: none;">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text"><strong>Joint Account:</strong> We confirm that we understand the ownership structure selected and agree to be jointly and severally liable for the account. We authorise either party to give instructions on the account.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- AIM Specific Declarations -->
+        <div class="section-card account-specific" id="aimDeclarations" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">🚀 AIM Portfolio Declarations</span>
+            </div>
+            <div class="section-content">
+                <div class="danger-box">
+                    <p><strong>⚠️ Higher Risk Investment:</strong> AIM shares are higher risk than main market shares. You could lose all of your investment.</p>
+                </div>
+
+                <div class="declaration-item" id="aimDecl1">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I confirm that I understand AIM shares are higher risk investments and that the value of my investment can fall significantly. I am prepared to accept this level of risk.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="aimDecl2">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that while AIM shares may qualify for Business Relief from Inheritance Tax after 2 years, this relief is not guaranteed and depends on the rules in force at the time of my death and whether the shares still qualify.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="aimDecl3">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I understand that AIM shares can be illiquid and I may not be able to sell my holdings quickly or at the price I expect. I should not invest money I may need to access at short notice.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="aimDecl4">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I confirm that I have read and understood the specific risk warnings provided for the AIM Portfolio Service and that this investment is suitable for my circumstances.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Protection & Consent -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">🔒 Data Protection & Consent</span>
+            </div>
+            <div class="section-content">
+                <div class="declaration-item" id="dataDecl1">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I consent to Evelyn Partners processing my personal data as described in the Privacy Policy for the purposes of administering my account and providing investment services.</span>
+                    </label>
+                </div>
+
+                <div class="declaration-item" id="dataDecl2">
+                    <label>
+                        <input type="checkbox" onchange="updateDeclaration(this)">
+                        <span class="text">I consent to Evelyn Partners sharing my information with third parties where necessary for the administration of my account, including but not limited to: fund managers, custodians, regulators, and tax authorities.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+            <button class="nav-btn nav-btn-prev" onclick="goBack()">← Back</button>
+            <button class="nav-btn nav-btn-next" id="continueBtn" disabled onclick="proceedToReview()">Continue to Review →</button>
+        </div>
+    </main>
+
+    <script>
+        let accountType = 'isa';
+        let isJointApplication = false;
+        let requiredDeclarations = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAccountType();
+            setupDeclarations();
+        });
+
+        function loadAccountType() {
+            const accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            accountType = accountData.accountType || 'isa';
+            isJointApplication = accountData.applicationType === 'joint';
+
+            // Update header based on account type
+            const headers = {
+                isa: { badge: '📈 ISA Application', title: 'ISA Declarations', step: 'Step 2 of 4' },
+                gia: { badge: '💼 GIA Application', title: 'GIA Declarations', step: 'Step 2 of 4' },
+                sipp: { badge: '🏦 SIPP Application', title: 'Pension Declarations', step: 'Step 2 of 5' },
+                jisa: { badge: '👶 JISA Application', title: 'Junior ISA Declarations', step: 'Step 2 of 4' },
+                aim: { badge: '🚀 AIM Application', title: 'AIM Portfolio Declarations', step: 'Step 2 of 5' }
+            };
+
+            const config = headers[accountType] || headers.isa;
+            document.getElementById('journeyBadge').textContent = config.badge;
+            document.getElementById('pageTitle').textContent = config.title;
+            document.getElementById('pageSubtitle').textContent = config.step + ' - Review and accept the terms and conditions';
+
+            // Add account class to body
+            document.body.classList.add('account-' + accountType);
+        }
+
+        function setupDeclarations() {
+            // Show relevant account-specific declarations
+            const sectionId = accountType + 'Declarations';
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+            }
+
+            // Show joint declaration for GIA if applicable
+            if (accountType === 'gia' && isJointApplication) {
+                document.getElementById('giaDecl3').style.display = 'block';
+            }
+
+            // Build list of required declarations
+            requiredDeclarations = ['decl1', 'decl2', 'decl3', 'decl4', 'dataDecl1', 'dataDecl2'];
+
+            // Add account-specific required declarations
+            const accountDecls = {
+                isa: ['isaDecl1', 'isaDecl2', 'isaDecl3', 'isaDecl4'],
+                sipp: ['sippDecl1', 'sippDecl2', 'sippDecl3', 'sippDecl4', 'sippDecl5'],
+                jisa: ['jisaDecl1', 'jisaDecl2', 'jisaDecl3', 'jisaDecl4'],
+                gia: ['giaDecl1', 'giaDecl2'],
+                aim: ['aimDecl1', 'aimDecl2', 'aimDecl3', 'aimDecl4']
+            };
+
+            if (accountDecls[accountType]) {
+                requiredDeclarations = requiredDeclarations.concat(accountDecls[accountType]);
+            }
+
+            // Add joint GIA declaration if applicable
+            if (accountType === 'gia' && isJointApplication) {
+                requiredDeclarations.push('giaDecl3');
+            }
+        }
+
+        function updateDeclaration(checkbox) {
+            const item = checkbox.closest('.declaration-item');
+            if (checkbox.checked) {
+                item.classList.add('checked');
+            } else {
+                item.classList.remove('checked');
+            }
+            checkAllDeclarations();
+        }
+
+        function checkAllDeclarations() {
+            let allChecked = true;
+
+            requiredDeclarations.forEach(declId => {
+                const item = document.getElementById(declId);
+                if (item && item.style.display !== 'none') {
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+                    if (!checkbox.checked) {
+                        allChecked = false;
+                    }
+                }
+            });
+
+            document.getElementById('continueBtn').disabled = !allChecked;
+        }
+
+        function goBack() {
+            // Navigate back to the account-specific application page
+            const backPages = {
+                isa: 'account_isa_application.html',
+                gia: 'account_gia_application.html',
+                sipp: 'account_sipp_application.html',
+                jisa: 'account_jisa_application.html',
+                aim: 'account_aim_application.html'
+            };
+            window.location.href = backPages[accountType] || 'evelyn_landing_page.html';
+        }
+
+        function proceedToReview() {
+            // Save declaration acceptance
+            const accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            accountData.declarationsAccepted = true;
+            accountData.declarationsTimestamp = new Date().toISOString();
+            localStorage.setItem('evelynAccountFormData', JSON.stringify(accountData));
+
+            // Navigate to review page
+            window.location.href = 'account_review.html';
+        }
+    </script>
+</body>
+</html>

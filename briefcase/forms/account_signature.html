@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Signature | Evelyn Partners</title>
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --warning-light: #fff3cd;
+            --danger: #dc3545;
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .header-content { max-width: 900px; margin: 0 auto; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .logo { font-size: 20px; font-weight: 600; }
+        .journey-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+        .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+
+        .main-content { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-300);
+        }
+        .progress-dot.active { background: var(--primary); }
+        .progress-dot.complete { background: var(--success); }
+
+        .section-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-title { font-size: 16px; font-weight: 600; color: var(--gray-800); }
+        .section-content { padding: 20px; }
+
+        .legal-text {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.7;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .signature-section { margin-bottom: 24px; }
+        .signature-section:last-child { margin-bottom: 0; }
+        .signature-label { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 8px; }
+        .signature-sublabel { font-size: 13px; color: var(--gray-500); margin-bottom: 12px; }
+
+        .signature-pad-container {
+            border: 2px dashed var(--gray-300);
+            border-radius: 8px;
+            background: white;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .signature-pad-container.signed { border-color: var(--success); border-style: solid; }
+
+        .signature-pad {
+            width: 100%;
+            height: 150px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .signature-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--gray-400);
+            font-size: 14px;
+            pointer-events: none;
+        }
+        .signature-pad-container.signed .signature-placeholder { display: none; }
+
+        .signature-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-clear {
+            padding: 8px 16px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+        .btn-clear:hover { background: var(--gray-200); }
+
+        .type-signature {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .type-signature input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: 'Brush Script MT', cursive;
+        }
+        .type-signature input:focus { outline: none; border-color: var(--primary); }
+
+        .signature-preview {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: var(--gray-800);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signature-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .signature-tab {
+            flex: 1;
+            padding: 12px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--gray-600);
+        }
+        .signature-tab.active { background: var(--primary); color: white; }
+
+        .draw-signature, .type-signature-section { display: none; }
+        .draw-signature.active, .type-signature-section.active { display: block; }
+
+        .confirmation-box {
+            background: var(--success-light);
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        .confirmation-box label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .confirmation-box input { width: 20px; height: 20px; margin-top: 2px; }
+        .confirmation-box span { font-size: 14px; color: #155724; }
+
+        .submit-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .btn-submit {
+            padding: 16px 48px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-submit:hover { background: #218838; transform: translateY(-1px); }
+        .btn-submit:disabled { background: var(--gray-400); cursor: not-allowed; transform: none; }
+
+        .submit-note { font-size: 13px; color: var(--gray-500); margin-top: 12px; }
+
+        /* Success Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 40px;
+        }
+
+        .modal h2 { font-size: 24px; color: var(--gray-800); margin-bottom: 12px; }
+        .modal p { font-size: 15px; color: var(--gray-600); margin-bottom: 8px; }
+        .modal .reference { font-size: 20px; font-weight: 600; color: var(--primary); margin: 16px 0; }
+
+        .modal-btn {
+            padding: 14px 32px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 16px; }
+            .signature-tabs { flex-direction: column; }
+            .modal { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="logo">Evelyn Partners</div>
+                <span class="journey-badge" id="journeyBadge">Electronic Signature</span>
+            </div>
+            <h1>Sign Your Application</h1>
+            <p>Final Step - Please sign below to submit your application</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-dot complete"></div>
+            <div class="progress-dot complete"></div>
+            <div class="progress-dot complete"></div>
+            <div class="progress-dot active"></div>
+        </div>
+
+        <!-- Legal Declaration -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">📜 Declaration</span>
+            </div>
+            <div class="section-content">
+                <div class="legal-text">
+                    <p><strong>By signing below, I/we confirm that:</strong></p>
+                    <ul style="margin: 12px 0 12px 20px;">
+                        <li>All information provided in this application is true, complete and accurate</li>
+                        <li>I/we have read and understood the Key Information Document(s) and Terms & Conditions</li>
+                        <li>I/we understand the risks associated with the investment(s) selected</li>
+                        <li>I/we authorise Evelyn Partners to open and manage the account(s) on my/our behalf</li>
+                        <li>I/we agree to the fees and charges as set out in the documentation provided</li>
+                        <li>I/we will notify Evelyn Partners of any changes to our circumstances</li>
+                    </ul>
+                    <p>This electronic signature has the same legal effect as a handwritten signature under the Electronic Communications Act 2000.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Primary Applicant Signature -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title" id="sig1Title">✍️ Your Signature</span>
+            </div>
+            <div class="section-content">
+                <div class="signature-section">
+                    <div class="signature-label" id="sig1Name">Sign as: [Name]</div>
+                    <div class="signature-sublabel">Choose how you'd like to sign:</div>
+
+                    <div class="signature-tabs">
+                        <button class="signature-tab active" onclick="switchSignatureMethod(1, 'draw')">Draw Signature</button>
+                        <button class="signature-tab" onclick="switchSignatureMethod(1, 'type')">Type Signature</button>
+                    </div>
+
+                    <div class="draw-signature active" id="drawSig1">
+                        <div class="signature-pad-container" id="sigPadContainer1">
+                            <canvas class="signature-pad" id="signaturePad1"></canvas>
+                            <div class="signature-placeholder">Sign here with your mouse or finger</div>
+                        </div>
+                        <div class="signature-actions">
+                            <button class="btn-clear" onclick="clearSignature(1)">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="type-signature-section" id="typeSig1">
+                        <div class="type-signature">
+                            <input type="text" id="typeSignatureInput1" placeholder="Type your full name" oninput="updateTypedSignature(1)">
+                        </div>
+                        <div class="signature-preview" id="signaturePreview1">Your signature will appear here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Joint Applicant Signature (if applicable) -->
+        <div class="section-card" id="jointSignatureSection" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">✍️ Joint Applicant Signature</span>
+            </div>
+            <div class="section-content">
+                <div class="signature-section">
+                    <div class="signature-label" id="sig2Name">Sign as: [Joint Applicant Name]</div>
+                    <div class="signature-sublabel">Choose how you'd like to sign:</div>
+
+                    <div class="signature-tabs">
+                        <button class="signature-tab active" onclick="switchSignatureMethod(2, 'draw')">Draw Signature</button>
+                        <button class="signature-tab" onclick="switchSignatureMethod(2, 'type')">Type Signature</button>
+                    </div>
+
+                    <div class="draw-signature active" id="drawSig2">
+                        <div class="signature-pad-container" id="sigPadContainer2">
+                            <canvas class="signature-pad" id="signaturePad2"></canvas>
+                            <div class="signature-placeholder">Sign here with your mouse or finger</div>
+                        </div>
+                        <div class="signature-actions">
+                            <button class="btn-clear" onclick="clearSignature(2)">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="type-signature-section" id="typeSig2">
+                        <div class="type-signature">
+                            <input type="text" id="typeSignatureInput2" placeholder="Type your full name" oninput="updateTypedSignature(2)">
+                        </div>
+                        <div class="signature-preview" id="signaturePreview2">Your signature will appear here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Confirmation -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">✅ Final Confirmation</span>
+            </div>
+            <div class="section-content">
+                <div class="confirmation-box">
+                    <label>
+                        <input type="checkbox" id="finalConfirmation" onchange="checkCanSubmit()">
+                        <span>I confirm that I have reviewed all details, understand the terms and conditions, and wish to submit this application.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Section -->
+        <div class="submit-section">
+            <button class="btn-submit" id="submitBtn" disabled onclick="submitApplication()">
+                Submit Application
+            </button>
+            <p class="submit-note">By clicking submit, your application will be sent for processing</p>
+        </div>
+
+        <!-- Back Navigation -->
+        <div class="page-navigation">
+            <button class="nav-btn" onclick="goBack()">← Back to Review</button>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-icon">🎉</div>
+            <h2>Application Submitted!</h2>
+            <p>Thank you for your application. We will process it and be in touch shortly.</p>
+            <div class="reference" id="applicationRef">Reference: EP-XXX-000000</div>
+            <p style="font-size: 13px;">A confirmation email has been sent to your registered email address.</p>
+            <button class="modal-btn" onclick="returnToDashboard()">Return to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        let accountData = {};
+        let isJointApplication = false;
+        let signatures = { 1: null, 2: null };
+        let signatureMethods = { 1: 'draw', 2: 'draw' };
+        let canvases = {};
+        let contexts = {};
+        let isDrawing = false;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            initializeSignaturePads();
+        });
+
+        function loadData() {
+            accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            isJointApplication = accountData.applicationType === 'joint';
+
+            // Update badge
+            const badges = {
+                isa: '📈 ISA', gia: '💼 GIA', sipp: '🏦 SIPP', jisa: '👶 JISA', aim: '🚀 AIM'
+            };
+            const accountType = accountData.accountType || 'isa';
+            document.getElementById('journeyBadge').textContent = (badges[accountType] || '') + ' Application';
+
+            // Set signer names
+            const name1 = [accountData.firstName, accountData.surname].filter(Boolean).join(' ') || 'Primary Applicant';
+            document.getElementById('sig1Name').textContent = 'Sign as: ' + name1;
+
+            if (isJointApplication) {
+                document.getElementById('jointSignatureSection').style.display = 'block';
+                const name2 = [accountData.firstName_customer2, accountData.surname_customer2].filter(Boolean).join(' ') || 'Joint Applicant';
+                document.getElementById('sig2Name').textContent = 'Sign as: ' + name2;
+            }
+        }
+
+        function initializeSignaturePads() {
+            initCanvas(1);
+            if (isJointApplication) {
+                initCanvas(2);
+            }
+        }
+
+        function initCanvas(num) {
+            const canvas = document.getElementById('signaturePad' + num);
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            const container = canvas.parentElement;
+            canvas.width = container.offsetWidth - 4;
+            canvas.height = 150;
+            
+            canvases[num] = canvas;
+            contexts[num] = ctx;
+
+            // Drawing setup
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Event listeners
+            canvas.addEventListener('mousedown', (e) => startDrawing(e, num));
+            canvas.addEventListener('mousemove', (e) => draw(e, num));
+            canvas.addEventListener('mouseup', () => stopDrawing(num));
+            canvas.addEventListener('mouseout', () => stopDrawing(num));
+
+            // Touch events
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e, num); });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e, num); });
+            canvas.addEventListener('touchend', () => stopDrawing(num));
+        }
+
+        function startDrawing(e, num) {
+            isDrawing = true;
+            const pos = getPosition(e, num);
+            contexts[num].beginPath();
+            contexts[num].moveTo(pos.x, pos.y);
+        }
+
+        function draw(e, num) {
+            if (!isDrawing) return;
+            const pos = getPosition(e, num);
+            contexts[num].lineTo(pos.x, pos.y);
+            contexts[num].stroke();
+        }
+
+        function stopDrawing(num) {
+            if (isDrawing) {
+                isDrawing = false;
+                signatures[num] = canvases[num].toDataURL();
+                document.getElementById('sigPadContainer' + num).classList.add('signed');
+                checkCanSubmit();
+            }
+        }
+
+        function getPosition(e, num) {
+            const canvas = canvases[num];
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function clearSignature(num) {
+            const canvas = canvases[num];
+            const ctx = contexts[num];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            signatures[num] = null;
+            document.getElementById('sigPadContainer' + num).classList.remove('signed');
+            checkCanSubmit();
+        }
+
+        function switchSignatureMethod(num, method) {
+            signatureMethods[num] = method;
+            
+            // Update tabs
+            const tabs = document.querySelectorAll(`#${method === 'draw' ? 'drawSig' : 'typeSig'}${num}`).item(0)
+                .parentElement.querySelectorAll('.signature-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide sections
+            document.getElementById('drawSig' + num).classList.toggle('active', method === 'draw');
+            document.getElementById('typeSig' + num).classList.toggle('active', method === 'type');
+
+            // Clear other method
+            if (method === 'draw') {
+                document.getElementById('typeSignatureInput' + num).value = '';
+                document.getElementById('signaturePreview' + num).textContent = 'Your signature will appear here';
+            } else {
+                clearSignature(num);
+            }
+            
+            checkCanSubmit();
+        }
+
+        function updateTypedSignature(num) {
+            const input = document.getElementById('typeSignatureInput' + num);
+            const preview = document.getElementById('signaturePreview' + num);
+            preview.textContent = input.value || 'Your signature will appear here';
+            signatures[num] = input.value ? 'typed:' + input.value : null;
+            checkCanSubmit();
+        }
+
+        function checkCanSubmit() {
+            const sig1Valid = signatures[1] && signatures[1].length > 0;
+            const sig2Valid = !isJointApplication || (signatures[2] && signatures[2].length > 0);
+            const confirmed = document.getElementById('finalConfirmation').checked;
+
+            document.getElementById('submitBtn').disabled = !(sig1Valid && sig2Valid && confirmed);
+        }
+
+        function submitApplication() {
+            // Generate reference number
+            const accountType = (accountData.accountType || 'APP').toUpperCase();
+            const timestamp = Date.now().toString().slice(-6);
+            const reference = `EP-${accountType}-${timestamp}`;
+
+            // Save submission data
+            accountData.signature1 = signatures[1];
+            accountData.signature2 = signatures[2];
+            accountData.submittedAt = new Date().toISOString();
+            accountData.applicationReference = reference;
+            accountData.status = 'submitted';
+            localStorage.setItem('evelynAccountFormData', JSON.stringify(accountData));
+
+            // Track completed application in master storage
+            const masterData = JSON.parse(localStorage.getItem('evelynFactFindMaster') || '{}');
+            if (!masterData.completedApplications) {
+                masterData.completedApplications = [];
+            }
+            masterData.completedApplications.push({
+                journey: accountData.accountType,
+                reference: reference,
+                applicationType: accountData.applicationType || 'individual',
+                completedAt: new Date().toISOString()
+            });
+            localStorage.setItem('evelynFactFindMaster', JSON.stringify(masterData));
+
+            // Show success modal
+            document.getElementById('applicationRef').textContent = 'Reference: ' + reference;
+            document.getElementById('successModal').classList.add('show');
+        }
+
+        function returnToDashboard() {
+            window.location.href = 'evelyn_landing_page.html';
+        }
+
+        function goBack() {
+            window.location.href = 'account_review.html';
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            initializeSignaturePads();
+        });
+    </script>
+</body>
+</html>

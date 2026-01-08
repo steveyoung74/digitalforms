@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Document Pack | Evelyn Partners</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --primary-light: #3D3060;
+            --accent-gold: #C4A35A;
+            --accent-gold-light: #D4B87A;
+            --accent-teal: #34675C;
+            --success: #2E7D5A;
+            --success-light: #E8F5EE;
+            --warning: #E09E45;
+            --warning-light: #FEF7E8;
+            --danger: #C75050;
+            --danger-light: #FCEAEA;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-200: #E4E7EC;
+            --gray-300: #D0D5DD;
+            --gray-400: #98A2B3;
+            --gray-500: #667085;
+            --gray-600: #475467;
+            --gray-700: #344054;
+            --gray-800: #1D2939;
+            --gray-900: #101828;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --shadow-sm: 0 1px 3px rgba(16,24,40,0.1);
+            --shadow-md: 0 4px 8px -2px rgba(16,24,40,0.1);
+            --shadow-lg: 0 12px 16px -4px rgba(16,24,40,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'DM Sans', -apple-system, sans-serif; 
+            background: var(--gray-50); 
+            color: var(--gray-800); 
+            line-height: 1.5; 
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--primary);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-logo svg {
+            height: 32px;
+            width: auto;
+        }
+        .header-help {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+        }
+        .header-help:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        /* Main Container */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: fadeIn 0.5s ease;
+        }
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        .welcome-subtitle {
+            font-size: 15px;
+            color: var(--gray-500);
+        }
+        .welcome-advisor {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+        }
+        .advisor-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .advisor-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .advisor-info {
+            text-align: left;
+        }
+        .advisor-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        .advisor-label {
+            font-size: 11px;
+            color: var(--gray-500);
+        }
+        .advisor-contact {
+            display: flex;
+            gap: 8px;
+        }
+        .advisor-contact-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--gray-200);
+            background: var(--gray-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .advisor-contact-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        .advisor-contact-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .login-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .login-branding {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-branding::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(196,163,90,0.1) 0%, transparent 70%);
+        }
+        .login-branding::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -30%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(52,103,92,0.15) 0%, transparent 70%);
+        }
+        .login-branding svg {
+            height: 60px;
+            width: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .login-tagline {
+            text-align: center;
+            margin-top: 32px;
+            position: relative;
+            z-index: 1;
+        }
+        .login-tagline h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+        .login-tagline p {
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+        }
+        .login-form-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            overflow-y: auto;
+        }
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-mobile-brand {
+            display: none;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-mobile-brand svg {
+            height: 40px;
+            width: auto;
+            margin-bottom: 16px;
+        }
+        .login-mobile-brand .app-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .login-header {
+            margin-bottom: 32px;
+        }
+        .login-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        .login-header p {
+            color: var(--gray-500);
+            font-size: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45,32,71,0.1);
+        }
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 4px;
+        }
+        .password-toggle:hover {
+            color: var(--gray-600);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(45,32,71,0.3);
+        }
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .login-btn .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .login-error {
+            background: var(--danger-light);
+            color: var(--danger);
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .login-error.show {
+            display: block;
+        }
+        .login-footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive login */
+        @media (max-width: 900px) {
+            .login-branding {
+                display: none;
+            }
+            .login-form-container {
+                max-width: 100%;
+                justify-content: flex-start;
+                padding-top: 60px;
+            }
+            .login-mobile-brand {
+                display: block;
+            }
+        }
+        @media (max-width: 480px) {
+            .login-form-container {
+                padding: 24px;
+                padding-top: 40px;
+            }
+            .login-header h1 {
+                font-size: 24px;
+            }
+        }
+        
+        /* Progress Overview */
+        .progress-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-100);
+            padding: 24px;
+            margin-bottom: 24px;
+            animation: fadeInScale 0.5s ease 0.1s both;
+        }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .progress-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        .progress-percent {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .progress-bar {
+            height: 10px;
+            background: var(--gray-100);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%);
+            border-radius: 5px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .progress-stats {
+            display: flex;
+            gap: 24px;
+        }
+        .progress-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        .progress-stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .progress-stat-dot.complete { background: var(--success); }
+        .progress-stat-dot.pending { background: var(--gray-300); }
+        
+        /* Forms List */
+        .forms-section {
+            margin-bottom: 32px;
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+        .forms-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .form-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: slideInUp 0.4s ease forwards;
+        }
+        .form-card:nth-child(1) { animation-delay: 0.15s; }
+        .form-card:nth-child(2) { animation-delay: 0.2s; }
+        .form-card:nth-child(3) { animation-delay: 0.25s; }
+        .form-card:nth-child(4) { animation-delay: 0.3s; }
+        .form-card:nth-child(5) { animation-delay: 0.35s; }
+        .form-card:nth-child(6) { animation-delay: 0.4s; }
+        .form-card:nth-child(7) { animation-delay: 0.45s; }
+        .form-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-200);
+        }
+        .form-card.complete {
+            background: var(--success-light);
+            border-color: rgba(46,125,90,0.2);
+        }
+        .form-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .form-card.locked:hover {
+            transform: none;
+            box-shadow: var(--shadow-sm);
+        }
+        .form-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .form-card.complete .form-icon {
+            background: var(--success);
+            color: white;
+        }
+        .form-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .form-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 2px;
+        }
+        .form-card.complete .form-name {
+            color: var(--success);
+        }
+        .form-description {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .form-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .form-progress-mini {
+            width: 60px;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .form-progress-mini-fill {
+            height: 100%;
+            background: var(--accent-gold);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+        .form-status-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            min-width: 36px;
+            text-align: right;
+        }
+        .form-card.complete .form-status-text {
+            color: var(--success);
+        }
+        .form-arrow {
+            color: var(--gray-400);
+            transition: transform 0.2s, color 0.2s;
+        }
+        .form-card:hover .form-arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+        .form-card.complete .form-arrow {
+            color: var(--success);
+        }
+        
+        /* Locked overlay */
+        .form-locked-badge {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-500);
+            background: var(--gray-100);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .form-card.locked .form-locked-badge {
+            display: flex;
+        }
+        .form-card.locked .form-status {
+            display: none;
+        }
+        
+        /* Help Footer */
+        .help-footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--gray-500);
+            font-size: 13px;
+        }
+        .help-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .help-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Form Modal */
+        .form-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .form-modal-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+        .form-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .form-modal-overlay.show .form-modal {
+            transform: translateY(0);
+        }
+        .form-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            flex-shrink: 0;
+        }
+        .form-modal-close {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .form-modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .form-modal-title {
+            flex: 1;
+        }
+        .form-modal-title h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .form-modal-title span {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .form-modal-iframe {
+            flex: 1;
+            border: none;
+            width: 100%;
+        }
+        
+        /* Complete All Banner */
+        .complete-banner {
+            background: linear-gradient(135deg, var(--success) 0%, #3D9970 100%);
+            color: white;
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 24px;
+            animation: fadeInScale 0.5s ease;
+        }
+        .complete-banner-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+        }
+        .complete-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .complete-banner p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 20px 16px;
+            }
+            .welcome-title {
+                font-size: 24px;
+            }
+            .welcome-advisor {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+            .advisor-details {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .progress-card {
+                padding: 20px;
+            }
+            .progress-stats {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .form-card {
+                padding: 14px 16px;
+            }
+            .form-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .form-name {
+                font-size: 14px;
+            }
+            .form-progress-mini {
+                display: none;
+            }
+        }
+        
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-branding">
+            <svg viewBox="0 0 173.61 65.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M69.2642 56.0118V54.4309H61.6699V65.723H69.4058V64.1421H63.4496V60.6973H68.4753V59.2007H63.4496V56.0118H69.2642Z" fill="#C4A35A"/>
+                <path d="M49.6732 57.7613L56.054 65.723H57.5475V54.4309H55.7408V62.5612L49.2787 54.4309H47.8936V65.723H49.6732V57.7613Z" fill="#C4A35A"/>
+                <path d="M40.9768 65.723V56.0118H44.7318V54.4309H35.415V56.0118H39.2001V65.723H40.9768Z" fill="#C4A35A"/>
+                <path d="M32.8192 58.1016C32.8192 56.072 31.3347 54.4309 29.3171 54.4309H24.4028V65.723H26.1855V61.8084H28.8083L31.2383 65.723H33.2408L30.5879 61.432C31.9158 60.9773 32.8192 59.541 32.8192 58.1016ZM29.29 60.2094H26.1855V55.9937H29.1967C30.2235 55.9937 30.9733 56.9543 30.9733 58.0835C30.9733 59.2127 30.3681 60.2185 29.29 60.2185V60.2094Z" fill="#C4A35A"/>
+                <path d="M81.3783 58.1016C81.3783 56.072 79.8938 54.4309 77.8762 54.4309H72.9619V65.723H74.7325V61.8084H77.3553L79.7854 65.723H81.7878L79.1349 61.432C80.4749 60.9773 81.3783 59.541 81.3783 58.1016ZM77.8491 60.2094H74.7325V55.9937H77.7437C78.7706 55.9937 79.5204 56.9543 79.5204 58.0835C79.5204 59.2127 78.9272 60.2185 77.8491 60.2185V60.2094Z" fill="#C4A35A"/>
+                <path d="M10.9971 65.723H12.8881L14.0745 62.6485H18.4228L19.6272 65.723H21.4882L17.0286 54.4309H15.4748L10.9971 65.723ZM18.0825 61.3206H14.3847L16.2757 56.4605L18.0825 61.3206Z" fill="#C4A35A"/>
+                <path d="M1.48438 54.4309V65.723H3.261V61.8084H6.31137C8.38309 61.8084 9.7261 60.0017 9.7261 58.1106C9.7261 56.1624 8.24156 54.4399 6.22705 54.4399L1.48438 54.4309ZM7.91936 58.1016C7.91936 59.2037 7.31712 60.2094 6.19694 60.2094H3.261V55.9937H6.11263C7.22076 56.0118 7.91936 56.9724 7.91936 58.1016Z" fill="#C4A35A"/>
+                <path d="M84.6697 57.7914C84.6697 59.8149 86.4764 60.369 88.1537 60.8357C89.6774 61.2543 91.1348 61.5674 91.1348 62.787C91.1348 63.8319 90.1471 64.2294 88.9306 64.2294C87.5484 64.2294 85.8561 63.5217 85.1214 62.787L84.2451 64.3137C85.5919 65.3126 87.2267 65.8474 88.9035 65.8374C91.6979 65.8374 93.0258 64.4462 93.0258 62.5912C93.0258 60.4834 91.469 59.9173 89.6894 59.4174C88.1025 58.9687 86.5336 58.7369 86.5336 57.5083C86.5336 56.3791 87.437 55.9274 88.7349 55.9274C89.8068 55.9274 91.1619 56.4634 91.7822 57.0867L92.5742 55.6173C91.473 54.8023 90.1409 54.3593 88.771 54.3525C86.4554 54.3525 84.6697 55.5902 84.6697 57.7914Z" fill="#C4A35A"/>
+                <path d="M94.0043 6.88667V37.0622C94.0043 40.9767 93.7032 42.2926 90.978 43.7712V44.274H105.57V43.7712C102.842 42.2926 102.544 40.9647 102.544 37.0622V0H90.7251V0.502874C93.5135 1.80372 94.0043 3.16179 94.0043 6.88667Z" fill="white"/>
+                <path d="M14.9447 44.8643C21.5875 44.8643 26.3091 41.2267 28.1128 34.9935L27.372 34.8158C25.5924 38.9533 22.3945 40.8383 18.6214 40.8383C12.5719 40.8383 8.65727 35.9932 8.65727 28.5706H28.2302C28.2302 20.5667 24.0145 14.5955 14.8875 14.5955C6.82042 14.5955 0 20.6179 0 29.7871C0 39.3688 6.7602 44.8643 14.9447 44.8643ZM14.8273 15.7247C19.0972 15.7247 19.8078 20.8678 19.8078 27.1673H8.71749C8.95538 20.2746 11.3282 15.7247 14.8273 15.7247Z" fill="white"/>
+                <path d="M74.9677 44.8643C81.6104 44.8643 86.332 41.2267 88.1358 34.9935L87.395 34.8158C85.6154 38.9533 82.4204 40.8383 78.6474 40.8383C72.5948 40.8383 68.6802 35.9932 68.6802 28.5706H88.2532C88.2532 20.5667 84.0375 14.5955 74.9104 14.5955C66.8434 14.5955 60.0229 20.6179 60.0229 29.7871C60.0229 39.3688 66.7832 44.8643 74.9677 44.8643ZM74.8502 15.7247C79.1201 15.7247 79.8338 20.8678 79.8338 27.1673H68.7404C68.9783 20.2746 71.3512 15.7247 74.8502 15.7247Z" fill="white"/>
+                <path d="M61.0735 15.2068H52.2506V15.7097C55.2257 16.8208 55.6713 18.9738 54.1507 22.0061L48.1011 34.7135L38.8687 15.2068H28.4077V15.7097C30.6752 16.9413 30.9582 17.8175 32.8583 21.5906L44.4094 44.8794H44.9213L56.12 21.7682C57.9599 17.9861 59.1613 16.7817 61.0855 15.7097L61.0735 15.2068Z" fill="white"/>
+                <path d="M170.544 37.062V24.8877C170.544 18.7387 167.283 14.6013 161.233 14.6013C156.192 14.6013 152.395 17.3506 150.853 22.7316V15.2066H139.627V15.8088C141.799 16.4924 142.313 18.1576 142.313 21.7409V37.05C142.313 40.9646 142.012 42.2805 139.302 43.759V44.2619H153.892V43.759C151.163 42.2805 150.88 40.9525 150.88 37.05V28.3174C150.88 22.4636 153.491 18.8291 157.168 18.8291C160.667 18.8291 162.031 21.5392 162.031 24.8515V32.6988V44.2378H173.597V43.7349C170.842 42.3076 170.544 40.9646 170.544 37.062Z" fill="white"/>
+                <path d="M129.772 15.2068V15.7097C132.744 16.8208 132.97 18.7871 131.669 22.0061L126.035 35.659L116.429 15.2068H105.929V15.7097C108.193 16.9413 108.479 17.8175 110.377 21.5906L122.075 45.0781C118.501 53.1181 115.396 59.9446 112.49 61.8266C111.96 59.0653 110.383 57.3097 108.127 57.3097C107.598 57.3101 107.074 57.4153 106.586 57.6191C106.098 57.823 105.655 58.1215 105.282 58.4974C104.91 58.8734 104.616 59.3194 104.417 59.8096C104.218 60.2999 104.117 60.8247 104.122 61.3538C104.122 64.0368 106.125 65.8255 108.976 65.8255C113.894 65.8255 117.489 59.3544 123.731 44.8342L133.635 21.7411C133.711 21.5635 133.861 21.2774 133.861 21.2774C135.514 17.8928 136.237 16.6221 138.107 15.791V15.1887L129.772 15.2068Z" fill="white"/>
+            </svg>
+            <div class="login-tagline">
+                <h2>Client Briefcase</h2>
+                <p>Access your personalised document pack</p>
+            </div>
+        </div>
+        <div class="login-form-container">
+            <!-- Mobile branding -->
+            <div class="login-mobile-brand">
+                <svg viewBox="0 0 173.61 65.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M69.2642 56.0118V54.4309H61.6699V65.723H69.4058V64.1421H63.4496V60.6973H68.4753V59.2007H63.4496V56.0118H69.2642Z" fill="#C4A35A"/>
+                    <path d="M49.6732 57.7613L56.054 65.723H57.5475V54.4309H55.7408V62.5612L49.2787 54.4309H47.8936V65.723H49.6732V57.7613Z" fill="#C4A35A"/>
+                    <path d="M40.9768 65.723V56.0118H44.7318V54.4309H35.415V56.0118H39.2001V65.723H40.9768Z" fill="#C4A35A"/>
+                    <path d="M32.8192 58.1016C32.8192 56.072 31.3347 54.4309 29.3171 54.4309H24.4028V65.723H26.1855V61.8084H28.8083L31.2383 65.723H33.2408L30.5879 61.432C31.9158 60.9773 32.8192 59.541 32.8192 58.1016ZM29.29 60.2094H26.1855V55.9937H29.1967C30.2235 55.9937 30.9733 56.9543 30.9733 58.0835C30.9733 59.2127 30.3681 60.2185 29.29 60.2185V60.2094Z" fill="#C4A35A"/>
+                    <path d="M81.3783 58.1016C81.3783 56.072 79.8938 54.4309 77.8762 54.4309H72.9619V65.723H74.7325V61.8084H77.3553L79.7854 65.723H81.7878L79.1349 61.432C80.4749 60.9773 81.3783 59.541 81.3783 58.1016ZM77.8491 60.2094H74.7325V55.9937H77.7437C78.7706 55.9937 79.5204 56.9543 79.5204 58.0835C79.5204 59.2127 78.9272 60.2185 77.8491 60.2185V60.2094Z" fill="#C4A35A"/>
+                    <path d="M10.9971 65.723H12.8881L14.0745 62.6485H18.4228L19.6272 65.723H21.4882L17.0286 54.4309H15.4748L10.9971 65.723ZM18.0825 61.3206H14.3847L16.2757 56.4605L18.0825 61.3206Z" fill="#C4A35A"/>
+                    <path d="M1.48438 54.4309V65.723H3.261V61.8084H6.31137C8.38309 61.8084 9.7261 60.0017 9.7261 58.1106C9.7261 56.1624 8.24156 54.4399 6.22705 54.4399L1.48438 54.4309ZM7.91936 58.1016C7.91936 59.2037 7.31712 60.2094 6.19694 60.2094H3.261V55.9937H6.11263C7.22076 56.0118 7.91936 56.9724 7.91936 58.1016Z" fill="#C4A35A"/>
+                    <path d="M84.6697 57.7914C84.6697 59.8149 86.4764 60.369 88.1537 60.8357C89.6774 61.2543 91.1348 61.5674 91.1348 62.787C91.1348 63.8319 90.1471 64.2294 88.9306 64.2294C87.5484 64.2294 85.8561 63.5217 85.1214 62.787L84.2451 64.3137C85.5919 65.3126 87.2267 65.8474 88.9035 65.8374C91.6979 65.8374 93.0258 64.4462 93.0258 62.5912C93.0258 60.4834 91.469 59.9173 89.6894 59.4174C88.1025 58.9687 86.5336 58.7369 86.5336 57.5083C86.5336 56.3791 87.437 55.9274 88.7349 55.9274C89.8068 55.9274 91.1619 56.4634 91.7822 57.0867L92.5742 55.6173C91.473 54.8023 90.1409 54.3593 88.771 54.3525C86.4554 54.3525 84.6697 55.5902 84.6697 57.7914Z" fill="#C4A35A"/>
+                    <path d="M94.0043 6.88667V37.0622C94.0043 40.9767 93.7032 42.2926 90.978 43.7712V44.274H105.57V43.7712C102.842 42.2926 102.544 40.9647 102.544 37.0622V0H90.7251V0.502874C93.5135 1.80372 94.0043 3.16179 94.0043 6.88667Z" fill="#2D2047"/>
+                    <path d="M14.9447 44.8643C21.5875 44.8643 26.3091 41.2267 28.1128 34.9935L27.372 34.8158C25.5924 38.9533 22.3945 40.8383 18.6214 40.8383C12.5719 40.8383 8.65727 35.9932 8.65727 28.5706H28.2302C28.2302 20.5667 24.0145 14.5955 14.8875 14.5955C6.82042 14.5955 0 20.6179 0 29.7871C0 39.3688 6.7602 44.8643 14.9447 44.8643ZM14.8273 15.7247C19.0972 15.7247 19.8078 20.8678 19.8078 27.1673H8.71749C8.95538 20.2746 11.3282 15.7247 14.8273 15.7247Z" fill="#2D2047"/>
+                    <path d="M74.9677 44.8643C81.6104 44.8643 86.332 41.2267 88.1358 34.9935L87.395 34.8158C85.6154 38.9533 82.4204 40.8383 78.6474 40.8383C72.5948 40.8383 68.6802 35.9932 68.6802 28.5706H88.2532C88.2532 20.5667 84.0375 14.5955 74.9104 14.5955C66.8434 14.5955 60.0229 20.6179 60.0229 29.7871C60.0229 39.3688 66.7832 44.8643 74.9677 44.8643ZM74.8502 15.7247C79.1201 15.7247 79.8338 20.8678 79.8338 27.1673H68.7404C68.9783 20.2746 71.3512 15.7247 74.8502 15.7247Z" fill="#2D2047"/>
+                    <path d="M61.0735 15.2068H52.2506V15.7097C55.2257 16.8208 55.6713 18.9738 54.1507 22.0061L48.1011 34.7135L38.8687 15.2068H28.4077V15.7097C30.6752 16.9413 30.9582 17.8175 32.8583 21.5906L44.4094 44.8794H44.9213L56.12 21.7682C57.9599 17.9861 59.1613 16.7817 61.0855 15.7097L61.0735 15.2068Z" fill="#2D2047"/>
+                    <path d="M170.544 37.062V24.8877C170.544 18.7387 167.283 14.6013 161.233 14.6013C156.192 14.6013 152.395 17.3506 150.853 22.7316V15.2066H139.627V15.8088C141.799 16.4924 142.313 18.1576 142.313 21.7409V37.05C142.313 40.9646 142.012 42.2805 139.302 43.759V44.2619H153.892V43.759C151.163 42.2805 150.88 40.9525 150.88 37.05V28.3174C150.88 22.4636 153.491 18.8291 157.168 18.8291C160.667 18.8291 162.031 21.5392 162.031 24.8515V32.6988V44.2378H173.597V43.7349C170.842 42.3076 170.544 40.9646 170.544 37.062Z" fill="#2D2047"/>
+                    <path d="M129.772 15.2068V15.7097C132.744 16.8208 132.97 18.7871 131.669 22.0061L126.035 35.659L116.429 15.2068H105.929V15.7097C108.193 16.9413 108.479 17.8175 110.377 21.5906L122.075 45.0781C118.501 53.1181 115.396 59.9446 112.49 61.8266C111.96 59.0653 110.383 57.3097 108.127 57.3097C107.598 57.3101 107.074 57.4153 106.586 57.6191C106.098 57.823 105.655 58.1215 105.282 58.4974C104.91 58.8734 104.616 59.3194 104.417 59.8096C104.218 60.2999 104.117 60.8247 104.122 61.3538C104.122 64.0368 106.125 65.8255 108.976 65.8255C113.894 65.8255 117.489 59.3544 123.731 44.8342L133.635 21.7411C133.711 21.5635 133.861 21.2774 133.861 21.2774C135.514 17.8928 136.237 16.6221 138.107 15.791V15.1887L129.772 15.2068Z" fill="#2D2047"/>
+                </svg>
+                <div class="app-name">Client Briefcase</div>
+            </div>
+            
+            <div class="login-form">
+                <div class="login-header">
+                    <h1>Welcome</h1>
+                    <p>Sign in to access your document pack</p>
+                </div>
+                
+                <div class="login-error" id="loginError">
+                    Invalid email or password. Please try again.
+                </div>
+                
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="loginEmail">Email address</label>
+                        <input type="email" class="form-input" id="loginEmail" placeholder="name@example.com" autocomplete="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="loginPassword">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        Sign in
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Need help? Contact <a href="mailto:support@evelynpartners.com">support@evelynpartners.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-logo">
+                <svg viewBox="0 0 173.61 65.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M69.2642 56.0118V54.4309H61.6699V65.723H69.4058V64.1421H63.4496V60.6973H68.4753V59.2007H63.4496V56.0118H69.2642Z" fill="#C4A35A"/>
+                    <path d="M49.6732 57.7613L56.054 65.723H57.5475V54.4309H55.7408V62.5612L49.2787 54.4309H47.8936V65.723H49.6732V57.7613Z" fill="#C4A35A"/>
+                    <path d="M40.9768 65.723V56.0118H44.7318V54.4309H35.415V56.0118H39.2001V65.723H40.9768Z" fill="#C4A35A"/>
+                    <path d="M32.8192 58.1016C32.8192 56.072 31.3347 54.4309 29.3171 54.4309H24.4028V65.723H26.1855V61.8084H28.8083L31.2383 65.723H33.2408L30.5879 61.432C31.9158 60.9773 32.8192 59.541 32.8192 58.1016ZM29.29 60.2094H26.1855V55.9937H29.1967C30.2235 55.9937 30.9733 56.9543 30.9733 58.0835C30.9733 59.2127 30.3681 60.2185 29.29 60.2185V60.2094Z" fill="#C4A35A"/>
+                    <path d="M81.3783 58.1016C81.3783 56.072 79.8938 54.4309 77.8762 54.4309H72.9619V65.723H74.7325V61.8084H77.3553L79.7854 65.723H81.7878L79.1349 61.432C80.4749 60.9773 81.3783 59.541 81.3783 58.1016ZM77.8491 60.2094H74.7325V55.9937H77.7437C78.7706 55.9937 79.5204 56.9543 79.5204 58.0835C79.5204 59.2127 78.9272 60.2185 77.8491 60.2185V60.2094Z" fill="#C4A35A"/>
+                    <path d="M10.9971 65.723H12.8881L14.0745 62.6485H18.4228L19.6272 65.723H21.4882L17.0286 54.4309H15.4748L10.9971 65.723ZM18.0825 61.3206H14.3847L16.2757 56.4605L18.0825 61.3206Z" fill="#C4A35A"/>
+                    <path d="M1.48438 54.4309V65.723H3.261V61.8084H6.31137C8.38309 61.8084 9.7261 60.0017 9.7261 58.1106C9.7261 56.1624 8.24156 54.4399 6.22705 54.4399L1.48438 54.4309ZM7.91936 58.1016C7.91936 59.2037 7.31712 60.2094 6.19694 60.2094H3.261V55.9937H6.11263C7.22076 56.0118 7.91936 56.9724 7.91936 58.1016Z" fill="#C4A35A"/>
+                    <path d="M84.6697 57.7914C84.6697 59.8149 86.4764 60.369 88.1537 60.8357C89.6774 61.2543 91.1348 61.5674 91.1348 62.787C91.1348 63.8319 90.1471 64.2294 88.9306 64.2294C87.5484 64.2294 85.8561 63.5217 85.1214 62.787L84.2451 64.3137C85.5919 65.3126 87.2267 65.8474 88.9035 65.8374C91.6979 65.8374 93.0258 64.4462 93.0258 62.5912C93.0258 60.4834 91.469 59.9173 89.6894 59.4174C88.1025 58.9687 86.5336 58.7369 86.5336 57.5083C86.5336 56.3791 87.437 55.9274 88.7349 55.9274C89.8068 55.9274 91.1619 56.4634 91.7822 57.0867L92.5742 55.6173C91.473 54.8023 90.1409 54.3593 88.771 54.3525C86.4554 54.3525 84.6697 55.5902 84.6697 57.7914Z" fill="#C4A35A"/>
+                    <path d="M94.0043 6.88667V37.0622C94.0043 40.9767 93.7032 42.2926 90.978 43.7712V44.274H105.57V43.7712C102.842 42.2926 102.544 40.9647 102.544 37.0622V0H90.7251V0.502874C93.5135 1.80372 94.0043 3.16179 94.0043 6.88667Z" fill="white"/>
+                    <path d="M14.9447 44.8643C21.5875 44.8643 26.3091 41.2267 28.1128 34.9935L27.372 34.8158C25.5924 38.9533 22.3945 40.8383 18.6214 40.8383C12.5719 40.8383 8.65727 35.9932 8.65727 28.5706H28.2302C28.2302 20.5667 24.0145 14.5955 14.8875 14.5955C6.82042 14.5955 0 20.6179 0 29.7871C0 39.3688 6.7602 44.8643 14.9447 44.8643ZM14.8273 15.7247C19.0972 15.7247 19.8078 20.8678 19.8078 27.1673H8.71749C8.95538 20.2746 11.3282 15.7247 14.8273 15.7247Z" fill="white"/>
+                    <path d="M74.9677 44.8643C81.6104 44.8643 86.332 41.2267 88.1358 34.9935L87.395 34.8158C85.6154 38.9533 82.4204 40.8383 78.6474 40.8383C72.5948 40.8383 68.6802 35.9932 68.6802 28.5706H88.2532C88.2532 20.5667 84.0375 14.5955 74.9104 14.5955C66.8434 14.5955 60.0229 20.6179 60.0229 29.7871C60.0229 39.3688 66.7832 44.8643 74.9677 44.8643ZM74.8502 15.7247C79.1201 15.7247 79.8338 20.8678 79.8338 27.1673H68.7404C68.9783 20.2746 71.3512 15.7247 74.8502 15.7247Z" fill="white"/>
+                    <path d="M61.0735 15.2068H52.2506V15.7097C55.2257 16.8208 55.6713 18.9738 54.1507 22.0061L48.1011 34.7135L38.8687 15.2068H28.4077V15.7097C30.6752 16.9413 30.9582 17.8175 32.8583 21.5906L44.4094 44.8794H44.9213L56.12 21.7682C57.9599 17.9861 59.1613 16.7817 61.0855 15.7097L61.0735 15.2068Z" fill="white"/>
+                    <path d="M170.544 37.062V24.8877C170.544 18.7387 167.283 14.6013 161.233 14.6013C156.192 14.6013 152.395 17.3506 150.853 22.7316V15.2066H139.627V15.8088C141.799 16.4924 142.313 18.1576 142.313 21.7409V37.05C142.313 40.9646 142.012 42.2805 139.302 43.759V44.2619H153.892V43.759C151.163 42.2805 150.88 40.9525 150.88 37.05V28.3174C150.88 22.4636 153.491 18.8291 157.168 18.8291C160.667 18.8291 162.031 21.5392 162.031 24.8515V32.6988V44.2378H173.597V43.7349C170.842 42.3076 170.544 40.9646 170.544 37.062Z" fill="white"/>
+                    <path d="M129.772 15.2068V15.7097C132.744 16.8208 132.97 18.7871 131.669 22.0061L126.035 35.659L116.429 15.2068H105.929V15.7097C108.193 16.9413 108.479 17.8175 110.377 21.5906L122.075 45.0781C118.501 53.1181 115.396 59.9446 112.49 61.8266C111.96 59.0653 110.383 57.3097 108.127 57.3097C107.598 57.3101 107.074 57.4153 106.586 57.6191C106.098 57.823 105.655 58.1215 105.282 58.4974C104.91 58.8734 104.616 59.3194 104.417 59.8096C104.218 60.2999 104.117 60.8247 104.122 61.3538C104.122 64.0368 106.125 65.8255 108.976 65.8255C113.894 65.8255 117.489 59.3544 123.731 44.8342L133.635 21.7411C133.711 21.5635 133.861 21.2774 133.861 21.2774C135.514 17.8928 136.237 16.6221 138.107 15.791V15.1887L129.772 15.2068Z" fill="white"/>
+                </svg>
+            </div>
+            <a href="#" class="header-help">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Need help?
+            </a>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1 class="welcome-title">Welcome, <span id="clientName">Michael</span></h1>
+            <p class="welcome-subtitle">Please complete the forms below to finalise your account setup</p>
+            <div class="welcome-advisor">
+                <div class="advisor-avatar" id="advisorAvatar">SC</div>
+                <div class="advisor-details">
+                    <div class="advisor-info">
+                        <div class="advisor-name" id="advisorName">Sarah Chen</div>
+                        <div class="advisor-label">Your Wealth Advisor</div>
+                    </div>
+                    <div class="advisor-contact">
+                        <a href="tel:+442079876543" class="advisor-contact-btn" title="Call advisor">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:sarah.chen@evelynpartners.com" class="advisor-contact-btn" title="Email advisor">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Progress Overview -->
+        <div class="progress-card" id="progressCard">
+            <div class="progress-header">
+                <span class="progress-title">Overall Progress</span>
+                <span class="progress-percent" id="progressPercent">35%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressFill" style="width: 35%"></div>
+            </div>
+            <div class="progress-stats">
+                <div class="progress-stat">
+                    <div class="progress-stat-dot complete"></div>
+                    <span><strong id="completedCount">2</strong> completed</span>
+                </div>
+                <div class="progress-stat">
+                    <div class="progress-stat-dot pending"></div>
+                    <span><strong id="pendingCount">5</strong> remaining</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Complete Banner (hidden by default) -->
+        <div class="complete-banner" id="completeBanner" style="display: none;">
+            <div class="complete-banner-icon">🎉</div>
+            <h2>All Done!</h2>
+            <p>You've completed all your forms. Your advisor will be in touch shortly.</p>
+        </div>
+        
+        <!-- Forms List -->
+        <div class="forms-section">
+            <div class="section-title">Your Forms</div>
+            <div class="forms-list" id="formsList">
+                <!-- Forms will be rendered here -->
+            </div>
+        </div>
+        
+        <!-- Help Footer -->
+        <div class="help-footer">
+            <p>Questions? Contact your advisor or email <a href="mailto:support@evelynpartners.com">support@evelynpartners.com</a></p>
+        </div>
+    </main>
+    
+    <!-- Form Modal -->
+    <div class="form-modal-overlay" id="formModalOverlay">
+        <div class="form-modal">
+            <div class="form-modal-header">
+                <button class="form-modal-close" onclick="closeFormModal()">✕</button>
+                <div class="form-modal-title">
+                    <h3 id="formModalTitle">Form</h3>
+                    <span id="formModalSubtitle">Complete all required fields</span>
+                </div>
+            </div>
+            <iframe class="form-modal-iframe" id="formModalIframe" src="about:blank"></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Demo client data
+        const clientData = {
+            clientId: 'client-002',
+            clientRef: 'EP-2025-001189',
+            clientName: 'Michael',
+            fullName: 'Michael Chen',
+            advisor: {
+                name: 'Sarah Chen',
+                initials: 'SC',
+                phone: '+442079876543',
+                email: 'sarah.chen@evelynpartners.com'
+            },
+            forms: [
+                { id: 'isa', name: 'Stocks & Shares ISA', icon: '📈', description: 'ISA application form', file: '../forms/account_isa_application.html', progress: 75 },
+                { id: 'gia', name: 'General Investment Account', icon: '💼', description: 'GIA application form', file: '../forms/account_gia_application.html', progress: 25 },
+                { id: 'sipp', name: 'SIPP', icon: '🏦', description: 'Pension application', file: '../forms/account_sipp_application.html', progress: 50 }
+            ]
+        };
+        
+        let currentFormUrl = '';
+        let isLoggedIn = false;
+        
+        // Login functions
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            const errorEl = document.getElementById('loginError');
+            
+            // Hide any previous error
+            errorEl.classList.remove('show');
+            
+            // Show loading
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div> Signing in...';
+            
+            // Simulate API call - accept any credentials for demo
+            setTimeout(() => {
+                isLoggedIn = true;
+                document.getElementById('loginScreen').classList.add('hidden');
+                
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = 'Sign in';
+                
+                // Initialize the app
+                init();
+            }, 800);
+        }
+        
+        function togglePassword() {
+            const input = document.getElementById('loginPassword');
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+        }
+        
+        function init() {
+            // Set client name
+            document.getElementById('clientName').textContent = clientData.clientName;
+            
+            // Set advisor
+            document.getElementById('advisorName').textContent = clientData.advisor.name;
+            document.getElementById('advisorAvatar').textContent = clientData.advisor.initials;
+            
+            // Render forms
+            renderForms();
+            updateProgress();
+        }
+        
+        function renderForms() {
+            const container = document.getElementById('formsList');
+            
+            container.innerHTML = clientData.forms.map(form => {
+                const isComplete = form.progress === 100;
+                
+                return `
+                    <div class="form-card ${isComplete ? 'complete' : ''}" 
+                         onclick="openForm('${form.id}')">
+                        <div class="form-icon">${isComplete ? '✓' : form.icon}</div>
+                        <div class="form-info">
+                            <div class="form-name">${form.name}</div>
+                            <div class="form-description">${form.description}</div>
+                        </div>
+                        <div class="form-status">
+                            ${!isComplete ? `
+                                <div class="form-progress-mini">
+                                    <div class="form-progress-mini-fill" style="width: ${form.progress}%"></div>
+                                </div>
+                            ` : ''}
+                            <span class="form-status-text">${isComplete ? 'Done' : form.progress + '%'}</span>
+                        </div>
+                        <svg class="form-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateProgress() {
+            const forms = clientData.forms;
+            const totalProgress = forms.reduce((sum, f) => sum + f.progress, 0);
+            const overallProgress = Math.round(totalProgress / forms.length);
+            const completed = forms.filter(f => f.progress === 100).length;
+            const pending = forms.length - completed;
+            
+            document.getElementById('progressPercent').textContent = overallProgress + '%';
+            document.getElementById('progressFill').style.width = overallProgress + '%';
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('pendingCount').textContent = pending;
+            
+            // Show complete banner if all done
+            if (overallProgress === 100) {
+                document.getElementById('progressCard').style.display = 'none';
+                document.getElementById('completeBanner').style.display = 'block';
+            }
+        }
+        
+        function openForm(formId) {
+            const form = clientData.forms.find(f => f.id === formId);
+            if (!form) return;
+            
+            currentFormUrl = form.file;
+            document.getElementById('formModalTitle').textContent = form.name;
+            document.getElementById('formModalSubtitle').textContent = form.description;
+            document.getElementById('formModalIframe').src = form.file;
+            document.getElementById('formModalOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFormModal() {
+            document.getElementById('formModalOverlay').classList.remove('show');
+            document.getElementById('formModalIframe').src = 'about:blank';
+            document.body.style.overflow = '';
+            currentFormUrl = '';
+            
+            // Simulate progress update (for demo)
+            // In real app, this would read from localStorage or API
+        }
+        
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('formModalOverlay');
+                if (modal.classList.contains('show')) {
+                    closeFormModal();
+                }
+            }
+        });
+        
+        // Check for session (for demo, just show login)
+        document.addEventListener('DOMContentLoaded', function() {
+            // In a real app, check for existing session here
+            // For demo, always show login screen
+        });
+    </script>
+</body>
+</html>

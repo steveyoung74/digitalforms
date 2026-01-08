@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISA Application | Evelyn Partners</title>
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .header-content { max-width: 900px; margin: 0 auto; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .logo { font-size: 20px; font-weight: 600; }
+        .journey-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+        .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+
+        .main-content { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        .prepop-notice {
+            background: var(--success-light);
+            border: 1px solid var(--success);
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .prepop-notice-icon { font-size: 24px; }
+        .prepop-notice-text { flex: 1; }
+        .prepop-notice-text strong { color: var(--success); }
+        .prepop-notice-text p { font-size: 13px; color: #155724; margin-top: 4px; }
+
+        .section-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title { font-size: 16px; font-weight: 600; color: var(--gray-800); }
+        .section-source { font-size: 12px; color: var(--gray-500); background: var(--gray-100); padding: 4px 10px; border-radius: 12px; }
+        .section-content { padding: 20px; }
+
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .data-item { }
+        .data-label { font-size: 12px; color: var(--gray-500); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-value { font-size: 15px; color: var(--gray-800); font-weight: 500; }
+        .data-value.empty { color: var(--gray-400); font-style: italic; font-weight: normal; }
+
+        .form-section { padding: 20px; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .form-group { }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--gray-700); margin-bottom: 6px; }
+        .form-label .required { color: #dc3545; }
+        .form-input, .form-select { width: 100%; padding: 12px 14px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 15px; }
+        .form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45, 32, 71, 0.15); }
+        .form-hint { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+
+        .currency-input { position: relative; }
+        .currency-input::before { content: '£'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-500); }
+        .currency-input input { padding-left: 28px; }
+
+        .btn { padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { background: var(--gray-100); color: var(--gray-700); }
+        .btn-success { background: var(--success); color: white; }
+
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding: 24px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn { display: flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; text-decoration: none; }
+        .nav-btn-prev { background: var(--gray-100); color: var(--gray-700); }
+        .nav-btn-next { background: var(--primary); color: white; }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 16px; }
+            .form-row, .data-grid { grid-template-columns: 1fr; }
+            .page-navigation { flex-direction: column; gap: 12px; }
+            .nav-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="logo">Evelyn Partners</div>
+                <span class="journey-badge" id="journeyBadge">📈 ISA Application</span>
+            </div>
+            <h1>Stocks & Shares ISA</h1>
+            <p>Step 1 of 5 - Review Your Details & ISA Subscription</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Pre-populated Data Notice -->
+        <div class="prepop-notice">
+            <span class="prepop-notice-icon">✅</span>
+            <div class="prepop-notice-text">
+                <strong>Your details have been pre-filled from your Fact Find</strong>
+                <p>Review the information below. You only need to provide ISA-specific details.</p>
+            </div>
+        </div>
+
+        <!-- Pre-populated Personal Details (from Fact Find) -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">👤 Personal Details</span>
+                <span class="section-source">From Fact Find</span>
+            </div>
+            <div class="section-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Full Name</div>
+                        <div class="data-value" id="displayName">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Date of Birth</div>
+                        <div class="data-value" id="displayDOB">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Email</div>
+                        <div class="data-value" id="displayEmail">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Phone</div>
+                        <div class="data-value" id="displayPhone">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Address</div>
+                        <div class="data-value" id="displayAddress">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">NI Number</div>
+                        <div class="data-value" id="displayNI">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Joint Applicant Details (shown only for joint applications) -->
+        <div class="section-card" id="jointApplicantSection" style="display: none; border-left: 4px solid var(--accent-teal);">
+            <div class="section-header">
+                <span class="section-title">👥 Joint Applicant Details</span>
+                <span class="section-source">From Fact Find</span>
+            </div>
+            <div class="section-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Full Name</div>
+                        <div class="data-value" id="displayName2">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Date of Birth</div>
+                        <div class="data-value" id="displayDOB2">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Email</div>
+                        <div class="data-value" id="displayEmail2">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Phone</div>
+                        <div class="data-value" id="displayPhone2">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Address</div>
+                        <div class="data-value" id="displayAddress2">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">NI Number</div>
+                        <div class="data-value" id="displayNI2">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-populated Investment Profile (from Fact Find) -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">📊 Investment Profile</span>
+                <span class="section-source">From Fact Find</span>
+            </div>
+            <div class="section-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Investment Objective</div>
+                        <div class="data-value" id="displayObjective">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Risk Attitude</div>
+                        <div class="data-value" id="displayRisk">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Investment Horizon</div>
+                        <div class="data-value" id="displayHorizon">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Employment Status</div>
+                        <div class="data-value" id="displayEmployment">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-populated Banking Details (from Fact Find) -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">🏦 Nominated Bank Account</span>
+                <span class="section-source">From Fact Find</span>
+            </div>
+            <div class="section-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Bank Name</div>
+                        <div class="data-value" id="displayBank">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Account Name</div>
+                        <div class="data-value" id="displayAccountName">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Sort Code</div>
+                        <div class="data-value" id="displaySortCode">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Account Number</div>
+                        <div class="data-value" id="displayAccountNum">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ISA-Specific Fields (NEW input required) -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">📈 ISA Subscription Details</span>
+                <span class="section-source" style="background: var(--primary); color: white;">New Information Required</span>
+            </div>
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">ISA Allowance Year <span class="required">*</span></label>
+                        <select class="form-select" id="isaYear">
+                            <option value="2024-25">2024/25 (Current Year)</option>
+                            <option value="2025-26">2025/26</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Initial Investment Amount <span class="required">*</span></label>
+                        <div class="currency-input">
+                            <input type="number" class="form-input" id="initialAmount" placeholder="0" min="0" max="20000" oninput="validateISAAmount(this)">
+                        </div>
+                        <div class="form-hint">Maximum £20,000 per tax year</div>
+                        <div class="error-message" id="initialAmountError" style="display: none; color: #dc3545; font-size: 13px; margin-top: 4px;">
+                            ⚠️ The maximum ISA allowance is £20,000 per tax year
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Funding Method <span class="required">*</span></label>
+                        <select class="form-select" id="fundingMethod">
+                            <option value="">Select funding method</option>
+                            <option value="bank-transfer">Bank Transfer</option>
+                            <option value="direct-debit">Direct Debit</option>
+                            <option value="cheque">Cheque</option>
+                            <option value="transfer-in">Transfer from Another Provider</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Monthly Contribution (Optional)</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-input" id="monthlyAmount" placeholder="0" min="0" oninput="validateTotalISAContributions()">
+                        </div>
+                        <div class="form-hint">Set up a regular monthly investment</div>
+                        <div class="error-message" id="monthlyAmountError" style="display: none; color: #dc3545; font-size: 13px; margin-top: 4px;">
+                            ⚠️ Total contributions (initial + 12 months) exceed the £20,000 annual allowance
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label class="form-label">Investment Strategy <span class="required">*</span></label>
+                        <select class="form-select" id="investmentStrategy">
+                            <option value="">Select investment strategy</option>
+                            <option value="cautious">Cautious - Lower risk, capital preservation focus</option>
+                            <option value="balanced">Balanced - Mix of growth and income</option>
+                            <option value="growth">Growth - Higher risk, growth focus</option>
+                            <option value="adventurous">Adventurous - Highest risk, maximum growth potential</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transfer Section (Conditional) -->
+        <div class="section-card" id="transferSection" style="display: none;">
+            <div class="section-header">
+                <span class="section-title">🔄 ISA Transfer Details</span>
+                <span class="section-source" style="background: var(--primary); color: white;">New Information Required</span>
+            </div>
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Current ISA Provider <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="transferProvider" placeholder="e.g. Hargreaves Lansdown">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Account Reference</label>
+                        <input type="text" class="form-input" id="transferRef" placeholder="Your account reference">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Transfer Type <span class="required">*</span></label>
+                        <select class="form-select" id="transferType">
+                            <option value="full">Full Transfer (entire ISA)</option>
+                            <option value="partial">Partial Transfer (specify amount)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Value</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-input" id="transferValue" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+            <a href="../index.html" class="nav-btn nav-btn-prev">← Back to Dashboard</a>
+            <button class="nav-btn nav-btn-next" onclick="proceedToNext()">Continue to Declarations →</button>
+        </div>
+    </main>
+
+    <script>
+        // Load pre-populated data from Fact Find
+        let isJointApplication = false;
+        let isAdvisorMode = false;
+        let advisorInfo = {};
+
+        // Demo data for GitHub Pages hosting
+        const DEMO_ACCOUNT_DATA = {
+            "applicationType": "individual",
+            "title": "Mr",
+            "firstName": "Michael",
+            "surname": "Chen",
+            "dateOfBirth": "1985-03-15",
+            "email": "michael.chen@email.com",
+            "phone": "07700 900123",
+            "address": "42 Victoria Gardens",
+            "city": "London",
+            "postcode": "SW1A 1AA",
+            "niNumber": "AB123456C",
+            "employmentStatus": "employed",
+            "employer": "Tech Solutions Ltd",
+            "jobTitle": "Senior Software Engineer",
+            "annualIncome": "85000",
+            "investmentObjective": "growth",
+            "riskAttitude": "balanced",
+            "investmentHorizon": "5-10",
+            "bankName": "Barclays",
+            "accountName": "Michael Chen",
+            "sortCode": "20-00-00",
+            "accountNumber": "12345678",
+            "nationality": "British",
+            "countryOfResidence": "United Kingdom",
+            "taxResident": "UK",
+            "usCitizen": "no",
+            "pepStatus": "no"
+        };
+
+        // Load demo data if localStorage is empty
+        function ensureDemoData() {
+            const existingData = localStorage.getItem('evelynAccountFormData');
+            if (!existingData || existingData === '{}' || existingData === 'null') {
+                localStorage.setItem('evelynAccountFormData', JSON.stringify(DEMO_ACCOUNT_DATA));
+            }
+        }
+        ensureDemoData();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check URL parameters for joint application
+            const urlParams = new URLSearchParams(window.location.search);
+            isJointApplication = urlParams.get('type') === 'joint';
+            
+            // Check for advisor mode
+            isAdvisorMode = urlParams.get('mode') === 'advisor';
+            if (isAdvisorMode) {
+                advisorInfo = {
+                    clientId: urlParams.get('clientId'),
+                    clientRef: urlParams.get('clientRef'),
+                    advisorId: urlParams.get('advisorId'),
+                    advisorName: urlParams.get('advisorName')
+                };
+                initAdvisorMode();
+            }
+            
+            // Also check saved account data
+            const accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            if (accountData.applicationType === 'joint') {
+                isJointApplication = true;
+            }
+            
+            // Update UI for joint application
+            if (isJointApplication) {
+                document.getElementById('journeyBadge').textContent = '👥 Joint ISA Application';
+                showJointApplicantSection();
+            }
+            
+            loadFactFindData();
+            setupEventListeners();
+        });
+        
+        function initAdvisorMode() {
+            // Add advisor banner to header
+            const header = document.querySelector('.form-header');
+            if (header) {
+                const banner = document.createElement('div');
+                banner.className = 'advisor-banner';
+                banner.innerHTML = `
+                    <div class="advisor-banner-content">
+                        <div class="advisor-banner-icon">👤</div>
+                        <div class="advisor-banner-text">
+                            <strong>Advisor Review Mode</strong>
+                            <span>Viewing as ${advisorInfo.advisorName} • Client: ${advisorInfo.clientRef}</span>
+                        </div>
+                        <div class="advisor-banner-actions">
+                            <button class="advisor-btn" onclick="window.close()">← Back to Portal</button>
+                        </div>
+                    </div>
+                `;
+                header.parentNode.insertBefore(banner, header);
+            }
+            
+            // Add advisor mode styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .advisor-banner {
+                    background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+                    color: white;
+                    padding: 12px 24px;
+                }
+                .advisor-banner-content {
+                    max-width: 900px;
+                    margin: 0 auto;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                }
+                .advisor-banner-icon { font-size: 20px; }
+                .advisor-banner-text {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                }
+                .advisor-banner-text strong { font-size: 14px; }
+                .advisor-banner-text span { font-size: 12px; opacity: 0.9; }
+                .advisor-btn {
+                    background: rgba(255,255,255,0.2);
+                    border: 1px solid rgba(255,255,255,0.3);
+                    color: white;
+                    padding: 6px 14px;
+                    border-radius: 6px;
+                    font-size: 13px;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+                .advisor-btn:hover { background: rgba(255,255,255,0.3); }
+            `;
+            document.head.appendChild(style);
+            
+            // Update page title
+            document.title = `[Advisor] ${document.title}`;
+        }
+
+        function showJointApplicantSection() {
+            const jointSection = document.getElementById('jointApplicantSection');
+            if (jointSection) {
+                jointSection.style.display = 'block';
+            }
+        }
+
+        function loadFactFindData() {
+            const accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            
+            // Personal Details
+            setDisplayValue('displayName', formatName(accountData.title, accountData.firstName, accountData.surname));
+            setDisplayValue('displayDOB', formatDate(accountData.dateOfBirth));
+            setDisplayValue('displayEmail', accountData.email);
+            setDisplayValue('displayPhone', accountData.phone);
+            setDisplayValue('displayAddress', formatAddress(accountData.address, accountData.city, accountData.postcode));
+            setDisplayValue('displayNI', accountData.niNumber);
+            
+            // Investment Profile
+            setDisplayValue('displayObjective', formatObjective(accountData.investmentObjective));
+            setDisplayValue('displayRisk', formatRiskLevel(accountData.riskAttitude));
+            setDisplayValue('displayHorizon', formatHorizon(accountData.investmentHorizon));
+            setDisplayValue('displayEmployment', formatEmployment(accountData.employmentStatus));
+            
+            // Banking Details
+            setDisplayValue('displayBank', accountData.bankName);
+            setDisplayValue('displayAccountName', accountData.accountName);
+            setDisplayValue('displaySortCode', accountData.sortCode);
+            setDisplayValue('displayAccountNum', maskAccountNumber(accountData.accountNumber));
+            
+            // Joint Applicant Details (if joint application)
+            if (isJointApplication) {
+                setDisplayValue('displayName2', formatName(accountData.title_customer2, accountData.firstName_customer2, accountData.surname_customer2));
+                setDisplayValue('displayDOB2', formatDate(accountData.dateOfBirth_customer2));
+                setDisplayValue('displayEmail2', accountData.email_customer2);
+                setDisplayValue('displayPhone2', accountData.phone_customer2);
+                setDisplayValue('displayAddress2', formatAddress(accountData.addressLine1_customer2, accountData.city_customer2, accountData.postcode_customer2));
+                setDisplayValue('displayNI2', accountData.niNumber_customer2);
+            }
+        }
+
+        function setDisplayValue(elementId, value) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                if (value && value !== 'undefined undefined undefined' && value !== '- -') {
+                    el.textContent = value;
+                    el.classList.remove('empty');
+                } else {
+                    el.textContent = 'Not provided';
+                    el.classList.add('empty');
+                }
+            }
+        }
+
+        function formatName(title, first, last) {
+            const parts = [title, first, last].filter(Boolean);
+            return parts.length > 0 ? parts.join(' ') : null;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return null;
+            try {
+                const date = new Date(dateStr);
+                return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch {
+                return dateStr;
+            }
+        }
+
+        function formatAddress(line1, city, postcode) {
+            const parts = [line1, city, postcode].filter(Boolean);
+            return parts.length > 0 ? parts.join(', ') : null;
+        }
+
+        function formatObjective(obj) {
+            const map = {
+                'income': 'Income for Distribution',
+                'balanced': 'Balanced Growth & Income',
+                'growth': 'Capital Growth'
+            };
+            return map[obj] || obj;
+        }
+
+        function formatRiskLevel(level) {
+            if (!level) return null;
+            const riskLabels = {
+                '1': '1 - Very Cautious',
+                '2': '2 - Cautious',
+                '3': '3 - Low-Medium',
+                '4': '4 - Medium',
+                '5': '5 - Medium-High',
+                '6': '6 - High',
+                '7': '7 - Adventurous'
+            };
+            return riskLabels[level] || `Risk Level ${level}`;
+        }
+
+        function formatHorizon(horizon) {
+            const map = {
+                'short': '2-3 Years (Short Term)',
+                'medium': '4-6 Years (Medium Term)',
+                'long': '7+ Years (Long Term)'
+            };
+            return map[horizon] || horizon;
+        }
+
+        function formatEmployment(status) {
+            const map = {
+                'employed': 'Employed',
+                'self-employed': 'Self-Employed',
+                'retired': 'Retired',
+                'not-working': 'Not Currently Working'
+            };
+            return map[status] || status;
+        }
+
+        function maskAccountNumber(num) {
+            if (!num) return null;
+            return '****' + num.slice(-4);
+        }
+
+        function validateISAAmount(input) {
+            const value = parseFloat(input.value) || 0;
+            const errorEl = document.getElementById('initialAmountError');
+            const maxAmount = 20000;
+            
+            if (value > maxAmount) {
+                // Show error
+                errorEl.style.display = 'block';
+                input.classList.add('input-error');
+                input.style.borderColor = '#dc3545';
+            } else {
+                // Hide error
+                errorEl.style.display = 'none';
+                input.classList.remove('input-error');
+                input.style.borderColor = '';
+            }
+            
+            // Also validate total contributions
+            validateTotalISAContributions();
+        }
+
+        function validateTotalISAContributions() {
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value) || 0;
+            const monthlyAmount = parseFloat(document.getElementById('monthlyAmount').value) || 0;
+            const annualMonthlyTotal = monthlyAmount * 12;
+            const totalContributions = initialAmount + annualMonthlyTotal;
+            const maxAmount = 20000;
+            
+            const monthlyInput = document.getElementById('monthlyAmount');
+            const monthlyErrorEl = document.getElementById('monthlyAmountError');
+            
+            if (totalContributions > maxAmount && monthlyAmount > 0) {
+                // Calculate max monthly allowed
+                const remainingAllowance = Math.max(0, maxAmount - initialAmount);
+                const maxMonthly = Math.floor(remainingAllowance / 12);
+                
+                monthlyErrorEl.innerHTML = `⚠️ Total contributions (£${initialAmount.toLocaleString()} + £${annualMonthlyTotal.toLocaleString()}/year = £${totalContributions.toLocaleString()}) exceed £20,000. Max monthly: £${maxMonthly.toLocaleString()}`;
+                monthlyErrorEl.style.display = 'block';
+                monthlyInput.style.borderColor = '#dc3545';
+            } else {
+                monthlyErrorEl.style.display = 'none';
+                monthlyInput.style.borderColor = '';
+            }
+        }
+
+        function setupEventListeners() {
+            // Show transfer section when transfer is selected
+            document.getElementById('fundingMethod').addEventListener('change', function() {
+                const transferSection = document.getElementById('transferSection');
+                transferSection.style.display = this.value === 'transfer-in' ? 'block' : 'none';
+            });
+        }
+
+        function proceedToNext() {
+            // Validate ISA amount
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value) || 0;
+            const monthlyAmount = parseFloat(document.getElementById('monthlyAmount').value) || 0;
+            const totalAnnualContributions = initialAmount + (monthlyAmount * 12);
+            
+            if (initialAmount > 20000) {
+                alert('The initial investment amount cannot exceed £20,000 (the annual ISA allowance).');
+                document.getElementById('initialAmount').focus();
+                return;
+            }
+            
+            if (totalAnnualContributions > 20000) {
+                alert(`Your total annual contributions (£${initialAmount.toLocaleString()} initial + £${(monthlyAmount * 12).toLocaleString()} monthly = £${totalAnnualContributions.toLocaleString()}) exceed the £20,000 ISA allowance.\n\nPlease reduce your initial investment or monthly contribution.`);
+                document.getElementById('monthlyAmount').focus();
+                return;
+            }
+            
+            // Save ISA-specific data
+            const isaData = {
+                isaYear: document.getElementById('isaYear').value,
+                initialAmount: document.getElementById('initialAmount').value,
+                fundingMethod: document.getElementById('fundingMethod').value,
+                monthlyAmount: document.getElementById('monthlyAmount').value,
+                investmentStrategy: document.getElementById('investmentStrategy').value
+            };
+
+            // Merge with existing account data
+            const existingData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            const mergedData = { ...existingData, ...isaData };
+            localStorage.setItem('evelynAccountFormData', JSON.stringify(mergedData));
+
+            // Navigate to next step (declarations/review)
+            // Navigate to declarations page
+            window.location.href = 'account_declarations.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIPP Application | Evelyn Partners</title>
+    <style>
+        :root {
+            --primary: #2D2047;
+            --primary-dark: #1E1530;
+            --success: #28a745;
+            --success-light: #d4edda;
+            --warning: #ffc107;
+            --warning-light: #fff3cd;
+            --info: #17a2b8;
+            --info-light: #d1ecf1;
+            --gray-50: #f8f9fa;
+            --gray-100: #f0f1f3;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .header-content { max-width: 900px; margin: 0 auto; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .logo { font-size: 20px; font-weight: 600; }
+        .journey-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+        .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+
+        .main-content { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+        .prepop-notice {
+            background: var(--success-light);
+            border: 1px solid var(--success);
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .prepop-notice-icon { font-size: 24px; }
+        .prepop-notice-text { flex: 1; }
+        .prepop-notice-text strong { color: var(--success); }
+        .prepop-notice-text p { font-size: 13px; color: #155724; margin-top: 4px; }
+
+        .pension-info {
+            background: var(--info-light);
+            border: 1px solid var(--info);
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+        .pension-info p { font-size: 14px; color: #0c5460; }
+
+        .section-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title { font-size: 16px; font-weight: 600; color: var(--gray-800); }
+        .section-source { font-size: 12px; color: var(--gray-500); background: var(--gray-100); padding: 4px 10px; border-radius: 12px; }
+        .section-content { padding: 20px; }
+
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .data-item { }
+        .data-label { font-size: 12px; color: var(--gray-500); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-value { font-size: 15px; color: var(--gray-800); font-weight: 500; }
+        .data-value.empty { color: var(--gray-400); font-style: italic; font-weight: normal; }
+
+        .form-section { padding: 20px; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .form-group { }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--gray-700); margin-bottom: 6px; }
+        .form-label .required { color: #dc3545; }
+        .form-input, .form-select { width: 100%; padding: 12px 14px; border: 1px solid var(--gray-300); border-radius: 6px; font-size: 15px; }
+        .form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45, 32, 71, 0.15); }
+        .form-hint { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+
+        .currency-input { position: relative; }
+        .currency-input::before { content: '£'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-500); }
+        .currency-input input { padding-left: 28px; }
+
+        .contribution-type { display: flex; gap: 12px; margin-bottom: 16px; }
+        .contrib-option { flex: 1; }
+        .contrib-option input { display: none; }
+        .contrib-option label { display: block; padding: 16px; border: 2px solid var(--gray-200); border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .contrib-option input:checked + label { border-color: var(--primary); background: rgba(45, 32, 71, 0.08); }
+        .contrib-option label:hover { border-color: var(--primary); }
+        .contrib-option label strong { display: block; margin-bottom: 4px; font-size: 15px; }
+        .contrib-option label span { font-size: 12px; color: var(--gray-500); }
+
+        .tax-relief-calc {
+            background: var(--success-light);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .tax-relief-calc h4 { color: var(--success); font-size: 14px; margin-bottom: 8px; }
+        .tax-relief-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px; }
+        .tax-relief-row.total { font-weight: 600; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 8px; margin-top: 8px; }
+
+        .beneficiary-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .beneficiary-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .beneficiary-title { font-weight: 600; color: var(--gray-700); }
+        .btn-remove { background: none; border: none; color: #dc3545; cursor: pointer; font-size: 13px; }
+        .btn-add { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; background: var(--gray-50); border: 2px dashed var(--gray-300); border-radius: 8px; color: var(--gray-600); cursor: pointer; font-size: 14px; }
+        .btn-add:hover { border-color: var(--primary); color: var(--primary); }
+
+        .btn { padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding: 24px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn { display: flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; text-decoration: none; }
+        .nav-btn-prev { background: var(--gray-100); color: var(--gray-700); }
+        .nav-btn-next { background: var(--primary); color: white; }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 16px; }
+            .form-row, .data-grid { grid-template-columns: 1fr; }
+            .page-navigation { flex-direction: column; gap: 12px; }
+            .nav-btn { width: 100%; justify-content: center; }
+            .contribution-type { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="logo">Evelyn Partners</div>
+                <span class="journey-badge">🏦 SIPP Application</span>
+            </div>
+            <h1>Self-Invested Personal Pension</h1>
+            <p>Step 1 of 6 - Review Your Details & Pension Setup</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Pre-populated Data Notice -->
+        <div class="prepop-notice">
+            <span class="prepop-notice-icon">✅</span>
+            <div class="prepop-notice-text">
+                <strong>Your details have been pre-filled from your Fact Find</strong>
+                <p>Review the information below. You only need to provide SIPP-specific details.</p>
+            </div>
+        </div>
+
+        <!-- Pension Information -->
+        <div class="pension-info">
+            <p><strong>ℹ️ Important:</strong> Pension contributions receive tax relief. You can contribute up to 100% of your earnings (max £60,000 annual allowance) and receive basic rate tax relief automatically. Higher/additional rate taxpayers can claim extra relief via self-assessment.</p>
+        </div>
+
+        <!-- Pre-populated Personal Details -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">👤 Personal Details</span>
+                <span class="section-source">From Fact Find</span>
+            </div>
+            <div class="section-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Full Name</div>
+                        <div class="data-value" id="displayName">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Date of Birth</div>
+                        <div class="data-value" id="displayDOB">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Age</div>
+                        <div class="data-value" id="displayAge">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">NI Number</div>
+                        <div class="data-value" id="displayNI">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Email</div>
+                        <div class="data-value" id="displayEmail">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Employment Status</div>
+                        <div class="data-value" id="displayEmployment">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-populated Investment Profile -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">📊 Investment Profile</span>
+                <span class="section-source">From Fact Find</span>
+            </div>
+            <div class="section-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Risk Attitude</div>
+                        <div class="data-value" id="displayRisk">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Investment Horizon</div>
+                        <div class="data-value" id="displayHorizon">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Annual Income</div>
+                        <div class="data-value" id="displayIncome">-</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Tax Position</div>
+                        <div class="data-value" id="displayTax">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIPP-Specific Fields -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">🏦 SIPP Configuration</span>
+                <span class="section-source" style="background: var(--primary); color: white;">New Information Required</span>
+            </div>
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Target Retirement Age <span class="required">*</span></label>
+                        <select class="form-select" id="retirementAge">
+                            <option value="">Select age</option>
+                            <option value="55">55 (Minimum)</option>
+                            <option value="57">57 (From April 2028)</option>
+                            <option value="60">60</option>
+                            <option value="65">65</option>
+                            <option value="67">67 (State Pension Age)</option>
+                            <option value="70">70</option>
+                            <option value="75">75</option>
+                        </select>
+                        <div class="form-hint">Minimum pension access age is currently 55, rising to 57 in 2028</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Existing Pension Savings</label>
+                        <select class="form-select" id="existingPensions">
+                            <option value="">Select range</option>
+                            <option value="none">None</option>
+                            <option value="under-50k">Under £50,000</option>
+                            <option value="50k-100k">£50,000 - £100,000</option>
+                            <option value="100k-250k">£100,000 - £250,000</option>
+                            <option value="250k-500k">£250,000 - £500,000</option>
+                            <option value="500k-1m">£500,000 - £1,000,000</option>
+                            <option value="over-1m">Over £1,000,000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Contribution Type <span class="required">*</span></label>
+                    <div class="contribution-type">
+                        <div class="contrib-option">
+                            <input type="radio" name="contribType" id="contribPersonal" value="personal" checked>
+                            <label for="contribPersonal">
+                                <strong>Personal Contribution</strong>
+                                <span>From your own funds, tax relief applied</span>
+                            </label>
+                        </div>
+                        <div class="contrib-option">
+                            <input type="radio" name="contribType" id="contribEmployer" value="employer">
+                            <label for="contribEmployer">
+                                <strong>Employer Contribution</strong>
+                                <span>Direct from employer, gross payment</span>
+                            </label>
+                        </div>
+                        <div class="contrib-option">
+                            <input type="radio" name="contribType" id="contribTransfer" value="transfer">
+                            <label for="contribTransfer">
+                                <strong>Pension Transfer</strong>
+                                <span>Transfer from existing pension</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" id="contributionAmounts">
+                    <div class="form-group">
+                        <label class="form-label">Initial Contribution <span class="required">*</span></label>
+                        <div class="currency-input">
+                            <input type="number" class="form-input" id="initialAmount" placeholder="0" min="0" oninput="calculateTaxRelief()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Monthly Contribution (Optional)</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-input" id="monthlyAmount" placeholder="0" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tax-relief-calc" id="taxReliefCalc">
+                    <h4>💰 Estimated Tax Relief</h4>
+                    <div class="tax-relief-row">
+                        <span>Your contribution (net)</span>
+                        <span id="netContrib">£0</span>
+                    </div>
+                    <div class="tax-relief-row">
+                        <span>Basic rate relief (20%)</span>
+                        <span id="basicRelief">£0</span>
+                    </div>
+                    <div class="tax-relief-row" id="higherReliefRow" style="display: none;">
+                        <span>Higher rate relief (via SA)</span>
+                        <span id="higherRelief">£0</span>
+                    </div>
+                    <div class="tax-relief-row total">
+                        <span>Total in your pension</span>
+                        <span id="totalPension">£0</span>
+                    </div>
+                </div>
+
+                <!-- Transfer Details (shown when transfer selected) -->
+                <div id="transferDetails" style="display: none; margin-top: 20px;">
+                    <h4 style="margin-bottom: 16px; color: var(--gray-700);">Pension Transfer Details</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Current Provider <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="transferProvider" placeholder="e.g. Scottish Widows">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Policy/Plan Number</label>
+                            <input type="text" class="form-input" id="transferPolicyNumber" placeholder="Your policy reference">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Estimated Transfer Value</label>
+                            <div class="currency-input">
+                                <input type="number" class="form-input" id="transferValue" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pension Type</label>
+                            <select class="form-select" id="transferType">
+                                <option value="">Select type</option>
+                                <option value="dc">Defined Contribution</option>
+                                <option value="db">Defined Benefit (Final Salary)</option>
+                                <option value="unknown">Not Sure</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px;">
+                    <div class="form-group full-width">
+                        <label class="form-label">Investment Strategy <span class="required">*</span></label>
+                        <select class="form-select" id="investmentStrategy">
+                            <option value="">Select investment strategy</option>
+                            <option value="cautious">Cautious - Lower risk, capital preservation</option>
+                            <option value="balanced">Balanced - Mix of growth and stability</option>
+                            <option value="growth">Growth - Higher risk, long-term growth focus</option>
+                            <option value="adventurous">Adventurous - Maximum growth potential</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beneficiaries -->
+        <div class="section-card">
+            <div class="section-header">
+                <span class="section-title">👥 Beneficiaries</span>
+                <span class="section-source" style="background: var(--primary); color: white;">New Information Required</span>
+            </div>
+            <div class="form-section">
+                <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">
+                    Nominate who should receive your pension fund in the event of your death. This is an expression of wish and the scheme trustees will take it into consideration.
+                </p>
+
+                <div id="beneficiariesList">
+                    <div class="beneficiary-card" data-index="1">
+                        <div class="beneficiary-header">
+                            <span class="beneficiary-title">Beneficiary 1</span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input beneficiary-name" placeholder="Full name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Relationship</label>
+                                <select class="form-select beneficiary-relationship">
+                                    <option value="">Select</option>
+                                    <option value="spouse">Spouse/Civil Partner</option>
+                                    <option value="child">Child</option>
+                                    <option value="parent">Parent</option>
+                                    <option value="sibling">Sibling</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Share (%)</label>
+                                <input type="number" class="form-input beneficiary-share" value="100" min="1" max="100" oninput="validateBeneficiaryShares()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share validation message -->
+                <div id="shareValidationMessage" style="display: none; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px;">
+                </div>
+
+                <button class="btn-add" onclick="addBeneficiary()">+ Add Another Beneficiary</button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+            <a href="../index.html" class="nav-btn nav-btn-prev">← Back to Dashboard</a>
+            <button class="nav-btn nav-btn-next" onclick="proceedToNext()">Continue to Declarations →</button>
+        </div>
+    </main>
+
+    <script>
+        let beneficiaryCount = 1;
+        let taxPosition = 'basic';
+
+        // Demo data for GitHub Pages hosting
+        const DEMO_ACCOUNT_DATA = {
+            "applicationType": "individual",
+            "title": "Mr",
+            "firstName": "Michael",
+            "surname": "Chen",
+            "dateOfBirth": "1985-03-15",
+            "email": "michael.chen@email.com",
+            "phone": "07700 900123",
+            "address": "42 Victoria Gardens",
+            "city": "London",
+            "postcode": "SW1A 1AA",
+            "niNumber": "AB123456C",
+            "employmentStatus": "employed",
+            "employer": "Tech Solutions Ltd",
+            "jobTitle": "Senior Software Engineer",
+            "annualIncome": "85000",
+            "investmentObjective": "growth",
+            "riskAttitude": "balanced",
+            "investmentHorizon": "5-10",
+            "bankName": "Barclays",
+            "accountName": "Michael Chen",
+            "sortCode": "20-00-00",
+            "accountNumber": "12345678",
+            "nationality": "British",
+            "countryOfResidence": "United Kingdom",
+            "taxResident": "UK",
+            "taxPosition": "basic",
+            "usCitizen": "no",
+            "pepStatus": "no"
+        };
+
+        // Load demo data if localStorage is empty
+        function ensureDemoData() {
+            const existingData = localStorage.getItem('evelynAccountFormData');
+            if (!existingData || existingData === '{}' || existingData === 'null') {
+                localStorage.setItem('evelynAccountFormData', JSON.stringify(DEMO_ACCOUNT_DATA));
+            }
+        }
+        ensureDemoData();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFactFindData();
+            setupEventListeners();
+        });
+
+        function loadFactFindData() {
+            const accountData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            
+            setDisplayValue('displayName', formatName(accountData.title, accountData.firstName, accountData.surname));
+            setDisplayValue('displayDOB', formatDate(accountData.dateOfBirth));
+            setDisplayValue('displayAge', calculateAge(accountData.dateOfBirth));
+            setDisplayValue('displayNI', accountData.niNumber);
+            setDisplayValue('displayEmail', accountData.email);
+            setDisplayValue('displayEmployment', formatEmployment(accountData.employmentStatus));
+            setDisplayValue('displayRisk', formatRiskLevel(accountData.riskAttitude));
+            setDisplayValue('displayHorizon', formatHorizon(accountData.investmentHorizon));
+            setDisplayValue('displayIncome', formatCurrency(accountData.annualIncome));
+            setDisplayValue('displayTax', formatTaxPosition(accountData.taxPosition));
+            
+            taxPosition = accountData.taxPosition || 'basic';
+        }
+
+        function setDisplayValue(elementId, value) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                if (value) {
+                    el.textContent = value;
+                    el.classList.remove('empty');
+                } else {
+                    el.textContent = 'Not provided';
+                    el.classList.add('empty');
+                }
+            }
+        }
+
+        function formatName(title, first, last) {
+            const parts = [title, first, last].filter(Boolean);
+            return parts.length > 0 ? parts.join(' ') : null;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return null;
+            try {
+                const date = new Date(dateStr);
+                return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch { return dateStr; }
+        }
+
+        function calculateAge(dateStr) {
+            if (!dateStr) return null;
+            const today = new Date();
+            const birth = new Date(dateStr);
+            let age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+            return age + ' years';
+        }
+
+        function formatEmployment(status) {
+            const map = { 'employed': 'Employed', 'self-employed': 'Self-Employed', 'retired': 'Retired', 'not-working': 'Not Working' };
+            return map[status] || status;
+        }
+
+        function formatRiskLevel(level) {
+            if (!level) return null;
+            const labels = { '1': '1 - Very Cautious', '2': '2 - Cautious', '3': '3 - Low-Medium', '4': '4 - Medium', '5': '5 - Medium-High', '6': '6 - High', '7': '7 - Adventurous' };
+            return labels[level] || `Risk Level ${level}`;
+        }
+
+        function formatHorizon(horizon) {
+            const map = { 'short': '2-3 Years', 'medium': '4-6 Years', 'long': '7+ Years' };
+            return map[horizon] || horizon;
+        }
+
+        function formatCurrency(amount) {
+            if (!amount) return null;
+            return '£' + parseInt(amount).toLocaleString();
+        }
+
+        function formatTaxPosition(tax) {
+            const map = { 'nil': 'Non-Taxpayer', 'basic': 'Basic Rate (20%)', 'higher': 'Higher Rate (40%)', 'additional': 'Additional Rate (45%)' };
+            return map[tax] || tax;
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('input[name="contribType"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    document.getElementById('contributionAmounts').style.display = this.value === 'transfer' ? 'none' : 'grid';
+                    document.getElementById('transferDetails').style.display = this.value === 'transfer' ? 'block' : 'none';
+                    document.getElementById('taxReliefCalc').style.display = this.value === 'personal' ? 'block' : 'none';
+                });
+            });
+        }
+
+        function calculateTaxRelief() {
+            const netAmount = parseFloat(document.getElementById('initialAmount').value) || 0;
+            const grossAmount = netAmount / 0.8; // Gross up for basic rate
+            const basicRelief = grossAmount - netAmount;
+            
+            document.getElementById('netContrib').textContent = '£' + netAmount.toLocaleString();
+            document.getElementById('basicRelief').textContent = '£' + basicRelief.toFixed(0);
+            document.getElementById('totalPension').textContent = '£' + grossAmount.toFixed(0);
+            
+            // Higher rate relief
+            if (taxPosition === 'higher' || taxPosition === 'additional') {
+                const higherRate = taxPosition === 'additional' ? 0.25 : 0.20;
+                const higherRelief = grossAmount * higherRate;
+                document.getElementById('higherReliefRow').style.display = 'flex';
+                document.getElementById('higherRelief').textContent = '£' + higherRelief.toFixed(0);
+            } else {
+                document.getElementById('higherReliefRow').style.display = 'none';
+            }
+        }
+
+        function addBeneficiary() {
+            beneficiaryCount++;
+            const container = document.getElementById('beneficiariesList');
+            const card = document.createElement('div');
+            card.className = 'beneficiary-card';
+            card.setAttribute('data-index', beneficiaryCount);
+            card.innerHTML = `
+                <div class="beneficiary-header">
+                    <span class="beneficiary-title">Beneficiary ${beneficiaryCount}</span>
+                    <button class="btn-remove" onclick="removeBeneficiary(${beneficiaryCount})">✕ Remove</button>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input beneficiary-name" placeholder="Full name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Relationship</label>
+                        <select class="form-select beneficiary-relationship">
+                            <option value="">Select</option>
+                            <option value="spouse">Spouse/Civil Partner</option>
+                            <option value="child">Child</option>
+                            <option value="parent">Parent</option>
+                            <option value="sibling">Sibling</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Share (%)</label>
+                        <input type="number" class="form-input beneficiary-share" value="0" min="1" max="100" oninput="validateBeneficiaryShares()">
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+            validateBeneficiaryShares();
+        }
+
+        function removeBeneficiary(index) {
+            const card = document.querySelector(`.beneficiary-card[data-index="${index}"]`);
+            if (card) card.remove();
+            validateBeneficiaryShares();
+        }
+
+        function validateBeneficiaryShares() {
+            const shareInputs = document.querySelectorAll('.beneficiary-share');
+            let totalShare = 0;
+            
+            shareInputs.forEach(input => {
+                totalShare += parseFloat(input.value) || 0;
+            });
+            
+            const messageEl = document.getElementById('shareValidationMessage');
+            
+            if (totalShare === 100) {
+                // Valid - exactly 100%
+                messageEl.style.display = 'block';
+                messageEl.style.background = '#d4edda';
+                messageEl.style.color = '#155724';
+                messageEl.innerHTML = '✓ Beneficiary shares total 100%';
+                shareInputs.forEach(input => input.style.borderColor = '');
+            } else if (totalShare > 100) {
+                // Invalid - over 100%
+                messageEl.style.display = 'block';
+                messageEl.style.background = '#f8d7da';
+                messageEl.style.color = '#721c24';
+                messageEl.innerHTML = `⚠️ Beneficiary shares total ${totalShare}% - must equal exactly 100%`;
+                shareInputs.forEach(input => input.style.borderColor = '#dc3545');
+            } else {
+                // Invalid - under 100%
+                messageEl.style.display = 'block';
+                messageEl.style.background = '#fff3cd';
+                messageEl.style.color = '#856404';
+                messageEl.innerHTML = `⚠️ Beneficiary shares total ${totalShare}% - must equal exactly 100% (${100 - totalShare}% remaining)`;
+                shareInputs.forEach(input => input.style.borderColor = '#ffc107');
+            }
+            
+            return totalShare === 100;
+        }
+
+        function proceedToNext() {
+            // Validate beneficiary shares
+            if (!validateBeneficiaryShares()) {
+                const shareInputs = document.querySelectorAll('.beneficiary-share');
+                let totalShare = 0;
+                shareInputs.forEach(input => {
+                    totalShare += parseFloat(input.value) || 0;
+                });
+                alert(`Beneficiary shares must total exactly 100%. Current total: ${totalShare}%`);
+                return;
+            }
+            
+            // Collect beneficiary data
+            const beneficiaries = [];
+            document.querySelectorAll('.beneficiary-card').forEach((card, index) => {
+                const name = card.querySelector('.beneficiary-name')?.value || '';
+                const relationship = card.querySelector('.beneficiary-relationship')?.value || '';
+                const share = card.querySelector('.beneficiary-share')?.value || 0;
+                if (name || relationship || share > 0) {
+                    beneficiaries.push({ name, relationship, share });
+                }
+            });
+            
+            const sippData = {
+                retirementAge: document.getElementById('retirementAge').value,
+                existingPensions: document.getElementById('existingPensions').value,
+                contributionType: document.querySelector('input[name="contribType"]:checked')?.value,
+                initialAmount: document.getElementById('initialAmount').value,
+                monthlyAmount: document.getElementById('monthlyAmount').value,
+                investmentStrategy: document.getElementById('investmentStrategy').value,
+                beneficiaries: beneficiaries,
+                accountType: 'sipp'
+            };
+
+            const existingData = JSON.parse(localStorage.getItem('evelynAccountFormData') || '{}');
+            localStorage.setItem('evelynAccountFormData', JSON.stringify({ ...existingData, ...sippData }));
+
+            // Navigate to declarations page
+            window.location.href = 'account_declarations.html';
+        }
+
+        function initAdvisorMode() {
+            const header = document.querySelector('.form-header');
+            if (header) {
+                const banner = document.createElement('div');
+                banner.className = 'advisor-banner';
+                banner.innerHTML = '<div class="advisor-banner-content"><div class="advisor-banner-icon">👤</div><div class="advisor-banner-text"><strong>Advisor Review Mode</strong><span>Viewing as ' + advisorInfo.advisorName + ' • Client: ' + advisorInfo.clientRef + '</span></div><div class="advisor-banner-actions"><button class="advisor-btn" onclick="window.close()">← Back to Portal</button></div></div>';
+                header.parentNode.insertBefore(banner, header);
+            }
+            const style = document.createElement('style');
+            style.textContent = '.advisor-banner{background:linear-gradient(135deg,#1E40AF 0%,#3B82F6 100%);color:white;padding:12px 24px}.advisor-banner-content{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:12px}.advisor-banner-icon{font-size:20px}.advisor-banner-text{flex:1;display:flex;flex-direction:column;gap:2px}.advisor-banner-text strong{font-size:14px}.advisor-banner-text span{font-size:12px;opacity:0.9}.advisor-btn{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer}.advisor-btn:hover{background:rgba(255,255,255,0.3)}';
+            document.head.appendChild(style);
+            document.title = '[Advisor] ' + document.title;
+        }
+    </script>
+</body>
+</html>
