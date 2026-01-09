@@ -636,8 +636,7 @@
             right: 0;
             top: 0;
             width: 380px;
-            height: 100vh;
-            height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            height: 100vh; 
             background: white; 
             border-left: 1px solid var(--gray-200); 
             display: flex; 
@@ -689,29 +688,23 @@
             }
             .panel {
                 width: 100%;
-                max-width: 380px;
-                /* Use dynamic viewport height for mobile browsers */
-                height: 100dvh;
+                max-width: 100%;
+                height: 100%;
+                max-height: 100vh;
+                max-height: 100dvh; /* Dynamic viewport height for mobile browsers */
             }
             .panel-body {
-                /* Ensure scrollable area gets proper touch handling */
-                touch-action: pan-y;
+                flex: 1;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                min-height: 0; /* Important for flex scroll */
+            }
+            .panel-footer {
+                flex-shrink: 0;
+                padding-bottom: max(16px, env(safe-area-inset-bottom));
             }
             .main-content {
                 padding: 20px;
-            }
-        }
-        
-        /* Small mobile screens - full panel */
-        @media (max-width: 420px) {
-            .panel {
-                max-width: 100%;
-            }
-            .panel-body {
-                padding: 16px;
-            }
-            .panel-footer {
-                padding: 12px 16px;
             }
         }
         
@@ -834,20 +827,31 @@
                 display: none;
             }
         }
-        .panel-header { padding: 20px; border-bottom: 1px solid var(--gray-100); background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); }
+        .panel-header { padding: 20px; border-bottom: 1px solid var(--gray-100); background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .panel-header-content { flex: 1; min-width: 0; }
+        .panel-close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--gray-100);
+            border-radius: 8px;
+            color: var(--gray-500);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .panel-close-btn:hover {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
         .panel-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: var(--gray-900); display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
         .panel-title-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; }
         .panel-subtitle { font-size: 12px; color: var(--gray-500); }
-        .panel-body { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding: 20px;
-            padding-bottom: 24px;
-            /* Enable momentum scrolling on iOS */
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-        }
-        .panel-footer { padding: 16px 20px; border-top: 1px solid var(--gray-100); background: var(--gray-50); flex-shrink: 0; }
+        .panel-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .panel-footer { padding: 16px 20px; border-top: 1px solid var(--gray-100); background: var(--gray-50); }
 
         /* Panel Sections */
         .panel-section { margin-bottom: 20px; }
@@ -902,16 +906,21 @@
         .form-badge { font-size: 9px; padding: 2px 6px; border-radius: 3px; background: var(--accent-gold); color: var(--primary-dark); font-weight: 600; }
 
         /* Delivery Options */
-        .delivery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .delivery-option { padding: 12px 8px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: all 0.2s; }
-        .delivery-option:hover { border-color: var(--gray-300); }
+        .delivery-options { display: flex; flex-direction: column; gap: 8px; }
+        .delivery-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; background: white; }
+        .delivery-option:hover { border-color: var(--gray-300); background: var(--gray-50); }
         .delivery-option.selected { border-color: var(--primary); background: rgba(45,32,71,0.04); }
-        .delivery-option-icon { font-size: 20px; margin-bottom: 4px; }
-        .delivery-option-label { font-size: 11px; font-weight: 500; color: var(--gray-700); }
+        .delivery-icon { font-size: 20px; flex-shrink: 0; }
+        .delivery-info { flex: 1; }
+        .delivery-name { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+        .delivery-desc { font-size: 11px; color: var(--gray-500); }
+        .delivery-check { width: 20px; height: 20px; border: 2px solid var(--gray-300); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: white; transition: all 0.2s; flex-shrink: 0; }
+        .delivery-option.selected .delivery-check { background: var(--primary); border-color: var(--primary); }
 
         /* Message */
         .message-textarea { width: 100%; padding: 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-family: inherit; font-size: 13px; resize: vertical; min-height: 80px; }
         .message-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,32,71,0.1); }
+        .optional-label { font-weight: 400; color: var(--gray-400); font-size: 11px; }
         .template-btns { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .template-btn { padding: 4px 8px; background: var(--gray-100); border: none; border-radius: var(--radius-sm); font-size: 10px; color: var(--gray-600); cursor: pointer; }
         .template-btn:hover { background: var(--gray-200); }
@@ -1899,8 +1908,15 @@
         <!-- Right Panel -->
         <aside class="panel" id="briefcasePanel">
             <div class="panel-header">
-                <div class="panel-title"><div class="panel-title-icon">💼</div>Briefcase Builder</div>
-                <p class="panel-subtitle">Select a client to build their form pack</p>
+                <div class="panel-header-content">
+                    <div class="panel-title"><div class="panel-title-icon">💼</div>Briefcase Builder</div>
+                    <p class="panel-subtitle">Select a client to build their form pack</p>
+                </div>
+                <button class="panel-close-btn" onclick="closePanel()" title="Close panel">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
             </div>
             <div class="panel-body" id="panelBody">
                 <div class="empty-state" id="emptyState">
@@ -2299,14 +2315,17 @@
             document.getElementById('panelBackdrop').classList.add('open');
         }
 
+        function closePanel() {
+            document.getElementById('briefcasePanel').classList.remove('open');
+            document.getElementById('panelBackdrop').classList.remove('open');
+        }
+
         function deselectClient() {
             selectedClient = null;
             selectedForms = [];
             renderClients();
             renderPanel();
-            // Close panel on mobile
-            document.getElementById('briefcasePanel').classList.remove('open');
-            document.getElementById('panelBackdrop').classList.remove('open');
+            closePanel();
         }
 
         // ==================== PANEL ====================
@@ -2314,14 +2333,14 @@
             const body = document.getElementById('builderContent');
             const empty = document.getElementById('emptyState');
             const footer = document.getElementById('panelFooter');
-            const panelHeader = document.querySelector('.panel-header');
+            const panelHeaderContent = document.querySelector('.panel-header-content');
 
             if (!selectedClient) {
                 empty.style.display = 'block';
                 body.style.display = 'none';
                 footer.style.display = 'none';
                 // Reset header to default
-                panelHeader.innerHTML = `
+                panelHeaderContent.innerHTML = `
                     <div class="panel-title"><div class="panel-title-icon">💼</div>Briefcase Builder</div>
                     <p class="panel-subtitle">Select a client to build their form pack</p>
                 `;
@@ -2344,12 +2363,12 @@
                     'complete': { bg: '#D1FAE5', color: '#065F46', icon: '✅' }
                 };
                 const status = statusColors[selectedClient.briefcase.status];
-                panelHeader.innerHTML = `
+                panelHeaderContent.innerHTML = `
                     <div class="panel-title"><div class="panel-title-icon">${status.icon}</div>Briefcase ${capitalise(selectedClient.briefcase.status.replace('-', ' '))}</div>
                     <p class="panel-subtitle">Review client progress and complete on their behalf</p>
                 `;
             } else {
-                panelHeader.innerHTML = `
+                panelHeaderContent.innerHTML = `
                     <div class="panel-title"><div class="panel-title-icon">💼</div>Briefcase Builder</div>
                     <p class="panel-subtitle">Select a client to build their form pack</p>
                 `;
@@ -2370,7 +2389,6 @@
                                 <div class="selected-client-name">${names}</div>
                                 <div class="selected-client-detail">${selectedClient.jurisdiction === 'UK' ? '🇬🇧 UK' : '🇮🇪 Ireland'} • ${capitalise(selectedClient.clientType)}</div>
                             </div>
-                            <button class="remove-btn" onclick="deselectClient()">✕</button>
                         </div>
                     </div>
 
@@ -2454,7 +2472,6 @@
                                 <div class="selected-client-name">${names}</div>
                                 <div class="selected-client-detail">${selectedClient.jurisdiction === 'UK' ? '🇬🇧 UK' : '🇮🇪 Ireland'} • ${capitalise(selectedClient.clientType)}</div>
                             </div>
-                            <button class="remove-btn" onclick="deselectClient()">✕</button>
                         </div>
                     </div>
 
@@ -2506,41 +2523,31 @@
 
                     <!-- Delivery Method -->
                     <div class="panel-section">
-                        <div class="panel-section-title">📤 Delivery Method</div>
-                        <div class="delivery-grid">
-                            <div class="delivery-option ${deliveryMethod==='email'?'selected':''}" onclick="setDelivery('email')">
-                                <div class="delivery-option-icon">📧</div>
-                                <div class="delivery-option-label">Email</div>
+                        <div class="panel-section-title">📧 Delivery Method</div>
+                        <div class="delivery-options">
+                            <div class="delivery-option ${deliveryMethod === 'email' ? 'selected' : ''}" onclick="setDelivery('email')">
+                                <div class="delivery-icon">📧</div>
+                                <div class="delivery-info">
+                                    <div class="delivery-name">Email</div>
+                                    <div class="delivery-desc">Send secure link via email</div>
+                                </div>
+                                <div class="delivery-check">${deliveryMethod === 'email' ? '✓' : ''}</div>
                             </div>
-                            <div class="delivery-option ${deliveryMethod==='sms'?'selected':''}" onclick="setDelivery('sms')">
-                                <div class="delivery-option-icon">💬</div>
-                                <div class="delivery-option-label">SMS</div>
-                            </div>
-                            <div class="delivery-option ${deliveryMethod==='portal'?'selected':''}" onclick="setDelivery('portal')">
-                                <div class="delivery-option-icon">🌐</div>
-                                <div class="delivery-option-label">Portal</div>
-                            </div>
-                            <div class="delivery-option ${deliveryMethod==='print'?'selected':''}" onclick="setDelivery('print')">
-                                <div class="delivery-option-icon">🖨️</div>
-                                <div class="delivery-option-label">Print</div>
+                            <div class="delivery-option ${deliveryMethod === 'sms' ? 'selected' : ''}" onclick="setDelivery('sms')">
+                                <div class="delivery-icon">💬</div>
+                                <div class="delivery-info">
+                                    <div class="delivery-name">SMS</div>
+                                    <div class="delivery-desc">Send link via text message</div>
+                                </div>
+                                <div class="delivery-check">${deliveryMethod === 'sms' ? '✓' : ''}</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Personal Message -->
                     <div class="panel-section">
-                        <div class="panel-section-title">✉️ Personal Message</div>
-                        <textarea class="message-textarea" id="personalMessage" placeholder="Add a personalised message to accompany the forms...">Dear ${selectedClient.applicants[0].firstName},
-
-Please find attached your onboarding forms. Take your time reviewing them.
-
-Best regards,
-${currentAdvisor.name.split(' ')[0]}</textarea>
-                        <div class="template-btns">
-                            <button class="template-btn" onclick="insertTemplate('standard')">Standard</button>
-                            <button class="template-btn" onclick="insertTemplate('urgent')">Urgent</button>
-                            <button class="template-btn" onclick="insertTemplate('reminder')">Reminder</button>
-                        </div>
+                        <div class="panel-section-title">✉️ Personal Message <span class="optional-label">(optional)</span></div>
+                        <textarea class="message-textarea" id="personalMessage" placeholder="Add a personal note to your client..."></textarea>
                     </div>
                 `;
 
@@ -2759,14 +2766,6 @@ ${currentAdvisor.name.split(' ')[0]}</textarea>
                 el.style.transform = 'scale(1)';
             }, 200);
         }
-
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLoginStatus();
-            renderClients();
-            renderPanel();
-            updateStats();
-        });
     </script>
 </body>
 </html>
