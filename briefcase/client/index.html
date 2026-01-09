@@ -20,9 +20,9 @@
             --danger: #C75050;
             --danger-light: #FCEAEA;
             --white: #FFFFFF;
-            --gray-50: #F9FAFB;
-            --gray-100: #F2F4F7;
-            --gray-200: #E4E7EC;
+            --gray-50: #E8ECF2;
+            --gray-100: #E0E5ED;
+            --gray-200: #D0D7E2;
             --gray-300: #D0D5DD;
             --gray-400: #98A2B3;
             --gray-500: #667085;
@@ -139,8 +139,8 @@
             padding: 12px 16px;
             background: white;
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            box-shadow: 0 2px 8px rgba(16,24,40,0.08);
+            border: 1px solid rgba(255,255,255,0.8);
         }
         .advisor-avatar {
             width: 44px;
@@ -447,8 +447,8 @@
         .progress-card {
             background: white;
             border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--gray-100);
+            box-shadow: 0 4px 12px rgba(16,24,40,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
             padding: 24px;
             margin-bottom: 24px;
             animation: fadeInScale 0.5s ease 0.1s both;
@@ -522,8 +522,8 @@
         .form-card {
             background: white;
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            box-shadow: 0 2px 8px rgba(16,24,40,0.08);
+            border: 1px solid rgba(255,255,255,0.8);
             padding: 16px 20px;
             display: flex;
             align-items: center;
@@ -544,7 +544,7 @@
         .form-card:nth-child(7) { animation-delay: 0.45s; }
         .form-card:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 12px rgba(16,24,40,0.12);
             border-color: var(--gray-200);
         }
         .form-card.complete {
@@ -750,6 +750,7 @@
             text-align: center;
             margin-bottom: 24px;
             animation: fadeInScale 0.5s ease;
+            box-shadow: 0 4px 12px rgba(46,125,90,0.3);
         }
         .complete-banner-icon {
             width: 64px;
@@ -1211,18 +1212,4 @@
         // Escape key to close modal
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modal = document.getElementById('formModalOverlay');
-                if (modal.classList.contains('show')) {
-                    closeFormModal();
-                }
-            }
-        });
-        
-        // Check for session (for demo, just show login)
-        document.addEventListener('DOMContentLoaded', function() {
-            // In a real app, check for existing session here
-            // For demo, always show login screen
-        });
-    </script>
-</body>
-</html>
+                const modal = document.get
