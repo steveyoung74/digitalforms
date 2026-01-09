@@ -1204,12 +1204,17 @@
             document.getElementById('formModalIframe').src = 'about:blank';
             document.body.style.overflow = '';
             currentFormUrl = '';
-            
-            // Simulate progress update (for demo)
-            // In real app, this would read from localStorage or API
         }
         
         // Escape key to close modal
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modal = document.get
+                const modal = document.getElementById('formModalOverlay');
+                if (modal.classList.contains('show')) {
+                    closeFormModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
