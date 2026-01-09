@@ -23,9 +23,9 @@
             --info: #4A7EB8;
             --info-light: #EBF3FB;
             --white: #FFFFFF;
-            --gray-50: #F9FAFB;
-            --gray-100: #F2F4F7;
-            --gray-200: #E4E7EC;
+            --gray-50: #E8ECF2;
+            --gray-100: #E0E5ED;
+            --gray-200: #D0D7E2;
             --gray-300: #D0D5DD;
             --gray-400: #98A2B3;
             --gray-500: #667085;
@@ -453,7 +453,7 @@
 
         /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .stat-card { background: white; border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100); }
+        .stat-card { background: white; border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: 0 2px 8px rgba(16,24,40,0.08); border: 1px solid rgba(255,255,255,0.8); }
         .stat-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
         .stat-icon { width: 32px; height: 32px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
         .stat-icon.gold { background: rgba(196,163,90,0.12); }
@@ -468,11 +468,11 @@
         /* Search & Filters */
         .toolbar { display: flex; gap: 12px; margin-bottom: 20px; }
         .search-box { flex: 1; position: relative; }
-        .search-box input { width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-size: 13px; background: white; }
+        .search-box input { width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-size: 13px; background: white; box-shadow: 0 1px 4px rgba(16,24,40,0.05); }
         .search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,32,71,0.1); }
         .search-box svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-400); }
-        .filter-btn { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-size: 13px; color: var(--gray-600); cursor: pointer; }
-        .filter-btn:hover { background: var(--gray-50); }
+        .filter-btn { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-size: 13px; color: var(--gray-600); cursor: pointer; box-shadow: 0 1px 4px rgba(16,24,40,0.05); }
+        .filter-btn:hover { background: var(--gray-100); }
 
         /* Tabs */
         .tabs { display: flex; gap: 4px; background: var(--gray-100); padding: 4px; border-radius: var(--radius-md); margin-bottom: 20px; width: fit-content; }
@@ -486,16 +486,16 @@
         .client-row { 
             background: white; 
             border-radius: var(--radius-lg); 
-            box-shadow: var(--shadow-sm); 
-            border: 1px solid var(--gray-100); 
+            box-shadow: 0 2px 8px rgba(16,24,40,0.08); 
+            border: 1px solid rgba(255,255,255,0.8); 
             padding: 16px; 
             cursor: pointer; 
             transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
         }
-        .client-row:hover { box-shadow: var(--shadow-md); border-color: var(--gray-200); }
-        .client-row.selected { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(196,163,90,0.15); }
+        .client-row:hover { box-shadow: 0 4px 12px rgba(16,24,40,0.12); border-color: var(--gray-200); }
+        .client-row.selected { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(196,163,90,0.15), 0 2px 8px rgba(16,24,40,0.08); }
         
         /* Card Header - Two rows: Top row and Meta row */
         .client-header {
@@ -638,7 +638,8 @@
             width: 380px;
             height: 100vh; 
             background: white; 
-            border-left: 1px solid var(--gray-200); 
+            border-left: 1px solid var(--gray-200);
+            box-shadow: -4px 0 20px rgba(16,24,40,0.08);
             display: flex; 
             flex-direction: column; 
             z-index: 200;
