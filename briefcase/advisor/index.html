@@ -925,6 +925,8 @@
         .delivery-option.selected .delivery-check { background: var(--primary); border-color: var(--primary); }
 
         /* Message */
+        .message-template-select { width: 100%; padding: 10px 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-family: inherit; font-size: 13px; background: white; color: var(--gray-700); cursor: pointer; margin-bottom: 10px; }
+        .message-template-select:focus { outline: none; border-color: var(--primary); }
         .message-textarea { width: 100%; padding: 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-family: inherit; font-size: 13px; resize: vertical; min-height: 80px; }
         .message-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,32,71,0.1); }
         .optional-label { font-weight: 400; color: var(--gray-400); font-size: 11px; }
@@ -2548,12 +2550,27 @@
                                 </div>
                                 <div class="delivery-check">${deliveryMethod === 'sms' ? '✓' : ''}</div>
                             </div>
+                            <div class="delivery-option ${deliveryMethod === 'print' ? 'selected' : ''}" onclick="setDelivery('print')">
+                                <div class="delivery-icon">🖨️</div>
+                                <div class="delivery-info">
+                                    <div class="delivery-name">Print</div>
+                                    <div class="delivery-desc">Generate printable PDF pack</div>
+                                </div>
+                                <div class="delivery-check">${deliveryMethod === 'print' ? '✓' : ''}</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Personal Message -->
                     <div class="panel-section">
                         <div class="panel-section-title">✉️ Personal Message <span class="optional-label">(optional)</span></div>
+                        <select class="message-template-select" id="messageTemplate" onchange="applyMessageTemplate(this.value)">
+                            <option value="">Select a template...</option>
+                            <option value="standard">Standard welcome</option>
+                            <option value="reminder">Friendly reminder</option>
+                            <option value="urgent">Time-sensitive</option>
+                            <option value="custom">Custom message</option>
+                        </select>
                         <textarea class="message-textarea" id="personalMessage" placeholder="Add a personal note to your client..."></textarea>
                     </div>
                 `;
@@ -2565,6 +2582,22 @@
         function selectEntity(entityId) { selectedEntity = entityId; renderPanel(); }
         function selectProposition(propId) { selectedProposition = propId; selectedForms = getRecommendedForms(selectedClient); renderPanel(); }
         function setDelivery(method) { deliveryMethod = method; renderPanel(); }
+        
+        function applyMessageTemplate(template) {
+            const textarea = document.getElementById('personalMessage');
+            if (!textarea || !selectedClient) return;
+            
+            const clientName = selectedClient.applicants[0].firstName;
+            const templates = {
+                'standard': `Dear ${clientName},\n\nPlease find enclosed your personalised document pack. Complete these forms at your convenience and don't hesitate to reach out if you have any questions.\n\nBest regards`,
+                'reminder': `Hi ${clientName},\n\nJust a gentle reminder to complete your outstanding forms when you have a moment. I'm here to help if you need any assistance.\n\nKind regards`,
+                'urgent': `Dear ${clientName},\n\nTo proceed with your account setup, please complete the enclosed forms at your earliest convenience. Feel free to contact me directly if you have any questions.\n\nBest regards`,
+                'custom': ''
+            };
+            
+            textarea.value = templates[template] || '';
+            textarea.focus();
+        }
 
         function toggleForm(formId) {
             if (selectedForms.includes(formId)) {
