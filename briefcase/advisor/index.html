@@ -1683,7 +1683,7 @@
             </form>
             
             <div class="login-footer">
-                <p>Need help? Contact <a href="/cdn-cgi/l/email-protection#fd8e888d8d928f89bd988b989184938d9c8f8993988f8ed39e9290">IT Support</a></p>
+                <p>Need help? Contact <a href="mailto:support@evelynpartners.com">IT Support</a></p>
             </div>
         </div>
     </div>
@@ -1964,7 +1964,7 @@
     </div>
 
     <!-- Embedded Data -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script id="configData" type="application/json">
+    <script id="configData" type="application/json">
     {
         "advisors": [
             {"id":"adv-001","name":"Sarah Chen","role":"advisor","roleTitle":"Senior Wealth Advisor","initials":"SC","teamId":"team-london-01"},
@@ -2754,4 +2754,19 @@ ${currentAdvisor.name.split(' ')[0]}</textarea>
             el.style.transform = 'scale(1.2)';
             el.style.transition = 'transform 0.2s ease';
             
-            setTimeout(() =
+            setTimeout(() => {
+                el.textContent = newValue;
+                el.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            renderClients();
+            renderPanel();
+            updateStats();
+        });
+    </script>
+</body>
+</html>
